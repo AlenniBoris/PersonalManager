@@ -2,6 +2,7 @@ package com.alenniboris.personalmanager.data.utils
 
 import android.util.Log
 import com.alenniboris.personalmanager.domain.model.CustomResultModelDomain
+import com.alenniboris.personalmanager.domain.utils.LogPrinter
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.tasks.await
@@ -33,7 +34,7 @@ object CommonFunctions {
 
             return@withContext CustomResultModelDomain.Success(Unit)
         }.getOrElse { exception ->
-            Log.e("!!!", exception.stackTraceToString())
+            LogPrinter.printLog("!!!", exception.stackTraceToString())
             return@withContext CustomResultModelDomain.Error(
                 exceptionMapping(exception)
             )
@@ -51,12 +52,11 @@ object CommonFunctions {
         runCatching {
 
             val elementRef = database.getReference(table + "/${modelId}")
-            Log.e("!!!!", elementRef.key.toString())
             elementRef.setValue(model)
 
             return@withContext CustomResultModelDomain.Success(Unit)
         }.getOrElse { exception ->
-            Log.e("!!!", exception.stackTraceToString())
+            LogPrinter.printLog("!!!", exception.stackTraceToString())
             return@withContext CustomResultModelDomain.Error(
                 exceptionMapping(exception)
             )
@@ -88,7 +88,7 @@ object CommonFunctions {
                 resultMapping(result)
             )
         }.getOrElse { exception ->
-            Log.e("!!!", exception.stackTraceToString())
+            LogPrinter.printLog("!!!", exception.stackTraceToString())
             return@withContext CustomResultModelDomain.Error(
                 exceptionMapping(exception)
             )

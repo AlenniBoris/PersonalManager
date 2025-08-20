@@ -17,6 +17,13 @@ class LoginUserByEmailAndPasswordUseCaseImpl @Inject constructor(
         email: String,
         password: String
     ): CustomResultModelDomain<Unit, CommonExceptionModelDomain> = withContext(dispatchers.IO) {
+
+        if (email.isEmpty() || password.isEmpty()) {
+            return@withContext CustomResultModelDomain.Error(
+                CommonExceptionModelDomain.NotAllFieldsFilled
+            )
+        }
+
         return@withContext userRepository.loginUser(
             email = email,
             password = password

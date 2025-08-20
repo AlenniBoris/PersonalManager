@@ -1,8 +1,7 @@
 package com.alenniboris.personalmanager.data.model
 
-import android.util.Log
 import com.alenniboris.personalmanager.domain.model.UserModelDomain
-import kotlin.String
+import com.alenniboris.personalmanager.domain.utils.LogPrinter
 
 data class UserModelData(
     val id: String? = null,
@@ -14,16 +13,6 @@ data class UserModelData(
     val height: String? = null,
     val address: String? = null
 ) {
-
-    val hasSomeValueMissing: Boolean
-        get() = id == null
-                || name == null
-                || email == null
-                || password == null
-                || age == null
-                || phone == null
-                || height == null
-                || address == null
 
     fun toUpdatesMap(): Map<String, String?> =
         mapOf(
@@ -51,9 +40,9 @@ fun UserModelData.toModelDomain(): UserModelDomain? =
             address = this.address!!
         )
     }.getOrElse {
-        Log.e(
-            "!!!!",
-            """
+        LogPrinter.printLog(
+            tag = "!!!",
+            message = """
                 UserModelData.toModelDomain()
                     ${it.stackTraceToString()}
             """.trimIndent()

@@ -11,4 +11,7 @@ data class UserModelDomain(
 )
 
 fun UserModelDomain.checkRegistrationFieldsFilled(): Boolean =
-    id.isEmpty() || name.isEmpty() || email.isEmpty()
+    this.id.isEmpty() || this.name.isEmpty() || this.email.isEmpty()
+
+fun UserModelDomain.checkEmailType(): Boolean =
+    "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$".toRegex().matches(this.email)

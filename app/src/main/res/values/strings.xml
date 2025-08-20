@@ -1,3 +1,28 @@
 <resources>
-    <string name="app_name">PersonalManager</string>
+    <string name="app_name">Personal Manager</string>
+    <string name="light_theme_mode_text">Light</string>
+    <string name="dark_theme_mode_text">Dark</string>
+    <string name="system_theme_mode_text">System</string>
+    <string name="home_button_text">Home</string>
+    <string name="weather_button_text">Weather</string>
+    <string name="tasks_button_text">Tasks</string>
+    <string name="health_button_text">Health</string>
+    <string name="text_field_icon_btn_description">text field icon btn</string>
+    <string name="getting_data_exception">Error while getting data, try again</string>
+    <string name="internet_exception">Check your internet connection</string>
+    <string name="no_user_exception">No such user, register</string>
+    <string name="not_filled_fields_exception">All fields should be filled</string>
+    <string name="password_check_exception">You entered two different passwords\n</string>
+    <string name="unknown_exception">Unknown error, try again</string>
+    <string name="existing_user_exception">User already exists. Log in</string>
+    <string name="wrong_password_exception">Wrong password</string>
+    <string name="app_description">Your daily life companion</string>
+    <string name="get_started_text">Get started</string>
+    <string name="log_reg_options_description">Sign in account or create one</string>
+    <string name="login_process_text">Sign in</string>
+    <string name="register_process_text">Register</string>
+    <string name="email_placeholder">Email</string>
+    <string name="password_placeholder">Password</string>
+    <string name="name_placeholder">Enter your full name</string>
+    <string name="password_check_placeholder">Confirm your password</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.alenniboris.personalmanager.domain.model
 
+import com.google.android.gms.common.internal.service.Common
+
 sealed class CommonExceptionModelDomain : Throwable() {
 
     data object InternetException : CommonExceptionModelDomain()
@@ -17,4 +19,8 @@ sealed class CommonExceptionModelDomain : Throwable() {
     data object ErrorGettingData : CommonExceptionModelDomain()
 
     data object UserAlreadyExists : CommonExceptionModelDomain()
+
+    data object EmailIsWrongType : CommonExceptionModelDomain()
+
+    data object WeakPassword: CommonExceptionModelDomain()
 }

@@ -4,6 +4,7 @@ import com.alenniboris.personalmanager.domain.model.CommonExceptionModelDomain
 import com.alenniboris.personalmanager.domain.model.CustomResultModelDomain
 import com.alenniboris.personalmanager.domain.model.IAppDispatchers
 import com.alenniboris.personalmanager.domain.model.UserModelDomain
+import com.alenniboris.personalmanager.domain.model.checkEmailType
 import com.alenniboris.personalmanager.domain.model.checkRegistrationFieldsFilled
 import com.alenniboris.personalmanager.domain.repository.IUserRepository
 import com.alenniboris.personalmanager.domain.usecase.logic.IRegisterUserUseCase
@@ -27,9 +28,21 @@ class RegisterUserUseCaseImpl @Inject constructor(
             )
         }
 
+        if (!user.checkEmailType()) {
+            return@withContext CustomResultModelDomain.Error(
+                CommonExceptionModelDomain.EmailIsWrongType
+            )
+        }
+
         if (password != passwordCheck) {
             return@withContext CustomResultModelDomain.Error(
                 CommonExceptionModelDomain.PasswordAndCheckNotMatch
+            )
+        }
+
+        if (password.length < 6) {
+            return@withContext CustomResultModelDomain.Error(
+                CommonExceptionModelDomain.WeakPassword
             )
         }
 

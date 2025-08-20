@@ -1,4 +1,4 @@
-package com.alenniboris.personalmanager.ui.theme
+package com.alenniboris.personalmanager.presentation.uikit.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -1,6 +1,5 @@
 package com.alenniboris.personalmanager.data.repository
 
-import android.util.Log
 import com.alenniboris.personalmanager.data.mapper.toCommonException
 import com.alenniboris.personalmanager.data.model.UserModelData
 import com.alenniboris.personalmanager.data.model.toModelData
@@ -12,6 +11,7 @@ import com.alenniboris.personalmanager.domain.model.CustomResultModelDomain
 import com.alenniboris.personalmanager.domain.model.IAppDispatchers
 import com.alenniboris.personalmanager.domain.model.UserModelDomain
 import com.alenniboris.personalmanager.domain.repository.IUserRepository
+import com.alenniboris.personalmanager.domain.utils.LogPrinter
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -56,6 +56,7 @@ class UserRepositoryImpl @Inject constructor(
 
                         if (databaseUser.password == password) {
 
+                            LogPrinter.printLog("!!!!", databaseUser.toModelDomain().toString())
                             _userFlow.update {
                                 databaseUser.toModelDomain()
                             }
@@ -78,9 +79,9 @@ class UserRepositoryImpl @Inject constructor(
                 }
             }
         }.getOrElse {
-            Log.e(
-                "!!!",
-                """
+            LogPrinter.printLog(
+                tag = "!!!",
+                message = """
                     loginUser , 
                     ${it.stackTraceToString()}
                 """.trimIndent()
@@ -156,9 +157,9 @@ class UserRepositoryImpl @Inject constructor(
                 }
             }
         }.getOrElse {
-            Log.e(
-                "!!!",
-                """
+            LogPrinter.printLog(
+                tag = "!!!",
+                message = """
                     registerUser , 
                     ${it.stackTraceToString()}
                 """.trimIndent()
