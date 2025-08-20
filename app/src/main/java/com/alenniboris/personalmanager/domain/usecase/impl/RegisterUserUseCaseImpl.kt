@@ -4,12 +4,13 @@ import com.alenniboris.personalmanager.domain.model.CommonExceptionModelDomain
 import com.alenniboris.personalmanager.domain.model.CustomResultModelDomain
 import com.alenniboris.personalmanager.domain.model.IAppDispatchers
 import com.alenniboris.personalmanager.domain.model.UserModelDomain
-import com.alenniboris.personalmanager.domain.model.checkFieldsFilled
+import com.alenniboris.personalmanager.domain.model.checkRegistrationFieldsFilled
 import com.alenniboris.personalmanager.domain.repository.IUserRepository
 import com.alenniboris.personalmanager.domain.usecase.logic.IRegisterUserUseCase
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class RegisterUserUseCaseImpl(
+class RegisterUserUseCaseImpl @Inject constructor(
     private val userRepository: IUserRepository,
     private val dispatchers: IAppDispatchers
 ) : IRegisterUserUseCase {
@@ -20,7 +21,7 @@ class RegisterUserUseCaseImpl(
         passwordCheck: String
     ): CustomResultModelDomain<Unit, CommonExceptionModelDomain> = withContext(dispatchers.IO) {
 
-        if (!user.checkFieldsFilled()) {
+        if (!user.checkRegistrationFieldsFilled()) {
             return@withContext CustomResultModelDomain.Error(
                 CommonExceptionModelDomain.NotAllFieldsFilled
             )

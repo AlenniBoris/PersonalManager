@@ -1,6 +1,6 @@
 package com.alenniboris.personalmanager.domain.model
 
-sealed class CommonExceptionModelDomain {
+sealed class CommonExceptionModelDomain : Throwable() {
 
     data object InternetException : CommonExceptionModelDomain()
 
@@ -13,4 +13,8 @@ sealed class CommonExceptionModelDomain {
     data object WrongPassword : CommonExceptionModelDomain()
 
     data object NoSuchUser : CommonExceptionModelDomain()
+
+    data object ErrorGettingData : CommonExceptionModelDomain()
+
+    data object UserAlreadyExists : CommonExceptionModelDomain()
 }

@@ -6,8 +6,9 @@ import com.alenniboris.personalmanager.domain.model.IAppDispatchers
 import com.alenniboris.personalmanager.domain.repository.IUserRepository
 import com.alenniboris.personalmanager.domain.usecase.logic.ILoginUserByEmailAndPasswordUseCase
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class LoginUserByEmailAndPasswordUseCaseImpl(
+class LoginUserByEmailAndPasswordUseCaseImpl @Inject constructor(
     private val userRepository: IUserRepository,
     private val dispatchers: IAppDispatchers
 ) : ILoginUserByEmailAndPasswordUseCase {
