@@ -15,8 +15,8 @@ class GetTodayWeatherForecastUseCaseImpl @Inject constructor(
 ) : IGetTodayWeatherForecastUseCase {
 
     override suspend fun invoke(
-        lat: Long,
-        lon: Long
+        lat: Double,
+        lon: Double
     ): CustomResultModelDomain<List<HourWeatherForecastModelDomain>, CommonExceptionModelDomain> =
         withContext(dispatchers.IO) {
             return@withContext weatherRepository.getTodayHourWeatherForecast(

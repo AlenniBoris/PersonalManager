@@ -1,17 +1,15 @@
 package com.alenniboris.personalmanager.domain.model.weather
 
-import java.util.Date
-
 data class CurrentWeatherForecastModelDomain(
-    val temperature: Int,
-    val windSpeed: Int,
+    val temperature: Double,
+    val windSpeed: Double,
     val windDirection: WindDirection,
-    val visibilityDistance: Int,
-    val sunsetTime: Date,
-    val sunriseTime: Date,
-    val uvIndex: Int,
-    val relativeHumidity: Int,
-    val precipitation: Int,
-    val precipitationProbability: Int,
+    val visibilityDistance: Double,
+    val sunsetTime: String,
+    val sunriseTime: String,
+    val uvIndex: Double,
+    val relativeHumidity: Double,
+    val precipitation: Double,
+    val precipitationProbability: Double,
     val place: String
 )

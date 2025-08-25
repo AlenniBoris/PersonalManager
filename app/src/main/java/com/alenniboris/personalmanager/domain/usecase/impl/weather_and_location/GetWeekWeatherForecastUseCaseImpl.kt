@@ -15,8 +15,8 @@ class GetWeekWeatherForecastUseCaseImpl @Inject constructor(
 ) : IGetWeekWeatherForecastUseCase {
 
     override suspend fun invoke(
-        lat: Long,
-        lon: Long
+        lat: Double,
+        lon: Double
     ): CustomResultModelDomain<List<DayWeatherForecastModelDomain>, CommonExceptionModelDomain> =
         withContext(dispatchers.IO) {
             return@withContext weatherRepository.getDayWeatherForecastForWeek(

@@ -6,7 +6,7 @@ import com.alenniboris.personalmanager.domain.model.weather.CurrentWeatherForeca
 
 interface IGetCurrentForecastUseCase {
     suspend fun invoke(
-        lat: Long,
-        lon: Long
-    ): CustomResultModelDomain<CurrentWeatherForecastModelDomain, CommonExceptionModelDomain>
+        lat: Double,
+        lon: Double
+    ): CustomResultModelDomain<CurrentWeatherForecastModelDomain?, CommonExceptionModelDomain>
 }

@@ -12,4 +12,6 @@ fun CommonExceptionModelDomain.toUiString(): Int = when (this) {
     CommonExceptionModelDomain.UnknownException -> R.string.unknown_exception
     CommonExceptionModelDomain.UserAlreadyExists -> R.string.existing_user_exception
     CommonExceptionModelDomain.WrongPassword -> R.string.wrong_password_exception
+    CommonExceptionModelDomain.EmailIsWrongType -> R.string.email_wrong_type_exception
+    CommonExceptionModelDomain.WeakPassword -> R.string.weak_password_exception
 }

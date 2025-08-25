@@ -18,8 +18,8 @@ class GetCurrentForecastUseCaseImpl @Inject constructor(
 ) : IGetCurrentForecastUseCase {
 
     override suspend fun invoke(
-        lat: Long,
-        lon: Long
+        lat: Double,
+        lon: Double
     ): CustomResultModelDomain<CurrentWeatherForecastModelDomain, CommonExceptionModelDomain> =
         withContext(dispatchers.IO) {
 
@@ -51,9 +51,12 @@ class GetCurrentForecastUseCaseImpl @Inject constructor(
                 )
             }
 
+            val weather = (weatherResult as CustomResultModelDomain.Success).result
+            val location = (locationResult as CustomResultModelDomain.Success).result
+
             return@withContext CustomResultModelDomain.Success(
-                weatherResult.result!!.copy(
-                    place = locationResult.result!!
+                weather.copy(
+                    place = location
                 )
             )
         }

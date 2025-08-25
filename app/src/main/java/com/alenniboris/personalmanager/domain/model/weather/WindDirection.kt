@@ -8,5 +8,6 @@ enum class WindDirection {
     South,
     SouthEast,
     East,
-    EastNorth
+    EastNorth,
+    Unknown
 }

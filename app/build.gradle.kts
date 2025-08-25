@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -19,6 +21,22 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val keyStoreFile = project.rootProject.file("apikeys.properties")
+        val properties = Properties()
+        properties.load(keyStoreFile.inputStream())
+        val meteoblueApiKey = properties.getProperty("METEOBLUE_API_KEY") ?: ""
+        buildConfigField(
+            type = "String",
+            name = "METEOBLUE_API_KEY",
+            value = meteoblueApiKey
+        )
+        val geoapifyApiKey = properties.getProperty("GEOAPIFY_API_KEY") ?: ""
+        buildConfigField(
+            type = "String",
+            name = "GEOAPIFY_API_KEY",
+            value = geoapifyApiKey
+        )
     }
 
     buildTypes {
@@ -71,9 +89,19 @@ dependencies {
     ksp(libs.hilt.android.compiler)
 
     // Raamcosta
-    implementation("io.github.raamcosta.compose-destinations:core:1.11.9")
-    ksp("io.github.raamcosta.compose-destinations:ksp:1.11.9")
+    implementation(libs.raamcosta.core)
+    ksp(libs.raamcosta.ksp)
 
     // Leak canary
-    debugImplementation("com.squareup.leakcanary:leakcanary-android:2.14")
+    debugImplementation(libs.leakcanary.android)
+
+    // Retrofit
+    implementation(libs.converter.gson)
+    implementation(libs.retrofit)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+    implementation(libs.retrofit.cache.extension)
+
+    //Gson
+    implementation(libs.gson)
 }

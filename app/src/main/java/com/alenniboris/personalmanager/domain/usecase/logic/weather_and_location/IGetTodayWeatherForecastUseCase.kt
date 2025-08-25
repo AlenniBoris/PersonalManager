@@ -6,7 +6,7 @@ import com.alenniboris.personalmanager.domain.model.weather.HourWeatherForecastM
 
 interface IGetTodayWeatherForecastUseCase {
     suspend fun invoke(
-        lat: Long,
-        lon: Long
+        lat: Double,
+        lon: Double
     ): CustomResultModelDomain<List<HourWeatherForecastModelDomain>, CommonExceptionModelDomain>
 }

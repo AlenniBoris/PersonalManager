@@ -5,7 +5,7 @@ import com.alenniboris.personalmanager.data.model.UserModelData
 import com.alenniboris.personalmanager.data.model.toModelData
 import com.alenniboris.personalmanager.data.model.toModelDomain
 import com.alenniboris.personalmanager.data.utils.CommonFunctions
-import com.alenniboris.personalmanager.data.utils.DatabaseValues
+import com.alenniboris.personalmanager.data.utils.FirebaseDatabaseValues
 import com.alenniboris.personalmanager.domain.model.common.CommonExceptionModelDomain
 import com.alenniboris.personalmanager.domain.model.common.CustomResultModelDomain
 import com.alenniboris.personalmanager.domain.model.common.IAppDispatchers
@@ -36,11 +36,11 @@ class UserRepositoryImpl @Inject constructor(
 
             return@withContext when (
                 val databaseUserResult = CommonFunctions.requestElementByField(
-                    field = DatabaseValues.FIELD_EMAIL,
+                    field = FirebaseDatabaseValues.FIELD_EMAIL,
                     fieldValue = email,
                     dispatcher = dispatchers.IO,
                     database = database,
-                    table = DatabaseValues.TABLE_USERS,
+                    table = FirebaseDatabaseValues.TABLE_USERS,
                     resultMapping = { dataModel: UserModelData? ->
                         dataModel
                     },
@@ -100,11 +100,11 @@ class UserRepositoryImpl @Inject constructor(
 
             when (
                 val databaseUserResult = CommonFunctions.requestElementByField(
-                    field = DatabaseValues.FIELD_EMAIL,
+                    field = FirebaseDatabaseValues.FIELD_EMAIL,
                     fieldValue = user.email,
                     dispatcher = dispatchers.IO,
                     database = database,
-                    table = DatabaseValues.TABLE_USERS,
+                    table = FirebaseDatabaseValues.TABLE_USERS,
                     resultMapping = { dataModel: UserModelData? ->
                         dataModel
                     },
@@ -133,7 +133,7 @@ class UserRepositoryImpl @Inject constructor(
                 val registrationResult = CommonFunctions.addRecordToTheTable(
                     dispatcher = dispatchers.IO,
                     database = database,
-                    table = DatabaseValues.TABLE_USERS,
+                    table = FirebaseDatabaseValues.TABLE_USERS,
                     exceptionMapping = { exception ->
                         exception.toCommonException()
                     },

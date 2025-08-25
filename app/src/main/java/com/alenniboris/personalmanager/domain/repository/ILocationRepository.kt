@@ -6,7 +6,7 @@ import com.alenniboris.personalmanager.domain.model.common.CustomResultModelDoma
 interface ILocationRepository {
 
     suspend fun getCurrentLocation(
-        lat: Long,
-        lon: Long
+        lat: Double,
+        lon: Double
     ): CustomResultModelDomain<String, CommonExceptionModelDomain>
 }

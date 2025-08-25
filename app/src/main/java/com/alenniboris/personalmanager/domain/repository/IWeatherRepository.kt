@@ -9,17 +9,17 @@ import com.alenniboris.personalmanager.domain.model.weather.HourWeatherForecastM
 interface IWeatherRepository {
 
     suspend fun getCurrentWeatherForecast(
-        lat: Long,
-        lon: Long
+        lat: Double,
+        lon: Double
     ): CustomResultModelDomain<CurrentWeatherForecastModelDomain, CommonExceptionModelDomain>
 
     suspend fun getTodayHourWeatherForecast(
-        lat: Long,
-        lon: Long
+        lat: Double,
+        lon: Double
     ): CustomResultModelDomain<List<HourWeatherForecastModelDomain>, CommonExceptionModelDomain>
 
     suspend fun getDayWeatherForecastForWeek(
-        lat: Long,
-        lon: Long
+        lat: Double,
+        lon: Double
     ): CustomResultModelDomain<List<DayWeatherForecastModelDomain>, CommonExceptionModelDomain>
 }
