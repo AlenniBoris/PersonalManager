@@ -3,13 +3,12 @@ package com.alenniboris.personalmanager.presentation.screens.login_registration
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.alenniboris.personalmanager.domain.model.CustomResultModelDomain
-import com.alenniboris.personalmanager.domain.usecase.logic.ILoginUserByEmailAndPasswordUseCase
-import com.alenniboris.personalmanager.domain.usecase.logic.IRegisterUserUseCase
+import com.alenniboris.personalmanager.domain.model.common.CustomResultModelDomain
+import com.alenniboris.personalmanager.domain.usecase.logic.user.ILoginUserByEmailAndPasswordUseCase
+import com.alenniboris.personalmanager.domain.usecase.logic.user.IRegisterUserUseCase
 import com.alenniboris.personalmanager.domain.utils.SingleFlowEvent
 import com.alenniboris.personalmanager.presentation.mapper.toUiString
 import com.alenniboris.personalmanager.presentation.model.toDomainModel
-import com.alenniboris.personalmanager.presentation.uikit.theme.passwordHidePicture
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

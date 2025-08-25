@@ -1,4 +1,4 @@
-package com.alenniboris.personalmanager.domain.model
+package com.alenniboris.personalmanager.domain.model.common
 
 sealed class CustomResultModelDomain<out R, out E>(
     open val result: R? = null,

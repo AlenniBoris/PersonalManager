@@ -1,6 +1,4 @@
-package com.alenniboris.personalmanager.domain.model
-
-import com.google.android.gms.common.internal.service.Common
+package com.alenniboris.personalmanager.domain.model.common
 
 sealed class CommonExceptionModelDomain : Throwable() {
 

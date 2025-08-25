@@ -1,7 +1,6 @@
 package com.alenniboris.personalmanager.data.utils
 
-import android.util.Log
-import com.alenniboris.personalmanager.domain.model.CustomResultModelDomain
+import com.alenniboris.personalmanager.domain.model.common.CustomResultModelDomain
 import com.alenniboris.personalmanager.domain.utils.LogPrinter
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.CoroutineDispatcher

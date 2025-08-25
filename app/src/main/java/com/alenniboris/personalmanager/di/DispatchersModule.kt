@@ -1,6 +1,6 @@
 package com.alenniboris.personalmanager.di
 
-import com.alenniboris.personalmanager.domain.model.IAppDispatchers
+import com.alenniboris.personalmanager.domain.model.common.IAppDispatchers
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

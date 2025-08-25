@@ -1,6 +1,6 @@
 package com.alenniboris.personalmanager.data.mapper
 
-import com.alenniboris.personalmanager.domain.model.CommonExceptionModelDomain
+import com.alenniboris.personalmanager.domain.model.common.CommonExceptionModelDomain
 import java.net.ConnectException
 import java.net.UnknownHostException
 

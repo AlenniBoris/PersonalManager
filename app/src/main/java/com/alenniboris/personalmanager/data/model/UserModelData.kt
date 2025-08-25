@@ -1,6 +1,6 @@
 package com.alenniboris.personalmanager.data.model
 
-import com.alenniboris.personalmanager.domain.model.UserModelDomain
+import com.alenniboris.personalmanager.domain.model.user.UserModelDomain
 import com.alenniboris.personalmanager.domain.utils.LogPrinter
 
 data class UserModelData(

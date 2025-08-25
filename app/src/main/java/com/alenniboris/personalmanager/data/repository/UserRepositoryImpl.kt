@@ -6,10 +6,10 @@ import com.alenniboris.personalmanager.data.model.toModelData
 import com.alenniboris.personalmanager.data.model.toModelDomain
 import com.alenniboris.personalmanager.data.utils.CommonFunctions
 import com.alenniboris.personalmanager.data.utils.DatabaseValues
-import com.alenniboris.personalmanager.domain.model.CommonExceptionModelDomain
-import com.alenniboris.personalmanager.domain.model.CustomResultModelDomain
-import com.alenniboris.personalmanager.domain.model.IAppDispatchers
-import com.alenniboris.personalmanager.domain.model.UserModelDomain
+import com.alenniboris.personalmanager.domain.model.common.CommonExceptionModelDomain
+import com.alenniboris.personalmanager.domain.model.common.CustomResultModelDomain
+import com.alenniboris.personalmanager.domain.model.common.IAppDispatchers
+import com.alenniboris.personalmanager.domain.model.user.UserModelDomain
 import com.alenniboris.personalmanager.domain.repository.IUserRepository
 import com.alenniboris.personalmanager.domain.utils.LogPrinter
 import com.google.firebase.database.FirebaseDatabase

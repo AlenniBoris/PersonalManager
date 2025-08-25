@@ -1,4 +1,4 @@
-package com.alenniboris.personalmanager.domain.model
+package com.alenniboris.personalmanager.domain.model.user
 
 data class UserModelDomain(
     val id: String,

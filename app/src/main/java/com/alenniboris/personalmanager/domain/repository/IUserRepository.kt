@@ -1,8 +1,8 @@
 package com.alenniboris.personalmanager.domain.repository
 
-import com.alenniboris.personalmanager.domain.model.CommonExceptionModelDomain
-import com.alenniboris.personalmanager.domain.model.CustomResultModelDomain
-import com.alenniboris.personalmanager.domain.model.UserModelDomain
+import com.alenniboris.personalmanager.domain.model.common.CommonExceptionModelDomain
+import com.alenniboris.personalmanager.domain.model.common.CustomResultModelDomain
+import com.alenniboris.personalmanager.domain.model.user.UserModelDomain
 import kotlinx.coroutines.flow.StateFlow
 
 interface IUserRepository {

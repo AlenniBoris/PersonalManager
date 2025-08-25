@@ -1,6 +1,6 @@
 package com.alenniboris.personalmanager.presentation.model
 
-import com.alenniboris.personalmanager.domain.model.UserModelDomain
+import com.alenniboris.personalmanager.domain.model.user.UserModelDomain
 
 data class UserModelUi(
     val id: String = "",

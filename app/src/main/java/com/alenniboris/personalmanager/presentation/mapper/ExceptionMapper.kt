@@ -1,7 +1,7 @@
 package com.alenniboris.personalmanager.presentation.mapper
 
 import com.alenniboris.personalmanager.R
-import com.alenniboris.personalmanager.domain.model.CommonExceptionModelDomain
+import com.alenniboris.personalmanager.domain.model.common.CommonExceptionModelDomain
 
 fun CommonExceptionModelDomain.toUiString(): Int = when (this) {
     CommonExceptionModelDomain.ErrorGettingData -> R.string.getting_data_exception

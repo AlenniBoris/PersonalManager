@@ -1,13 +1,13 @@
-package com.alenniboris.personalmanager.domain.usecase.impl
+package com.alenniboris.personalmanager.domain.usecase.impl.user
 
-import com.alenniboris.personalmanager.domain.model.CommonExceptionModelDomain
-import com.alenniboris.personalmanager.domain.model.CustomResultModelDomain
-import com.alenniboris.personalmanager.domain.model.IAppDispatchers
-import com.alenniboris.personalmanager.domain.model.UserModelDomain
-import com.alenniboris.personalmanager.domain.model.checkEmailType
-import com.alenniboris.personalmanager.domain.model.checkRegistrationFieldsFilled
+import com.alenniboris.personalmanager.domain.model.common.CommonExceptionModelDomain
+import com.alenniboris.personalmanager.domain.model.common.CustomResultModelDomain
+import com.alenniboris.personalmanager.domain.model.common.IAppDispatchers
+import com.alenniboris.personalmanager.domain.model.user.UserModelDomain
+import com.alenniboris.personalmanager.domain.model.user.checkEmailType
+import com.alenniboris.personalmanager.domain.model.user.checkRegistrationFieldsFilled
 import com.alenniboris.personalmanager.domain.repository.IUserRepository
-import com.alenniboris.personalmanager.domain.usecase.logic.IRegisterUserUseCase
+import com.alenniboris.personalmanager.domain.usecase.logic.user.IRegisterUserUseCase
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
