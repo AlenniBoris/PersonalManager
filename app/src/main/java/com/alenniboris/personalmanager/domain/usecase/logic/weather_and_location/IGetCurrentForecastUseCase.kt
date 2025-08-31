@@ -8,5 +8,5 @@ interface IGetCurrentForecastUseCase {
     suspend fun invoke(
         lat: Double,
         lon: Double
-    ): CustomResultModelDomain<CurrentWeatherForecastModelDomain?, CommonExceptionModelDomain>
+    ): CustomResultModelDomain<CurrentWeatherForecastModelDomain, CommonExceptionModelDomain>
 }

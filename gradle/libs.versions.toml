@@ -2,28 +2,30 @@
 agp = "8.11.1"
 cacheExtension = "1.0.0"
 converterGson = "3.0.0"
+datastorePreferences = "1.1.7"
 gson = "2.13.1"
 leakcanaryAndroid = "2.14"
 loggingInterceptor = "5.1.0"
 raamcostaCore = "1.11.9"
-hiltAndroid = "2.57"
+hiltAndroid = "2.57.1"
 hiltNavigationCompose = "1.2.0"
 kotlin = "2.2.10"
 coreKtx = "1.17.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
-lifecycleRuntimeKtx = "2.9.2"
+lifecycleRuntimeKtx = "2.9.3"
 activityCompose = "1.10.1"
-composeBom = "2025.08.00"
+composeBom = "2025.08.01"
 googleGmsGoogleServices = "4.4.3"
 firebaseDatabase = "22.0.0"
 ksp = "2.2.10-2.0.2"
-lifecycleRuntimeCompose = "2.9.2"
-lifecycleRuntimeComposeAndroid = "2.9.2"
+lifecycleRuntimeComposeAndroid = "2.9.3"
 retrofit = "3.0.0"
+playServicesLocation = "21.3.0"
 
 [libraries]
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
@@ -52,6 +54,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -1,0 +1,318 @@
+package com.alenniboris.personalmanager.presentation.screens.weather.views
+
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import com.alenniboris.fastbanking.presentation.uikit.theme.bodyStyle
+import com.alenniboris.personalmanager.R
+import com.alenniboris.personalmanager.domain.model.weather.DayWeatherForecastModelDomain
+import com.alenniboris.personalmanager.domain.model.weather.WindDirection
+import com.alenniboris.personalmanager.presentation.model.DayWeatherForecastModelUi
+import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
+import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.appSubtleTextColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.filterSheetTextStartPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.forecastSheetIconVerticalPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.forecastSheetTextDoubleVerticalPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.forecastSheetTextVerticalPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockBorderWidth
+import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockOuterPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockShape
+import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenColumnInnerPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenCurrentForecastBlockInnerPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenCurrentForecastBlockLeftPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenCurrentForecastBlockRightPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenHumidityColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenIconSizeBig
+import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenTextSize
+import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenTextSizeBig
+import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenUvIndexColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenWaterColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenWindDirectionColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenWindGrayColor
+import java.util.Calendar
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun DayForecastSheetUi(
+    modifier: Modifier,
+    dayForecast: DayWeatherForecastModelUi
+) {
+
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        Row(
+            modifier = Modifier.align(Alignment.Start),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = painterResource(dayForecast.weatherPictureId),
+                tint = appSubtleTextColor,
+                contentDescription = stringResource(R.string.picture_description)
+            )
+
+            Text(
+                modifier = Modifier.padding(filterSheetTextStartPadding),
+                text = stringResource(R.string.forecast_text),
+                style = bodyStyle.copy(
+                    color = appMainTextColor,
+                    fontSize = weatherScreenTextSize
+                )
+            )
+        }
+
+        Text(
+            modifier = Modifier
+                .padding(forecastSheetTextVerticalPadding)
+                .align(Alignment.Start),
+            text = stringResource(R.string.detailed_weather_info_text)
+                    + stringResource(dayForecast.dayName)
+                    + ", "
+                    + dayForecast.timeText,
+            style = bodyStyle.copy(
+                color = appSubtleTextColor,
+                fontSize = weatherScreenTextSize
+            )
+        )
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Icon(
+                modifier = Modifier
+                    .padding(forecastSheetIconVerticalPadding)
+                    .size(weatherScreenIconSizeBig),
+                painter = painterResource(dayForecast.weatherPictureId),
+                tint = appSubtleTextColor,
+                contentDescription = stringResource(R.string.picture_description)
+            )
+
+            Text(
+                modifier = Modifier.padding(forecastSheetTextDoubleVerticalPadding),
+                text = makeTemperatureText(
+                    max = dayForecast.temperatureMaxText,
+                    min = dayForecast.temperatureMinText
+                ),
+                style = bodyStyle.copy(
+                    color = appMainTextColor,
+                    fontSize = weatherScreenTextSizeBig
+                )
+            )
+
+            Text(
+                modifier = Modifier.padding(forecastSheetTextVerticalPadding),
+                text = stringResource(R.string.felt_tempetature_text) + makeTemperatureText(
+                    max = dayForecast.feltTemperatureMaxText,
+                    min = dayForecast.feltTemperatureMinText
+                ),
+                style = bodyStyle.copy(
+                    color = appSubtleTextColor,
+                    fontSize = weatherScreenTextSize
+                )
+            )
+        }
+
+        Row(
+            modifier = Modifier
+                .padding(forecastSheetIconVerticalPadding)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+
+            ForecastDetailsInfoBlock(
+                modifier = Modifier
+                    .padding(weatherScreenCurrentForecastBlockLeftPadding)
+                    .clip(weatherScreenBlockShape)
+                    .border(
+                        width = weatherScreenBlockBorderWidth,
+                        color = appSubtleTextColor,
+                        shape = weatherScreenBlockShape
+                    )
+                    .weight(1f)
+                    .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                sectionIcon = painterResource(R.drawable.water_drop_icon),
+                iconTint = weatherScreenWaterColor,
+                sectionHeader = stringResource(R.string.precipitation_section_text),
+                sectionValue = dayForecast.precipitationProbabilityText
+                    ?: stringResource(R.string.zero_procent_text)
+            )
+
+            ForecastDetailsInfoBlock(
+                modifier = Modifier
+                    .padding(weatherScreenCurrentForecastBlockRightPadding)
+                    .clip(weatherScreenBlockShape)
+                    .border(
+                        width = weatherScreenBlockBorderWidth,
+                        color = appSubtleTextColor,
+                        shape = weatherScreenBlockShape
+                    )
+                    .weight(1f)
+                    .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                sectionIcon = painterResource(R.drawable.water_drop_icon),
+                iconTint = weatherScreenHumidityColor,
+                sectionHeader = stringResource(R.string.humidity_section_text),
+                sectionValue = dayForecast.humidityText
+                    ?: stringResource(R.string.no_text_placeholder)
+            )
+        }
+
+        Row(
+            modifier = Modifier
+                .padding(weatherScreenBlockOuterPadding)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+
+            ForecastDetailsInfoBlock(
+                modifier = Modifier
+                    .padding(weatherScreenCurrentForecastBlockLeftPadding)
+                    .clip(weatherScreenBlockShape)
+                    .border(
+                        width = weatherScreenBlockBorderWidth,
+                        color = appSubtleTextColor,
+                        shape = weatherScreenBlockShape
+                    )
+                    .weight(1f)
+                    .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                sectionIcon = painterResource(R.drawable.wind_speed_icon),
+                iconTint = weatherScreenWindGrayColor,
+                sectionHeader = stringResource(R.string.wind_speed_section_text),
+                sectionValue = dayForecast.windSpeedText
+                    ?: stringResource(R.string.no_text_placeholder)
+            )
+
+            ForecastDetailsInfoBlock(
+                modifier = Modifier
+                    .padding(weatherScreenCurrentForecastBlockRightPadding)
+                    .clip(weatherScreenBlockShape)
+                    .border(
+                        width = weatherScreenBlockBorderWidth,
+                        color = appSubtleTextColor,
+                        shape = weatherScreenBlockShape
+                    )
+                    .weight(1f)
+                    .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                sectionIcon = painterResource(R.drawable.wind_direction_icon),
+                iconTint = weatherScreenWindDirectionColor,
+                sectionHeader = stringResource(R.string.wind_direction_section_text),
+                sectionValue = stringResource(
+                    dayForecast.windDirectionTextId ?: R.string.no_text_placeholder
+                )
+            )
+        }
+
+        ForecastDetailsInfoBlock(
+            modifier = Modifier
+                .padding(weatherScreenBlockOuterPadding)
+                .clip(weatherScreenBlockShape)
+                .border(
+                    width = weatherScreenBlockBorderWidth,
+                    color = appSubtleTextColor,
+                    shape = weatherScreenBlockShape
+                )
+                .padding(weatherScreenCurrentForecastBlockInnerPadding),
+            sectionIcon = painterResource(R.drawable.sunny_weather_icon),
+            iconTint = weatherScreenUvIndexColor,
+            sectionHeader = stringResource(R.string.uv_index_section_text),
+            sectionValue = dayForecast.uvIndexText
+        )
+    }
+}
+
+private fun makeTemperatureText(max: String?, min: String?): String = "${max ?: "-"}/${min ?: "-"}"
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+@Preview
+private fun LightTheme() {
+    PersonalManagerTheme(
+        darkTheme = false
+    ) {
+        Surface {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(appColor)
+            ) {
+                DayForecastSheetUi(
+                    modifier = Modifier.padding(weatherScreenColumnInnerPadding),
+                    dayForecast = DayWeatherForecastModelUi(
+                        domainModel = DayWeatherForecastModelDomain(
+                            dayDate = Calendar.getInstance().time,
+                            temperatureMin = -12.0,
+                            temperatureMax = 12.0,
+                            feltTemperatureMin = -10.0,
+                            feltTemperatureMax = 15.2,
+                            relativeHumidity = 10.2,
+                            uvIndex = 3.0,
+                            precipitationProbability = 12.0,
+                            precipitation = 1.0,
+                            windDirection = WindDirection.SouthEast,
+                            windSpeed = 123.9
+                        )
+                    )
+                )
+            }
+        }
+    }
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+@Preview
+private fun DarkTheme() {
+    PersonalManagerTheme(
+        darkTheme = true
+    ) {
+        Surface {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(appColor)
+            ) {
+                DayForecastSheetUi(
+                    modifier = Modifier.padding(weatherScreenColumnInnerPadding),
+                    dayForecast = DayWeatherForecastModelUi(
+                        domainModel = DayWeatherForecastModelDomain(
+                            dayDate = Calendar.getInstance().time,
+                            temperatureMin = -12.0,
+                            temperatureMax = 12.0,
+                            feltTemperatureMin = -10.0,
+                            feltTemperatureMax = 15.2,
+                            relativeHumidity = 10.2,
+                            uvIndex = 3.0,
+                            precipitationProbability = 12.0,
+                            precipitation = 1.0,
+                            windDirection = WindDirection.SouthEast,
+                            windSpeed = 123.9
+                        )
+                    )
+                )
+            }
+        }
+    }
+}

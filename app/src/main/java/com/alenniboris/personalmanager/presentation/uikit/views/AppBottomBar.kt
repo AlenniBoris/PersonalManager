@@ -65,7 +65,7 @@ fun AppBottomBar(
                     .clip(bottomBarButtonShape)
                     .background(backgroundColor)
                     .padding(bottomBarButtonInnerPadding)
-                    .clickable { item::onClick },
+                    .clickable { item.onClick() },
                 item = item,
                 currentRoute = currentRoute
             )

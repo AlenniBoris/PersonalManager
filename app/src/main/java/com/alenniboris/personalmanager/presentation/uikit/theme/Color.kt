@@ -76,3 +76,16 @@ val logRegScreenBackgroundColor
         false -> LogRegScreenBackgroundColorLight
         true ->LogRegScreenBackgroundColorDark
     }
+
+val weatherScreenCardColor = Color(0xFF013AE5)
+val weatherScreenWaterColor = Color(0xFF0168E5)
+val weatherScreenHumidityColor = Color(0xFF1AAD02)
+val weatherScreenWindDirectionColor = Color(0xFF8303B2)
+val weatherScreenWindColor = Color(0xFF73E501)
+val weatherScreenWindGrayColor = Color(0xFF6B6B6B)
+val weatherScreenVisibilityColor = Color(0xFF6945AF)
+val weatherScreenUvIndexColor = Color(0xFFE0AB44)
+val weatherScreenSunriseColor = Color(0xFFEC8F09)
+val weatherScreenSunsetColor = Color(0xFFEC5809)
+val weatherScreenCardTextColor = Color(0xFFFFFFFF)
+
