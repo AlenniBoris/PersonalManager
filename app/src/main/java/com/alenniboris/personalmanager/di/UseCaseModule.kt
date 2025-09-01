@@ -1,5 +1,9 @@
 package com.alenniboris.personalmanager.di
 
+import com.alenniboris.personalmanager.domain.usecase.impl.tasks.AddTaskUseCaseImpl
+import com.alenniboris.personalmanager.domain.usecase.impl.tasks.GetAllTasksUseCaseImpl
+import com.alenniboris.personalmanager.domain.usecase.impl.tasks.RemoveTaskUseCaseImpl
+import com.alenniboris.personalmanager.domain.usecase.impl.tasks.UpdateTaskUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.user.GetCurrentUserUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.user.LoginUserByEmailAndPasswordUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.user.RegisterUserUseCaseImpl
@@ -7,6 +11,10 @@ import com.alenniboris.personalmanager.domain.usecase.impl.user.SignOutUserUseCa
 import com.alenniboris.personalmanager.domain.usecase.impl.weather_and_location.GetCurrentForecastUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.weather_and_location.GetTodayWeatherForecastUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.weather_and_location.GetWeekWeatherForecastUseCaseImpl
+import com.alenniboris.personalmanager.domain.usecase.logic.tasks.IAddTaskUseCase
+import com.alenniboris.personalmanager.domain.usecase.logic.tasks.IGetAllTasksUseCase
+import com.alenniboris.personalmanager.domain.usecase.logic.tasks.IRemoveTaskUseCase
+import com.alenniboris.personalmanager.domain.usecase.logic.tasks.IUpdateTaskUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.user.IGetCurrentUserUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.user.ILoginUserByEmailAndPasswordUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.user.IRegisterUserUseCase
@@ -59,4 +67,24 @@ abstract class UseCaseModule {
     abstract fun bindGetWeekWeatherForecastUseCase(
         getWeekWeatherForecastUseCaseImpl: GetWeekWeatherForecastUseCaseImpl
     ): IGetWeekWeatherForecastUseCase
+
+    @Binds
+    abstract fun bindGetAllTasksUseCase(
+        getAllTasksUseCaseImpl: GetAllTasksUseCaseImpl
+    ): IGetAllTasksUseCase
+
+    @Binds
+    abstract fun bindAllTaskUseCase(
+        addTaskUseCaseImpl: AddTaskUseCaseImpl
+    ): IAddTaskUseCase
+
+    @Binds
+    abstract fun bindRemoveTaskUseCase(
+        removeTaskUseCaseImpl: RemoveTaskUseCaseImpl
+    ): IRemoveTaskUseCase
+
+    @Binds
+    abstract fun bindUpdateTaskUseCase(
+        updateTaskUseCaseImpl: UpdateTaskUseCaseImpl
+    ): IUpdateTaskUseCase
 }

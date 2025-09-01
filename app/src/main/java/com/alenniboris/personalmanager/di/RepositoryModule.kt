@@ -1,9 +1,11 @@
 package com.alenniboris.personalmanager.di
 
 import com.alenniboris.personalmanager.data.repository.LocationRepositoryImpl
+import com.alenniboris.personalmanager.data.repository.TasksRepositoryImpl
 import com.alenniboris.personalmanager.data.repository.UserRepositoryImpl
 import com.alenniboris.personalmanager.data.repository.WeatherRepositoryImpl
 import com.alenniboris.personalmanager.domain.repository.ILocationRepository
+import com.alenniboris.personalmanager.domain.repository.ITasksRepository
 import com.alenniboris.personalmanager.domain.repository.IUserRepository
 import com.alenniboris.personalmanager.domain.repository.IWeatherRepository
 import dagger.Binds
@@ -27,4 +29,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindLocationRepository(locationRepositoryImpl: LocationRepositoryImpl): ILocationRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindTasksRepository(tasksRepositoryImpl: TasksRepositoryImpl): ITasksRepository
 }
