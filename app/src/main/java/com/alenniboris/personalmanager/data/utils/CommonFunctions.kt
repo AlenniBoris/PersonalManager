@@ -1,6 +1,7 @@
 package com.alenniboris.personalmanager.data.utils
 
 import com.alenniboris.personalmanager.domain.model.common.CustomResultModelDomain
+import com.alenniboris.personalmanager.domain.utils.GsonUtil.toJson
 import com.alenniboris.personalmanager.domain.utils.LogPrinter
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.CoroutineDispatcher
@@ -31,6 +32,27 @@ object CommonFunctions {
 
             newTableRef.setValue(editedRecord)
 
+            return@withContext CustomResultModelDomain.Success(Unit)
+        }.getOrElse { exception ->
+            LogPrinter.printLog("!!!", exception.stackTraceToString())
+            return@withContext CustomResultModelDomain.Error(
+                exceptionMapping(exception)
+            )
+        }
+    }
+
+    suspend inline fun <ExceptionModel> removeRecordFromTheTable(
+        dispatcher: CoroutineDispatcher,
+        database: FirebaseDatabase,
+        table: String,
+        recordId: String,
+        crossinline exceptionMapping: (Throwable) -> ExceptionModel
+    ): CustomResultModelDomain<Unit, ExceptionModel> = withContext(dispatcher) {
+        runCatching {
+
+            val tableRef = database.getReference(table)
+            val recordRef = tableRef.child(recordId)
+            recordRef.removeValue()
             return@withContext CustomResultModelDomain.Success(Unit)
         }.getOrElse { exception ->
             LogPrinter.printLog("!!!", exception.stackTraceToString())
@@ -85,6 +107,38 @@ object CommonFunctions {
 
             return@withContext CustomResultModelDomain.Success(
                 resultMapping(result)
+            )
+        }.getOrElse { exception ->
+            LogPrinter.printLog("!!!", exception.stackTraceToString())
+            return@withContext CustomResultModelDomain.Error(
+                exceptionMapping(exception)
+            )
+        }
+    }
+
+    suspend fun <DataModel, DomainModel, ExceptionModel> requestListOfElements(
+        dispatcher: CoroutineDispatcher,
+        database: FirebaseDatabase,
+        table: String,
+        jsonMapping: (String) -> DataModel,
+        modelsMapping: (DataModel) -> DomainModel?,
+        filterPredicate: (DomainModel) -> Boolean,
+        exceptionMapping: (Throwable) -> ExceptionModel
+    ): CustomResultModelDomain<List<DomainModel>, ExceptionModel> = withContext(dispatcher) {
+        runCatching {
+            val snapshot = database.reference
+                .child(table)
+                .get()
+                .await()
+
+            val elements = snapshot.children
+                .toList()
+                .map { jsonMapping(it.value.toJson()) }
+                .mapNotNull { modelsMapping(it) }
+                .filter { filterPredicate(it) }
+
+            return@withContext CustomResultModelDomain.Success(
+                elements
             )
         }.getOrElse { exception ->
             LogPrinter.printLog("!!!", exception.stackTraceToString())

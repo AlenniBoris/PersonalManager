@@ -9,6 +9,7 @@ data class TaskModelDomain(
     val description: String,
     val dueDate: Date,
     val dueTime: Date,
+    val createdDate: Date,
     val priority: TaskPriority,
-    val taskStatus: TaskStatus
+    val status: TaskStatus
 )
