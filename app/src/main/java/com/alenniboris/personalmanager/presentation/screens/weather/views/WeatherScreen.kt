@@ -6,11 +6,9 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -49,12 +47,11 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appSubtleTextColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.buttonRowBackgroundColor
-import com.alenniboris.personalmanager.presentation.uikit.theme.currentThemeMode
 import com.alenniboris.personalmanager.presentation.uikit.theme.topBarInnerPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockBorderWidth
+import com.alenniboris.personalmanager.presentation.uikit.theme.appDetailsInfoBlockBorderWidth
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockOuterPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockShape
+import com.alenniboris.personalmanager.presentation.uikit.theme.appRoundedShape
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenCardColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenColumnInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenWeatherCardInnerPadding
@@ -131,7 +128,7 @@ private fun WeatherScreenUi(
             CurrentWeatherCard(
                 modifier = Modifier
                     .padding(weatherScreenBlockOuterPadding)
-                    .clip(weatherScreenBlockShape)
+                    .clip(appRoundedShape)
                     .fillMaxWidth()
                     .background(weatherScreenCardColor)
                     .padding(weatherScreenWeatherCardInnerPadding),
@@ -148,7 +145,7 @@ private fun WeatherScreenUi(
             AppButtonRow(
                 modifier = Modifier
                     .padding(weatherScreenBlockOuterPadding)
-                    .clip(weatherScreenBlockShape)
+                    .clip(appRoundedShape)
                     .fillMaxWidth()
                     .background(buttonRowBackgroundColor)
                     .padding(appButtonRowInnerPadding),
@@ -188,12 +185,12 @@ private fun WeatherScreenUi(
                     WeekForecastUi(
                         modifier = Modifier
                             .padding(weatherScreenBlockOuterPadding)
-                            .clip(weatherScreenBlockShape)
+                            .clip(appRoundedShape)
                             .fillMaxWidth()
                             .border(
-                                width = weatherScreenBlockBorderWidth,
+                                width = appDetailsInfoBlockBorderWidth,
                                 color = appSubtleTextColor,
-                                shape = weatherScreenBlockShape
+                                shape = appRoundedShape
                             )
                             .padding(weatherScreenBlockInnerPadding),
                         isLoading = state.isWeekForecastLoading,

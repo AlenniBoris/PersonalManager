@@ -28,10 +28,10 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerT
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appIconPlaceholderShape
 import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSize
 import com.alenniboris.personalmanager.presentation.uikit.theme.topBarButtonInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.topBarInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.topBarSubtleTextPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.topBarTextSize
 import com.alenniboris.personalmanager.presentation.uikit.theme.topBarThirdButtonPadding
 
 @Composable
@@ -75,7 +75,7 @@ fun AppTopBar(
                 style = bodyStyle.copy(
                     color = textColor,
                     fontWeight = FontWeight.Bold,
-                    fontSize = topBarTextSize
+                    fontSize = appTextSize
                 )
             )
 
@@ -85,7 +85,7 @@ fun AppTopBar(
                     text = subtleText,
                     style = bodyStyle.copy(
                         color = textColor,
-                        fontSize = topBarTextSize
+                        fontSize = appTextSize
                     )
                 )
             }

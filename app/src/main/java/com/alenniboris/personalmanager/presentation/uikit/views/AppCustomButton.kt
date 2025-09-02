@@ -21,8 +21,8 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerT
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appCustomButtonInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.appCustomButtonShape
-import com.alenniboris.personalmanager.presentation.uikit.theme.appCustomButtonTextSize
 import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSize
 import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenBackgroundColor
 
 @Composable
@@ -60,7 +60,7 @@ fun AppCustomButton(
         Text(
             text = text,
             style = bodyStyle.copy(
-                fontSize = appCustomButtonTextSize,
+                fontSize = appTextSize,
                 color = appColor
             )
         )

@@ -32,12 +32,12 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerT
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appSubtleTextColor
-import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockBorderWidth
+import com.alenniboris.personalmanager.presentation.uikit.theme.appDetailsInfoBlockBorderWidth
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockOuterPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockShape
+import com.alenniboris.personalmanager.presentation.uikit.theme.appRoundedShape
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenColumnInnerPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenTextSize
+import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSize
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenWeekForecastItemOuterPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenWeekForecastItemTextPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.zeroPadding
@@ -105,7 +105,7 @@ private fun DayForecastUi(
                 text = dayForecast.timeText ?: stringResource(R.string.no_text_placeholder),
                 style = bodyStyle.copy(
                     color = appSubtleTextColor,
-                    fontSize = weatherScreenTextSize
+                    fontSize = appTextSize
                 )
             )
 
@@ -114,7 +114,7 @@ private fun DayForecastUi(
                 text = stringResource(dayForecast.dayName),
                 style = bodyStyle.copy(
                     color = appMainTextColor,
-                    fontSize = weatherScreenTextSize
+                    fontSize = appTextSize
                 )
             )
         }
@@ -125,7 +125,7 @@ private fun DayForecastUi(
                     ?: stringResource(R.string.no_text_placeholder),
                 style = bodyStyle.copy(
                     color = appMainTextColor,
-                    fontSize = weatherScreenTextSize
+                    fontSize = appTextSize
                 )
             )
             Text(
@@ -134,7 +134,7 @@ private fun DayForecastUi(
                     ?: stringResource(R.string.no_text_placeholder),
                 style = bodyStyle.copy(
                     color = appSubtleTextColor,
-                    fontSize = weatherScreenTextSize
+                    fontSize = appTextSize
                 )
             )
         }
@@ -159,12 +159,12 @@ private fun LightTheme() {
                 WeekForecastUi(
                     modifier = Modifier
                         .padding(weatherScreenBlockOuterPadding)
-                        .clip(weatherScreenBlockShape)
+                        .clip(appRoundedShape)
                         .fillMaxWidth()
                         .border(
-                            width = weatherScreenBlockBorderWidth,
+                            width = appDetailsInfoBlockBorderWidth,
                             color = appSubtleTextColor,
-                            shape = weatherScreenBlockShape
+                            shape = appRoundedShape
                         )
                         .padding(weatherScreenBlockInnerPadding),
                     isLoading = false,
@@ -240,12 +240,12 @@ private fun DarkTheme() {
                 WeekForecastUi(
                     modifier = Modifier
                         .padding(weatherScreenBlockOuterPadding)
-                        .clip(weatherScreenBlockShape)
+                        .clip(appRoundedShape)
                         .fillMaxWidth()
                         .border(
-                            width = weatherScreenBlockBorderWidth,
+                            width = appDetailsInfoBlockBorderWidth,
                             color = appSubtleTextColor,
-                            shape = weatherScreenBlockShape
+                            shape = appRoundedShape
                         )
                         .padding(weatherScreenBlockInnerPadding),
                     isLoading = false,

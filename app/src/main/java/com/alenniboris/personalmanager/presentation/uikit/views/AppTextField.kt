@@ -35,9 +35,9 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerT
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appSubtleTextColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSize
 import com.alenniboris.personalmanager.presentation.uikit.theme.enterTextFieldColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.enterValueTextFieldInnerBoxPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.enterValueTextFieldTextSize
 import com.alenniboris.personalmanager.presentation.uikit.theme.passwordHidePicture
 import com.alenniboris.personalmanager.presentation.uikit.theme.passwordShowPicture
 
@@ -120,7 +120,7 @@ private fun EnterValueTextField(
                         Text(
                             text = placeholder,
                             color = appSubtleTextColor,
-                            style = bodyStyle.copy(fontSize = enterValueTextFieldTextSize)
+                            style = bodyStyle.copy(fontSize = appTextSize)
                         )
                     }
                     innerTextField()
@@ -129,7 +129,7 @@ private fun EnterValueTextField(
         },
         textStyle = bodyStyle.copy(
             color = appMainTextColor,
-            fontSize = enterValueTextFieldTextSize
+            fontSize = appTextSize
         ),
         cursorBrush = SolidColor(appMainTextColor),
         visualTransformation = if (isPasswordField && !isPasswordVisible) PasswordVisualTransformation()

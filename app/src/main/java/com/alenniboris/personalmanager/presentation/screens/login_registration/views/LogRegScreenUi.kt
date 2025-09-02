@@ -28,21 +28,21 @@ import com.alenniboris.personalmanager.presentation.screens.login_registration.t
 import com.alenniboris.personalmanager.presentation.uikit.model.ClickableElement
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
 import com.alenniboris.personalmanager.presentation.uikit.theme.appButtonRowInnerPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.appButtonRowShape
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appIcon
 import com.alenniboris.personalmanager.presentation.uikit.theme.appIconPlaceholderShape
 import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.appRoundedShape
+import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSize
+import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeMedium
 import com.alenniboris.personalmanager.presentation.uikit.theme.buttonRowBackgroundColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenBackgroundColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenColumnPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenFinalButtonPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenHeaderTextBottomPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenHeaderTextSize
 import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenIconInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenInnerSectionPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenMainShape
-import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenMainTextSize
 import com.alenniboris.personalmanager.presentation.uikit.views.AppButtonRow
 import com.alenniboris.personalmanager.presentation.uikit.views.AppCustomButton
 import com.alenniboris.personalmanager.presentation.uikit.views.AppIconPlaceholder
@@ -103,7 +103,7 @@ private fun MainSection(
 
         AppButtonRow(
             modifier = Modifier
-                .clip(appButtonRowShape)
+                .clip(appRoundedShape)
                 .fillMaxWidth()
                 .background(buttonRowBackgroundColor)
                 .padding(appButtonRowInnerPadding),
@@ -166,7 +166,7 @@ private fun HeaderTextSection(
             text = mainText,
             style = bodyStyle.copy(
                 color = appMainTextColor,
-                fontSize = logRegScreenHeaderTextSize,
+                fontSize = appTextSizeMedium,
                 fontWeight = FontWeight.Bold
             )
         )
@@ -176,7 +176,7 @@ private fun HeaderTextSection(
             text = subtleTextString,
             style = bodyStyle.copy(
                 color = appMainTextColor,
-                fontSize = logRegScreenMainTextSize
+                fontSize = appTextSize
             )
         )
     }

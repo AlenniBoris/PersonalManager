@@ -25,10 +25,10 @@ import androidx.compose.ui.unit.dp
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.appRoundedShape
 import com.alenniboris.personalmanager.presentation.uikit.theme.appSubtleTextColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.bottomBarActiveButtonColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.bottomBarButtonInnerPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.bottomBarButtonShape
 import com.alenniboris.personalmanager.presentation.uikit.theme.bottomBarButtonTextPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.bottomBarInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.values.BottomBarModelUi
@@ -62,7 +62,7 @@ fun AppBottomBar(
 
             BottomBarItem(
                 modifier = Modifier
-                    .clip(bottomBarButtonShape)
+                    .clip(appRoundedShape)
                     .background(backgroundColor)
                     .padding(bottomBarButtonInnerPadding)
                     .clickable { item.onClick() },

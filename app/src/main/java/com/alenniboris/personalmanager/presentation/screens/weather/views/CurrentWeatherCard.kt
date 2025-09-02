@@ -24,16 +24,16 @@ import com.alenniboris.fastbanking.presentation.uikit.theme.bodyStyle
 import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
-import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockShape
+import com.alenniboris.personalmanager.presentation.uikit.theme.appRoundedShape
+import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSize
+import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeBig
+import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockOuterPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenCardColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenCardTextColor
-import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenTextSize
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenIconSizeBig
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenWeatherCardInnerPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockOuterPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenWeatherCardTextPaddingValues
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenWeatherCardTextRowPaddingValues
-import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenTextSizeBig
 import com.alenniboris.personalmanager.presentation.uikit.views.AppProgressAnimation
 
 
@@ -62,7 +62,7 @@ fun CurrentWeatherCard(
                 text = locationText,
                 style = bodyStyle.copy(
                     color = weatherScreenCardTextColor,
-                    fontSize = weatherScreenTextSize
+                    fontSize = appTextSize
                 )
             )
 
@@ -75,7 +75,7 @@ fun CurrentWeatherCard(
                     modifier = Modifier.size(weatherScreenIconSizeBig),
                     painter = weatherPicture,
                     tint = weatherScreenCardTextColor,
-                    contentDescription = stringResource(R.string.picture_decription)
+                    contentDescription = stringResource(R.string.picture_description)
                 )
 
                 Text(
@@ -83,7 +83,7 @@ fun CurrentWeatherCard(
                     text = temperatureText,
                     style = bodyStyle.copy(
                         color = weatherScreenCardTextColor,
-                        fontSize = weatherScreenTextSizeBig
+                        fontSize = appTextSizeBig
                     )
                 )
             }
@@ -107,7 +107,7 @@ private fun LightTheme() {
                 CurrentWeatherCard(
                     modifier = Modifier
                         .padding(weatherScreenBlockOuterPadding)
-                        .clip(weatherScreenBlockShape)
+                        .clip(appRoundedShape)
                         .fillMaxWidth()
                         .background(weatherScreenCardColor)
                         .padding(weatherScreenWeatherCardInnerPadding),
@@ -120,7 +120,7 @@ private fun LightTheme() {
                 CurrentWeatherCard(
                     modifier = Modifier
                         .padding(weatherScreenBlockOuterPadding)
-                        .clip(weatherScreenBlockShape)
+                        .clip(appRoundedShape)
                         .fillMaxWidth()
                         .background(weatherScreenCardColor)
                         .padding(weatherScreenWeatherCardInnerPadding),
@@ -150,7 +150,7 @@ private fun DarkTheme() {
                 CurrentWeatherCard(
                     modifier = Modifier
                         .padding(weatherScreenBlockOuterPadding)
-                        .clip(weatherScreenBlockShape)
+                        .clip(appRoundedShape)
                         .fillMaxWidth()
                         .background(weatherScreenCardColor)
                         .padding(weatherScreenWeatherCardInnerPadding),
@@ -163,7 +163,7 @@ private fun DarkTheme() {
                 CurrentWeatherCard(
                     modifier = Modifier
                         .padding(weatherScreenBlockOuterPadding)
-                        .clip(weatherScreenBlockShape)
+                        .clip(appRoundedShape)
                         .fillMaxWidth()
                         .background(weatherScreenCardColor)
                         .padding(weatherScreenWeatherCardInnerPadding),

@@ -207,7 +207,9 @@ private fun AppUi(
 
                                     BottomBarValues.Tasks -> {
                                         if (currentRoute != TasksScreenRoute) {
-                                            LogPrinter.printLog("!!!", TasksScreenRoute)
+                                            navController.navigate(
+                                                TasksScreenRoute
+                                            )
                                         }
                                     }
 

@@ -74,7 +74,7 @@ private val LogRegScreenBackgroundColorDark = Color(0xFF252525)
 val logRegScreenBackgroundColor
     get() = when (currentThemeMode.value.isThemeDark) {
         false -> LogRegScreenBackgroundColorLight
-        true ->LogRegScreenBackgroundColorDark
+        true -> LogRegScreenBackgroundColorDark
     }
 
 val weatherScreenCardColor = Color(0xFF013AE5)
@@ -88,4 +88,18 @@ val weatherScreenUvIndexColor = Color(0xFFE0AB44)
 val weatherScreenSunriseColor = Color(0xFFEC8F09)
 val weatherScreenSunsetColor = Color(0xFFEC5809)
 val weatherScreenCardTextColor = Color(0xFFFFFFFF)
-
+val tasksScreenCompletedTaskBackgroundColor = Color(0xFFE8EFE8)
+val tasksScreenCompletedTaskColor = Color(0xFF069806)
+val tasksScreenUpcomingTaskColor = Color(0xFF985106)
+val tasksScreenSkippedTaskColor = Color(0xFF98060B)
+val tasksScreenCompletedTaskIconColor = Color(0xFF50B649)
+val tasksScreenCompletedTaskBorderColor = Color(0xFF50B649)
+val tasksScreenSkippedTaskBackgroundColor = Color(0xFFEFE8E8)
+val tasksScreenSkippedTaskBorderColor = Color(0xFFB64949)
+val tasksScreenSkippedTaskIconColor = Color(0xFFB64949)
+val tasksScreenPendingTaskIconColor = Color(0xFFFF9800)
+val tasksScreenPendingTaskBackgroundColor = Color(0xFFD0D0D0)
+val taskLowPriorityColor = Color(0xFF82BB7D)
+val taskMediumPriorityColor = Color(0xFFBBB87D)
+val taskHighPriorityColor = Color(0xFFBB827D)
+val taskScreenTaskDetailsTextColor = Color(0xFF000000)

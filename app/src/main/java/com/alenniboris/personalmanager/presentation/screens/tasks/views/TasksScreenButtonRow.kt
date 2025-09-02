@@ -1,20 +1,23 @@
-package com.alenniboris.personalmanager.presentation.uikit.views
+package com.alenniboris.personalmanager.presentation.screens.tasks.views
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,17 +37,25 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.buttonRowActiveB
 import com.alenniboris.personalmanager.presentation.uikit.theme.buttonRowBackgroundColor
 
 @Composable
-fun AppButtonRow(
+fun TasksScreenButtonRow(
     modifier: Modifier = Modifier,
     currentElement: ClickableElement,
     listOfElements: List<ClickableElement>,
+    itemsLazyListState: LazyListState = rememberLazyListState(),
 ) {
 
-    Row(
+    LaunchedEffect(key1 = currentElement) {
+        val index = listOfElements.indexOfFirst { it.text == currentElement.text }
+        if (index >= 0) {
+            itemsLazyListState.animateScrollToItem(index)
+        }
+    }
+
+    LazyRow(
         modifier = modifier,
-        horizontalArrangement = Arrangement.SpaceEvenly
+        state = itemsLazyListState
     ) {
-        listOfElements.forEach { element ->
+        items(listOfElements) { element ->
 
             val backgroundColor by animateColorAsState(
                 if (element == currentElement)
@@ -59,7 +70,6 @@ fun AppButtonRow(
                     .clickable {
                         element.onClick()
                     }
-                    .weight(1f)
                     .background(color = backgroundColor)
                     .padding(appButtonRowButtonInnerPadding)
             ) {
@@ -90,7 +100,7 @@ private fun LightTheme() {
                     .background(appColor)
             ) {
 
-                AppButtonRow(
+                TasksScreenButtonRow(
                     modifier = Modifier
                         .padding(vertical = 20.dp)
                         .clip(appRoundedShape)
@@ -125,7 +135,7 @@ private fun LightTheme() {
                     )
                 )
 
-                AppButtonRow(
+                TasksScreenButtonRow(
                     modifier = Modifier
                         .padding(vertical = 20.dp)
                         .clip(appRoundedShape)
@@ -160,7 +170,7 @@ private fun LightTheme() {
                     )
                 )
 
-                AppButtonRow(
+                TasksScreenButtonRow(
                     modifier = Modifier
                         .padding(vertical = 20.dp)
                         .clip(appRoundedShape)
@@ -200,11 +210,12 @@ private fun DarkTheme() {
                     .background(appColor)
             ) {
 
-                AppButtonRow(
+                TasksScreenButtonRow(
                     modifier = Modifier
                         .padding(vertical = 20.dp)
                         .clip(appRoundedShape)
                         .fillMaxWidth()
+                        .horizontalScroll(rememberScrollState())
                         .background(buttonRowBackgroundColor)
                         .padding(appButtonRowInnerPadding),
                     currentElement = ClickableElement(
@@ -234,7 +245,7 @@ private fun DarkTheme() {
                     )
                 )
 
-                AppButtonRow(
+                TasksScreenButtonRow(
                     modifier = Modifier
                         .padding(vertical = 20.dp)
                         .clip(appRoundedShape)

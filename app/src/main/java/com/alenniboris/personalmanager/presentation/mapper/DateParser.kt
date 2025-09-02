@@ -6,6 +6,7 @@ import com.alenniboris.personalmanager.presentation.uikit.values.DayType
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.ZoneId
+import java.util.Calendar
 import java.util.Date
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -30,4 +31,15 @@ fun Date.toDayType(): DayType {
             DayOfWeek.SUNDAY -> DayType.SUNDAY
         }
     }
+}
+
+fun Date.stripTime(): Date {
+    val cal = Calendar.getInstance().apply {
+        time = this@stripTime
+        set(Calendar.HOUR_OF_DAY, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }
+    return cal.time
 }

@@ -28,27 +28,28 @@ import com.alenniboris.personalmanager.domain.model.weather.WindDirection
 import com.alenniboris.personalmanager.presentation.model.HourWeatherForecastModelUi
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.appDetailsInfoBlockBorderWidth
+import com.alenniboris.personalmanager.presentation.uikit.theme.appDetailsInfoBlockLeftPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.appDetailsInfoBlockRightPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.appRoundedShape
 import com.alenniboris.personalmanager.presentation.uikit.theme.appSubtleTextColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSize
+import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeBig
 import com.alenniboris.personalmanager.presentation.uikit.theme.filterSheetTextStartPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.forecastSheetIconVerticalPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.forecastSheetTextDoubleVerticalPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.forecastSheetTextVerticalPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockBorderWidth
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockOuterPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockShape
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenColumnInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenCurrentForecastBlockInnerPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenCurrentForecastBlockLeftPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenCurrentForecastBlockRightPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenHumidityColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenIconSizeBig
-import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenTextSize
-import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenTextSizeBig
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenUvIndexColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenWaterColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenWindDirectionColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenWindGrayColor
+import com.alenniboris.personalmanager.presentation.uikit.views.AppDetailsInfoBlock
 
 @Composable
 fun HourForecastSheetUi(
@@ -76,7 +77,7 @@ fun HourForecastSheetUi(
                 text = stringResource(R.string.forecast_text),
                 style = bodyStyle.copy(
                     color = appMainTextColor,
-                    fontSize = weatherScreenTextSize
+                    fontSize = appTextSize
                 )
             )
         }
@@ -88,7 +89,7 @@ fun HourForecastSheetUi(
             text = stringResource(R.string.detailed_weather_info_text) + hourForecast.timeText,
             style = bodyStyle.copy(
                 color = appSubtleTextColor,
-                fontSize = weatherScreenTextSize
+                fontSize = appTextSize
             )
         )
 
@@ -110,7 +111,7 @@ fun HourForecastSheetUi(
                 text = hourForecast.temperatureText ?: stringResource(R.string.no_text_placeholder),
                 style = bodyStyle.copy(
                     color = appMainTextColor,
-                    fontSize = weatherScreenTextSizeBig
+                    fontSize = appTextSizeBig
                 )
             )
 
@@ -119,7 +120,7 @@ fun HourForecastSheetUi(
                 text = stringResource(R.string.felt_tempetature_text) + hourForecast.feltTemperatureText,
                 style = bodyStyle.copy(
                     color = appSubtleTextColor,
-                    fontSize = weatherScreenTextSize
+                    fontSize = appTextSize
                 )
             )
         }
@@ -131,14 +132,14 @@ fun HourForecastSheetUi(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
 
-            ForecastDetailsInfoBlock(
+            AppDetailsInfoBlock(
                 modifier = Modifier
-                    .padding(weatherScreenCurrentForecastBlockLeftPadding)
-                    .clip(weatherScreenBlockShape)
+                    .padding(appDetailsInfoBlockRightPadding)
+                    .clip(appRoundedShape)
                     .border(
-                        width = weatherScreenBlockBorderWidth,
+                        width = appDetailsInfoBlockBorderWidth,
                         color = appSubtleTextColor,
-                        shape = weatherScreenBlockShape
+                        shape = appRoundedShape
                     )
                     .weight(1f)
                     .padding(weatherScreenCurrentForecastBlockInnerPadding),
@@ -149,14 +150,14 @@ fun HourForecastSheetUi(
                     ?: stringResource(R.string.zero_procent_text)
             )
 
-            ForecastDetailsInfoBlock(
+            AppDetailsInfoBlock(
                 modifier = Modifier
-                    .padding(weatherScreenCurrentForecastBlockRightPadding)
-                    .clip(weatherScreenBlockShape)
+                    .padding(appDetailsInfoBlockLeftPadding)
+                    .clip(appRoundedShape)
                     .border(
-                        width = weatherScreenBlockBorderWidth,
+                        width = appDetailsInfoBlockBorderWidth,
                         color = appSubtleTextColor,
-                        shape = weatherScreenBlockShape
+                        shape = appRoundedShape
                     )
                     .weight(1f)
                     .padding(weatherScreenCurrentForecastBlockInnerPadding),
@@ -175,14 +176,14 @@ fun HourForecastSheetUi(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
 
-            ForecastDetailsInfoBlock(
+            AppDetailsInfoBlock(
                 modifier = Modifier
-                    .padding(weatherScreenCurrentForecastBlockLeftPadding)
-                    .clip(weatherScreenBlockShape)
+                    .padding(appDetailsInfoBlockRightPadding)
+                    .clip(appRoundedShape)
                     .border(
-                        width = weatherScreenBlockBorderWidth,
+                        width = appDetailsInfoBlockBorderWidth,
                         color = appSubtleTextColor,
-                        shape = weatherScreenBlockShape
+                        shape = appRoundedShape
                     )
                     .weight(1f)
                     .padding(weatherScreenCurrentForecastBlockInnerPadding),
@@ -193,14 +194,14 @@ fun HourForecastSheetUi(
                     ?: stringResource(R.string.no_text_placeholder)
             )
 
-            ForecastDetailsInfoBlock(
+            AppDetailsInfoBlock(
                 modifier = Modifier
-                    .padding(weatherScreenCurrentForecastBlockRightPadding)
-                    .clip(weatherScreenBlockShape)
+                    .padding(appDetailsInfoBlockLeftPadding)
+                    .clip(appRoundedShape)
                     .border(
-                        width = weatherScreenBlockBorderWidth,
+                        width = appDetailsInfoBlockBorderWidth,
                         color = appSubtleTextColor,
-                        shape = weatherScreenBlockShape
+                        shape = appRoundedShape
                     )
                     .weight(1f)
                     .padding(weatherScreenCurrentForecastBlockInnerPadding),
@@ -213,14 +214,14 @@ fun HourForecastSheetUi(
             )
         }
 
-        ForecastDetailsInfoBlock(
+        AppDetailsInfoBlock(
             modifier = Modifier
                 .padding(weatherScreenBlockOuterPadding)
-                .clip(weatherScreenBlockShape)
+                .clip(appRoundedShape)
                 .border(
-                    width = weatherScreenBlockBorderWidth,
+                    width = appDetailsInfoBlockBorderWidth,
                     color = appSubtleTextColor,
-                    shape = weatherScreenBlockShape
+                    shape = appRoundedShape
                 )
                 .padding(weatherScreenCurrentForecastBlockInnerPadding),
             sectionIcon = painterResource(R.drawable.sunny_weather_icon),
