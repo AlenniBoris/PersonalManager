@@ -62,12 +62,10 @@ class LogRegScreenViewModel @Inject constructor(
     private fun proceedFinalButtonAction() {
         when (_state.value) {
             is LogRegScreenState.Login -> {
-                Log.e("!!!!", "login")
                 proceedUserLogin()
             }
 
             is LogRegScreenState.Registration -> {
-                Log.e("!!!!", "register")
                 proceedUserRegistration()
             }
         }

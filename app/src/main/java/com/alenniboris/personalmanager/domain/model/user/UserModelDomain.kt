@@ -6,8 +6,14 @@ data class UserModelDomain(
     val email: String,
     val age: Int,
     val phoneNumber: String,
-    val height: Int,
-    val address: String
+    val height: Double,
+    val address: String,
+    val weight: Double,
+    val caloriesIntake: Double,
+    val fitnessGoal: FitnessGoal,
+    val neededProteins: Double,
+    val neededFats: Double,
+    val neededCarbohydrates: Double
 )
 
 fun UserModelDomain.checkRegistrationFieldsFilled(): Boolean =

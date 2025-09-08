@@ -1,5 +1,7 @@
 package com.alenniboris.personalmanager.di
 
+import com.alenniboris.personalmanager.domain.usecase.impl.food.GetFoodIntakeByDateUseCaseImpl
+import com.alenniboris.personalmanager.domain.usecase.impl.heart.GetHeartRatesByDateUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.tasks.AddTaskUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.tasks.GetAllTasksUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.tasks.RemoveTaskUseCaseImpl
@@ -11,6 +13,9 @@ import com.alenniboris.personalmanager.domain.usecase.impl.user.SignOutUserUseCa
 import com.alenniboris.personalmanager.domain.usecase.impl.weather_and_location.GetCurrentForecastUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.weather_and_location.GetTodayWeatherForecastUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.weather_and_location.GetWeekWeatherForecastUseCaseImpl
+import com.alenniboris.personalmanager.domain.usecase.impl.weight.GetWeightsListByDateRangeUseCaseImpl
+import com.alenniboris.personalmanager.domain.usecase.logic.food.IGetFoodIntakeByDateUseCase
+import com.alenniboris.personalmanager.domain.usecase.logic.heart.IGetHeartRatesByDateUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.tasks.IAddTaskUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.tasks.IGetAllTasksUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.tasks.IRemoveTaskUseCase
@@ -22,6 +27,7 @@ import com.alenniboris.personalmanager.domain.usecase.logic.user.ISignOutUserUse
 import com.alenniboris.personalmanager.domain.usecase.logic.weather_and_location.IGetCurrentForecastUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.weather_and_location.IGetTodayWeatherForecastUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.weather_and_location.IGetWeekWeatherForecastUseCase
+import com.alenniboris.personalmanager.domain.usecase.logic.weight.IGetWeightsListByDateRangeUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -87,4 +93,19 @@ abstract class UseCaseModule {
     abstract fun bindUpdateTaskUseCase(
         updateTaskUseCaseImpl: UpdateTaskUseCaseImpl
     ): IUpdateTaskUseCase
+
+    @Binds
+    abstract fun bindGetWeightsListByDateRangeUseCase(
+        getWeightsListByDateRangeUseCaseImpl: GetWeightsListByDateRangeUseCaseImpl
+    ): IGetWeightsListByDateRangeUseCase
+
+    @Binds
+    abstract fun bindGetHeartRatesByDateUseCase(
+        getHeartRatesByDateUseCaseImpl: GetHeartRatesByDateUseCaseImpl
+    ): IGetHeartRatesByDateUseCase
+
+    @Binds
+    abstract fun bindGetFoodIntakeByDateUseCase(
+        getFoodIntakeByDateUseCaseImpl: GetFoodIntakeByDateUseCaseImpl
+    ): IGetFoodIntakeByDateUseCase
 }
