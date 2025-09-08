@@ -1,17 +1,47 @@
 package com.alenniboris.personalmanager.data.repository
 
+import com.alenniboris.personalmanager.data.mapper.toCommonException
+import com.alenniboris.personalmanager.data.model.heart.HeartRateModelData
+import com.alenniboris.personalmanager.data.model.heart.toModelDomain
+import com.alenniboris.personalmanager.data.utils.CommonFunctions
+import com.alenniboris.personalmanager.data.utils.FirebaseDatabaseValues
 import com.alenniboris.personalmanager.domain.model.common.CommonExceptionModelDomain
 import com.alenniboris.personalmanager.domain.model.common.CustomResultModelDomain
+import com.alenniboris.personalmanager.domain.model.common.IAppDispatchers
 import com.alenniboris.personalmanager.domain.model.heart.HeartRateModelDomain
 import com.alenniboris.personalmanager.domain.repository.IHeartRepository
+import com.alenniboris.personalmanager.domain.utils.GsonUtil.fromJson
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.withContext
 import java.util.Date
+import javax.inject.Inject
 
-class HeartRepositoryImpl : IHeartRepository {
+class HeartRepositoryImpl @Inject constructor(
+    private val database: FirebaseDatabase,
+    private val dispatchers: IAppDispatchers
+) : IHeartRepository {
 
     override suspend fun getListOfRatesByDate(
         date: Date,
         userId: String
-    ): CustomResultModelDomain<List<HeartRateModelDomain>, CommonExceptionModelDomain> {
-        TODO("Not yet implemented")
-    }
+    ): CustomResultModelDomain<List<HeartRateModelDomain>, CommonExceptionModelDomain> =
+        withContext(dispatchers.IO) {
+            return@withContext CommonFunctions.requestListOfElements(
+                dispatcher = dispatchers.IO,
+                database = database,
+                table = FirebaseDatabaseValues.TABLE_FOOD,
+                jsonMapping = { json ->
+                    json.fromJson<HeartRateModelData>()
+                },
+                modelsMapping = { dataModel ->
+                    dataModel.toModelDomain()
+                },
+                filterPredicate = { domainModel ->
+                    domainModel.userId == userId
+                },
+                exceptionMapping = { exception ->
+                    exception.toCommonException()
+                }
+            )
+        }
 }

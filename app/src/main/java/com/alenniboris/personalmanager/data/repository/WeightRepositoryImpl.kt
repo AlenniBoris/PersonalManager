@@ -1,18 +1,50 @@
 package com.alenniboris.personalmanager.data.repository
 
+import com.alenniboris.personalmanager.data.mapper.toCommonException
+import com.alenniboris.personalmanager.data.model.weight.WeightModelData
+import com.alenniboris.personalmanager.data.model.weight.toModelDomain
+import com.alenniboris.personalmanager.data.utils.CommonFunctions
+import com.alenniboris.personalmanager.data.utils.FirebaseDatabaseValues
 import com.alenniboris.personalmanager.domain.model.common.CommonExceptionModelDomain
 import com.alenniboris.personalmanager.domain.model.common.CustomResultModelDomain
+import com.alenniboris.personalmanager.domain.model.common.IAppDispatchers
 import com.alenniboris.personalmanager.domain.model.weight.WeightModelDomain
 import com.alenniboris.personalmanager.domain.repository.IWeightRepository
+import com.alenniboris.personalmanager.domain.utils.GsonUtil.fromJson
+import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.withContext
 import java.util.Date
+import javax.inject.Inject
 
-class WeightRepositoryImpl : IWeightRepository {
+class WeightRepositoryImpl @Inject constructor(
+    private val database: FirebaseDatabase,
+    private val dispatchers: IAppDispatchers
+) : IWeightRepository {
 
     override suspend fun getWeightsListByDateRange(
         startDate: Date,
         endDate: Date,
         userId: String
-    ): CustomResultModelDomain<List<WeightModelDomain>, CommonExceptionModelDomain> {
-        TODO("Not yet implemented")
-    }
+    ): CustomResultModelDomain<List<WeightModelDomain>, CommonExceptionModelDomain> =
+        withContext(dispatchers.IO) {
+            return@withContext CommonFunctions.requestListOfElements(
+                dispatcher = dispatchers.IO,
+                database = database,
+                table = FirebaseDatabaseValues.TABLE_FOOD,
+                jsonMapping = { json ->
+                    json.fromJson<WeightModelData>()
+                },
+                modelsMapping = { dataModel ->
+                    dataModel.toModelDomain()
+                },
+                filterPredicate = { domainModel ->
+                    (domainModel.userId == userId) &&
+                            (domainModel.markingDate.time >= startDate.time &&
+                                    domainModel.markingDate.time <= endDate.time)
+                },
+                exceptionMapping = { exception ->
+                    exception.toCommonException()
+                }
+            )
+        }
 }

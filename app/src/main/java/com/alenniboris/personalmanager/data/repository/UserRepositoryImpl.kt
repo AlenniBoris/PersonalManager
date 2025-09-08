@@ -56,7 +56,6 @@ class UserRepositoryImpl @Inject constructor(
 
                         if (databaseUser.password == password) {
 
-                            LogPrinter.printLog("!!!!", databaseUser.toModelDomain().toString())
                             _userFlow.update {
                                 databaseUser.toModelDomain()
                             }

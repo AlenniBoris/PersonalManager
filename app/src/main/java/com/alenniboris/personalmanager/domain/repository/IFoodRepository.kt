@@ -11,4 +11,17 @@ interface IFoodRepository {
         date: Date,
         userId: String
     ): CustomResultModelDomain<List<FoodIntakeModelDomain>, CommonExceptionModelDomain>
+
+    suspend fun recordFoodIntake(
+        foodIntake: FoodIntakeModelDomain,
+        userId: String
+    ): CustomResultModelDomain<Unit, CommonExceptionModelDomain>
+
+    suspend fun updateFoodIntake(
+        foodIntake: FoodIntakeModelDomain
+    ): CustomResultModelDomain<Unit, CommonExceptionModelDomain>
+
+    suspend fun removeFoodIntake(
+        foodIntake: FoodIntakeModelDomain
+    ): CustomResultModelDomain<Unit, CommonExceptionModelDomain>
 }

@@ -1,6 +1,9 @@
 package com.alenniboris.personalmanager.di
 
 import com.alenniboris.personalmanager.domain.usecase.impl.food.GetFoodIntakeByDateUseCaseImpl
+import com.alenniboris.personalmanager.domain.usecase.impl.food.RecordFoodIntakeUseCaseImpl
+import com.alenniboris.personalmanager.domain.usecase.impl.food.RemoveFoodIntakeUseCaseImpl
+import com.alenniboris.personalmanager.domain.usecase.impl.food.UpdateFoodIntakeUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.heart.GetHeartRatesByDateUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.tasks.AddTaskUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.tasks.GetAllTasksUseCaseImpl
@@ -15,6 +18,9 @@ import com.alenniboris.personalmanager.domain.usecase.impl.weather_and_location.
 import com.alenniboris.personalmanager.domain.usecase.impl.weather_and_location.GetWeekWeatherForecastUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.weight.GetWeightsListByDateRangeUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.logic.food.IGetFoodIntakeByDateUseCase
+import com.alenniboris.personalmanager.domain.usecase.logic.food.IRecordFoodIntakeUseCase
+import com.alenniboris.personalmanager.domain.usecase.logic.food.IRemoveFoodIntakeUseCase
+import com.alenniboris.personalmanager.domain.usecase.logic.food.IUpdateFoodIntakeUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.heart.IGetHeartRatesByDateUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.tasks.IAddTaskUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.tasks.IGetAllTasksUseCase
@@ -108,4 +114,19 @@ abstract class UseCaseModule {
     abstract fun bindGetFoodIntakeByDateUseCase(
         getFoodIntakeByDateUseCaseImpl: GetFoodIntakeByDateUseCaseImpl
     ): IGetFoodIntakeByDateUseCase
+
+    @Binds
+    abstract fun bindRecordFoodIntakeUseCase(
+        recordFoodIntakeUseCaseImpl: RecordFoodIntakeUseCaseImpl
+    ): IRecordFoodIntakeUseCase
+
+    @Binds
+    abstract fun bindUpdateFoodIntakeUseCase(
+        updateFoodIntakeUseCaseImpl: UpdateFoodIntakeUseCaseImpl
+    ): IUpdateFoodIntakeUseCase
+
+    @Binds
+    abstract fun bindRemoveFoodIntakeUseCase(
+        removeFoodIntakeUseCaseImpl: RemoveFoodIntakeUseCaseImpl
+    ): IRemoveFoodIntakeUseCase
 }

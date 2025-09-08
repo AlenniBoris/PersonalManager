@@ -20,6 +20,7 @@ class TasksRepositoryImpl @Inject constructor(
     private val database: FirebaseDatabase,
     private val dispatchers: IAppDispatchers
 ) : ITasksRepository {
+
     override suspend fun getAllTasks(
         userId: String
     ): CustomResultModelDomain<List<TaskModelDomain>, CommonExceptionModelDomain> =

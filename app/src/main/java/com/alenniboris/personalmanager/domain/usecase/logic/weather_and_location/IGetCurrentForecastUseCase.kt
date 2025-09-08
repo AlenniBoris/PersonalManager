@@ -5,6 +5,7 @@ import com.alenniboris.personalmanager.domain.model.common.CustomResultModelDoma
 import com.alenniboris.personalmanager.domain.model.weather.CurrentWeatherForecastModelDomain
 
 interface IGetCurrentForecastUseCase {
+
     suspend fun invoke(
         lat: Double,
         lon: Double
