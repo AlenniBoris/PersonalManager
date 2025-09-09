@@ -29,7 +29,7 @@ class HeartRepositoryImpl @Inject constructor(
             return@withContext CommonFunctions.requestListOfElements(
                 dispatcher = dispatchers.IO,
                 database = database,
-                table = FirebaseDatabaseValues.TABLE_FOOD,
+                table = FirebaseDatabaseValues.TABLE_HEART_RATE,
                 jsonMapping = { json ->
                     json.fromJson<HeartRateModelData>()
                 },
@@ -37,7 +37,7 @@ class HeartRepositoryImpl @Inject constructor(
                     dataModel.toModelDomain()
                 },
                 filterPredicate = { domainModel ->
-                    domainModel.userId == userId
+                    domainModel.userId == userId && domainModel.markingDate == date
                 },
                 exceptionMapping = { exception ->
                     exception.toCommonException()

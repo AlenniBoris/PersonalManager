@@ -31,9 +31,9 @@ import com.alenniboris.personalmanager.domain.model.weather.DayWeatherForecastMo
 import com.alenniboris.personalmanager.domain.model.weather.HourWeatherForecastModelDomain
 import com.alenniboris.personalmanager.domain.model.weather.WindDirection
 import com.alenniboris.personalmanager.domain.utils.LogPrinter
-import com.alenniboris.personalmanager.presentation.model.DayWeatherForecastModelUi
-import com.alenniboris.personalmanager.presentation.model.HourWeatherForecastModelUi
-import com.alenniboris.personalmanager.presentation.model.UserModelUi
+import com.alenniboris.personalmanager.presentation.model.weather.DayWeatherForecastModelUi
+import com.alenniboris.personalmanager.presentation.model.weather.HourWeatherForecastModelUi
+import com.alenniboris.personalmanager.presentation.model.user.UserModelUi
 import com.alenniboris.personalmanager.presentation.screens.weather.IWeatherScreenEvent
 import com.alenniboris.personalmanager.presentation.screens.weather.IWeatherScreenIntent
 import com.alenniboris.personalmanager.presentation.screens.weather.WeatherScreenOptions

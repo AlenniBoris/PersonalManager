@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alenniboris.personalmanager.domain.utils.LogPrinter
+import com.alenniboris.personalmanager.presentation.screens.login_registration.ILogRegScreenEvent
 import com.alenniboris.personalmanager.presentation.screens.login_registration.LogRegScreenViewModel
 import com.alenniboris.personalmanager.presentation.screens.weather.IWeatherScreenEvent
 import com.alenniboris.personalmanager.presentation.uikit.values.LogRegScreenRoute
@@ -29,9 +30,9 @@ fun LogRegScreen(
     val event by remember { mutableStateOf(viewModel.event) }
     val context = LocalContext.current
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(event) {
         launch {
-            event.filterIsInstance<IWeatherScreenEvent.ShowToast>().collect { coming ->
+            event.filterIsInstance<ILogRegScreenEvent.ShowToast>().collect { coming ->
                 LogPrinter.printLog("!!!", context.getString(coming.messageId))
             }
         }

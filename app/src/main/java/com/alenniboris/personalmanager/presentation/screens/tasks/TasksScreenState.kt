@@ -8,8 +8,8 @@ import com.alenniboris.personalmanager.domain.model.task.TaskPriority
 import com.alenniboris.personalmanager.domain.model.task.TaskStatus
 import com.alenniboris.personalmanager.presentation.mapper.stripTime
 import com.alenniboris.personalmanager.presentation.mapper.toDayType
-import com.alenniboris.personalmanager.presentation.model.TaskModelUi
-import com.alenniboris.personalmanager.presentation.model.UserModelUi
+import com.alenniboris.personalmanager.presentation.model.task.TaskModelUi
+import com.alenniboris.personalmanager.presentation.model.user.UserModelUi
 import com.alenniboris.personalmanager.presentation.uikit.model.PieSegment
 import com.alenniboris.personalmanager.presentation.uikit.theme.tasksScreenCompletedTaskColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.tasksScreenSkippedTaskColor

@@ -8,7 +8,7 @@ import com.alenniboris.personalmanager.domain.usecase.logic.user.ILoginUserByEma
 import com.alenniboris.personalmanager.domain.usecase.logic.user.IRegisterUserUseCase
 import com.alenniboris.personalmanager.domain.utils.SingleFlowEvent
 import com.alenniboris.personalmanager.presentation.mapper.toUiString
-import com.alenniboris.personalmanager.presentation.model.toDomainModel
+import com.alenniboris.personalmanager.presentation.model.user.toDomainModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

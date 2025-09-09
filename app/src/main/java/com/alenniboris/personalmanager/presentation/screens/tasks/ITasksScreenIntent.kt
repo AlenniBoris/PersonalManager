@@ -2,7 +2,7 @@ package com.alenniboris.personalmanager.presentation.screens.tasks
 
 import com.alenniboris.personalmanager.domain.model.task.TaskPriority
 import com.alenniboris.personalmanager.domain.model.task.TaskStatus
-import com.alenniboris.personalmanager.presentation.model.TaskModelUi
+import com.alenniboris.personalmanager.presentation.model.task.TaskModelUi
 import java.util.Date
 
 sealed interface ITasksScreenIntent {

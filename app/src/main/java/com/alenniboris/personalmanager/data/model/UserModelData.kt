@@ -16,9 +16,9 @@ data class UserModelData(
     val weight: String? = null,
     val caloriesIntake: String? = null,
     val fitnessGoal: String? = null,
-    val neededProteins: String?,
-    val neededFats: String?,
-    val neededCarbohydrates: String?
+    val neededProteins: String? = null,
+    val neededFats: String? = null,
+    val neededCarbohydrates: String? = null
 ) {
 
     fun toUpdatesMap(): Map<String, String?> =

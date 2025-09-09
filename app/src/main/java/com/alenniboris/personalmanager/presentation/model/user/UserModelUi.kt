@@ -1,4 +1,4 @@
-package com.alenniboris.personalmanager.presentation.model
+package com.alenniboris.personalmanager.presentation.model.user
 
 import com.alenniboris.personalmanager.domain.model.user.FitnessGoal
 import com.alenniboris.personalmanager.domain.model.user.UserModelDomain

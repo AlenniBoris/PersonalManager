@@ -1,4 +1,4 @@
-package com.alenniboris.personalmanager.presentation.model
+package com.alenniboris.personalmanager.presentation.model.weather
 
 import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.domain.model.weather.HourWeatherForecastModelDomain

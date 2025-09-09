@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,9 +37,10 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeMediu
 import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeSmall
 import com.alenniboris.personalmanager.presentation.uikit.theme.buttonRowBackgroundColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.enterTextFieldColor
-import com.alenniboris.personalmanager.presentation.uikit.theme.tasksScreenAddDialogItemPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogItemPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.tasksScreenAddDialogProgressHeight
 import com.alenniboris.personalmanager.presentation.uikit.views.AppCustomButton
+import com.alenniboris.personalmanager.presentation.uikit.views.AppLazyButtonRow
 import com.alenniboris.personalmanager.presentation.uikit.views.AppProgressAnimation
 import com.alenniboris.personalmanager.presentation.uikit.views.AppTextField
 
@@ -102,7 +102,7 @@ private fun AddTaskDialogUi(
             )
 
             Text(
-                modifier = Modifier.padding(tasksScreenAddDialogItemPadding),
+                modifier = Modifier.padding(addDialogItemPadding),
                 text = stringResource(R.string.create_new_task_text),
                 style = bodyStyle.copy(
                     color = appSubtleTextColor,
@@ -112,7 +112,7 @@ private fun AddTaskDialogUi(
 
             Column(
                 modifier = Modifier
-                    .padding(tasksScreenAddDialogItemPadding)
+                    .padding(addDialogItemPadding)
             ) {
                 Text(
                     text = stringResource(R.string.title_text),
@@ -141,7 +141,7 @@ private fun AddTaskDialogUi(
 
             Column(
                 modifier = Modifier
-                    .padding(tasksScreenAddDialogItemPadding)
+                    .padding(addDialogItemPadding)
             ) {
                 Text(
                     text = stringResource(R.string.description_text),
@@ -170,7 +170,7 @@ private fun AddTaskDialogUi(
 
             Column(
                 modifier = Modifier
-                    .padding(tasksScreenAddDialogItemPadding)
+                    .padding(addDialogItemPadding)
             ) {
                 Text(
                     text = stringResource(R.string.priority_text),
@@ -180,7 +180,7 @@ private fun AddTaskDialogUi(
                     )
                 )
 
-                TasksScreenButtonRow(
+                AppLazyButtonRow(
                     modifier = Modifier
                         .clip(appRoundedShape)
                         .background(buttonRowBackgroundColor)
@@ -204,7 +204,7 @@ private fun AddTaskDialogUi(
 
             Column(
                 modifier = Modifier
-                    .padding(tasksScreenAddDialogItemPadding)
+                    .padding(addDialogItemPadding)
             ) {
                 Text(
                     text = stringResource(R.string.due_date_text),
@@ -231,7 +231,7 @@ private fun AddTaskDialogUi(
 
             Column(
                 modifier = Modifier
-                    .padding(tasksScreenAddDialogItemPadding)
+                    .padding(addDialogItemPadding)
             ) {
                 Text(
                     text = stringResource(R.string.due_time_text),
@@ -258,7 +258,7 @@ private fun AddTaskDialogUi(
 
             AppCustomButton(
                 modifier = Modifier
-                    .padding(tasksScreenAddDialogItemPadding)
+                    .padding(addDialogItemPadding)
                     .fillMaxWidth(),
                 onClick = {
                     proceedIntent(
@@ -271,7 +271,7 @@ private fun AddTaskDialogUi(
 
             AppCustomButton(
                 modifier = Modifier
-                    .padding(tasksScreenAddDialogItemPadding)
+                    .padding(addDialogItemPadding)
                     .fillMaxWidth(),
                 onClick = {
                     proceedIntent(

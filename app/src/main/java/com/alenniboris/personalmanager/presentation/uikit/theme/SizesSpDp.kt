@@ -72,7 +72,7 @@ val taskItemUiTextTopPadding = PaddingValues(top = 10.dp)
 val taskItemUiDetailsItemIconPadding = PaddingValues(end = 5.dp)
 val tasksScreenContentListFirstPadding = PaddingValues(top = 10.dp, bottom = 10.dp)
 val tasksScreenContentListPadding = PaddingValues(top = 5.dp, bottom = 5.dp)
-val tasksScreenAddDialogItemPadding = PaddingValues(top = 15.dp)
+val addDialogItemPadding = PaddingValues(top = 15.dp)
 val tasksScreenAddDialogProgressHeight = 300.dp
 val tasksScreenTaskItemButtonPadding = PaddingValues(start = 10.dp)
 val tasksScreenPieChartRadius = 100.dp
@@ -84,5 +84,30 @@ val tasksScreenTaskDetailsIconSize = 50.dp
 val appDetailsInfoBlockRightPadding = PaddingValues(end = 7.dp)
 val appDetailsInfoBlockLeftPadding = PaddingValues(start = 7.dp)
 val tasksScreenTaskItemSize = 24.dp
-val tasksScreenDateFilterInnerPadding = PaddingValues(vertical = 15.dp, horizontal = 15.dp)
+val appDateFilterInnerPadding = PaddingValues(vertical = 15.dp, horizontal = 15.dp)
 val tasksScreenDateFilterButtonInnerPadding = PaddingValues(vertical = 5.dp, horizontal = 10.dp)
+val healthScreenContentPadding = PaddingValues(horizontal = 15.dp)
+val healthScreenContentItemTopPadding = PaddingValues(vertical = 10.dp)
+val healthScreenContentItemDoubleTopPadding = PaddingValues(vertical = 20.dp)
+val healthScreenInfoItemInnerPadding = PaddingValues(horizontal = 10.dp, vertical = 15.dp)
+val healthScreenInfoIconInnerPadding = PaddingValues(all = 10.dp)
+val healthScreenInfoTextColumnPadding = PaddingValues(start = 10.dp)
+val healthScreenInfoTextPadding = PaddingValues(top = 5.dp)
+val healthScreenOverviewStatisticsSectionInnerPadding = PaddingValues(all = 15.dp)
+val healthScreenOverviewStatisticsSectionProgressLineHeight = 10.dp
+val healthScreenPlotHeight = 200.dp
+val healthScreenPlotInnerPadding = PaddingValues(all = 15.dp)
+val healthScreenWeightPlotDetailsBoxInnerPadding = PaddingValues(all = 10.dp)
+val healthScreenWeightPlotPointRadius = 13f
+val healthScreenWeightPlotSelectedPointRadius = 13f
+val healthScreenWeightChangeTextStartPadding = PaddingValues(start = 10.dp)
+val healthScreenNutritionOptionTextStartPadding = PaddingValues(start = 15.dp)
+val healthScreenNutritionOptionListPadding = PaddingValues(all = 15.dp)
+val healthScreenNutritionOptionFoodItemPadding = PaddingValues(top = 10.dp)
+val healthScreenNutritionOptionFoodItemInnerPadding =
+    PaddingValues(vertical = 10.dp, horizontal = 10.dp)
+val healthScreenNutritionOptionFoodItemTextPadding = PaddingValues(start = 5.dp)
+val healthScreenNutritionOptionFoodItemRowPadding = PaddingValues(top = 10.dp)
+val healthScreenFoodAddDialogItemStartPadding = PaddingValues(start = 10.dp)
+val healthScreenFoodDetailsStartPadding = PaddingValues(start = 10.dp)
+val healthScreenFoodDetailsColorRadius = 24.dp

@@ -30,7 +30,7 @@ class WeightRepositoryImpl @Inject constructor(
             return@withContext CommonFunctions.requestListOfElements(
                 dispatcher = dispatchers.IO,
                 database = database,
-                table = FirebaseDatabaseValues.TABLE_FOOD,
+                table = FirebaseDatabaseValues.TABLE_WEIGHT,
                 jsonMapping = { json ->
                     json.fromJson<WeightModelData>()
                 },

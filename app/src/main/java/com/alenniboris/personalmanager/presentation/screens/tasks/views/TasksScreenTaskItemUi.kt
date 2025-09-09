@@ -38,7 +38,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.times
 import com.alenniboris.fastbanking.presentation.uikit.theme.bodyStyle
 import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.domain.model.task.TaskModelDomain
@@ -46,7 +45,7 @@ import com.alenniboris.personalmanager.domain.model.task.TaskPriority
 import com.alenniboris.personalmanager.domain.model.task.TaskStatus
 import com.alenniboris.personalmanager.presentation.mapper.toUiColor
 import com.alenniboris.personalmanager.presentation.mapper.toUiString
-import com.alenniboris.personalmanager.presentation.model.TaskModelUi
+import com.alenniboris.personalmanager.presentation.model.task.TaskModelUi
 import com.alenniboris.personalmanager.presentation.screens.tasks.ITasksScreenIntent
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor

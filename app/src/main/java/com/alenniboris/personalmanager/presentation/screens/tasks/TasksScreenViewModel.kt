@@ -10,12 +10,13 @@ import com.alenniboris.personalmanager.domain.usecase.logic.tasks.IGetAllTasksUs
 import com.alenniboris.personalmanager.domain.usecase.logic.tasks.IRemoveTaskUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.tasks.IUpdateTaskUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.user.IGetCurrentUserUseCase
-import com.alenniboris.personalmanager.domain.utils.GsonUtil.copyAny
 import com.alenniboris.personalmanager.domain.utils.SingleFlowEvent
 import com.alenniboris.personalmanager.presentation.mapper.toUiString
-import com.alenniboris.personalmanager.presentation.model.TaskModelUi
-import com.alenniboris.personalmanager.presentation.model.toModelUi
+import com.alenniboris.personalmanager.presentation.model.task.TaskModelUi
+import com.alenniboris.personalmanager.presentation.model.task.toModelUi
+import com.alenniboris.personalmanager.presentation.model.user.toModelUi
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -37,6 +38,8 @@ class TasksScreenViewModel @Inject constructor(
 
     private val _event = SingleFlowEvent<ITasksScreenEvent>(viewModelScope)
     val event = _event.flow
+
+    private var _tasksLoadingJob: Job? = null
 
     init {
         loadTasks()
@@ -354,7 +357,8 @@ class TasksScreenViewModel @Inject constructor(
     }
 
     private fun loadTasks() {
-        viewModelScope.launch {
+        _tasksLoadingJob?.cancel()
+        _tasksLoadingJob = viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
             when (
                 val res = getAllTasksUseCase.invoke()

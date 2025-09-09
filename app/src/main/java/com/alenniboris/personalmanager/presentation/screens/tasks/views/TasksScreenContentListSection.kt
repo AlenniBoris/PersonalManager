@@ -3,7 +3,6 @@ package com.alenniboris.personalmanager.presentation.screens.tasks.views
 import android.icu.util.Calendar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,7 +26,7 @@ import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.domain.model.task.TaskModelDomain
 import com.alenniboris.personalmanager.domain.model.task.TaskPriority
 import com.alenniboris.personalmanager.domain.model.task.TaskStatus
-import com.alenniboris.personalmanager.presentation.model.TaskModelUi
+import com.alenniboris.personalmanager.presentation.model.task.TaskModelUi
 import com.alenniboris.personalmanager.presentation.screens.tasks.ITasksScreenIntent
 import com.alenniboris.personalmanager.presentation.screens.tasks.TasksScreenOption
 import com.alenniboris.personalmanager.presentation.screens.tasks.toUiIcon

@@ -1,6 +1,6 @@
 package com.alenniboris.personalmanager.presentation.screens.login_registration
 
-import com.alenniboris.personalmanager.presentation.model.UserModelUi
+import com.alenniboris.personalmanager.presentation.model.user.UserModelUi
 
 sealed class LogRegScreenState(
     val currentProcess: LogRegScreenProcess

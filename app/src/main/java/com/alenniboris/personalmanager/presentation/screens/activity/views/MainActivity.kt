@@ -215,7 +215,9 @@ private fun AppUi(
 
                                     BottomBarValues.Health -> {
                                         if (currentRoute != HealthScreenRoute) {
-                                            LogPrinter.printLog("!!!", HealthScreenRoute)
+                                            navController.navigate(
+                                                HealthScreenRoute
+                                            )
                                         }
                                     }
                                 }

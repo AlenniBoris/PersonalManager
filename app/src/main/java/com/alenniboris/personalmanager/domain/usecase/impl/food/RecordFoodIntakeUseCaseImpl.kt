@@ -22,8 +22,7 @@ class RecordFoodIntakeUseCaseImpl @Inject constructor(
         withContext(dispatchers.IO) {
             return@withContext getCurrentUserUseCase.userFlow.value?.let { user ->
                 foodRepository.recordFoodIntake(
-                    foodIntake = foodIntake,
-                    userId = user.id
+                    foodIntake = foodIntake.copy(userId = user.id)
                 )
             } ?: CustomResultModelDomain.Error(
                 CommonExceptionModelDomain.UnknownException

@@ -62,17 +62,17 @@ class UserRepositoryImpl @Inject constructor(
 
                             CustomResultModelDomain.Success(Unit)
                         } else {
-                            CustomResultModelDomain.Error(
+                            return@withContext CustomResultModelDomain.Error(
                                 CommonExceptionModelDomain.WrongPassword
                             )
                         }
-                    } ?: CustomResultModelDomain.Error(
+                    } ?: return@withContext CustomResultModelDomain.Error(
                         CommonExceptionModelDomain.NoSuchUser
                     )
                 }
 
                 is CustomResultModelDomain.Error -> {
-                    CustomResultModelDomain.Error(
+                    return@withContext CustomResultModelDomain.Error(
                         databaseUserResult.exception
                     )
                 }

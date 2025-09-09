@@ -27,12 +27,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.domain.utils.LogPrinter
+import com.alenniboris.personalmanager.presentation.screens.tasks.ITasksScreenEvent
 import com.alenniboris.personalmanager.presentation.screens.tasks.ITasksScreenIntent
 import com.alenniboris.personalmanager.presentation.screens.tasks.TasksScreenOption
 import com.alenniboris.personalmanager.presentation.screens.tasks.TasksScreenState
 import com.alenniboris.personalmanager.presentation.screens.tasks.TasksScreenViewModel
 import com.alenniboris.personalmanager.presentation.screens.tasks.toUiString
-import com.alenniboris.personalmanager.presentation.screens.weather.IWeatherScreenEvent
 import com.alenniboris.personalmanager.presentation.uikit.model.ClickableElement
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
 import com.alenniboris.personalmanager.presentation.uikit.theme.appButtonRowInnerPadding
@@ -44,11 +44,14 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.appSubtleTextCol
 import com.alenniboris.personalmanager.presentation.uikit.theme.buttonRowBackgroundColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.taskScreenComponentOuterPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.tasksScreenContentPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.tasksScreenDateFilterInnerPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.appDateFilterInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.topBarInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.values.TasksScreenRoute
 import com.alenniboris.personalmanager.presentation.uikit.views.AppBottomSheet
 import com.alenniboris.personalmanager.presentation.uikit.views.AppCustomButton
+import com.alenniboris.personalmanager.presentation.uikit.views.AppDatePicker
+import com.alenniboris.personalmanager.presentation.uikit.views.AppLazyButtonRow
+import com.alenniboris.personalmanager.presentation.uikit.views.AppSingleLineDateFilter
 import com.alenniboris.personalmanager.presentation.uikit.views.AppTopBar
 import com.ramcosta.composedestinations.annotation.Destination
 import kotlinx.coroutines.flow.filterIsInstance
@@ -67,7 +70,7 @@ fun TasksScreen() {
 
     LaunchedEffect(Unit) {
         launch {
-            event.filterIsInstance<IWeatherScreenEvent.ShowToast>().collect { coming ->
+            event.filterIsInstance<ITasksScreenEvent.ShowToast>().collect { coming ->
                 LogPrinter.printLog(
                     tag = "!!!",
                     message = context.getString(coming.messageId)
@@ -128,7 +131,7 @@ private fun TasksScreenUi(
                 isLoading = state.isLoading
             )
 
-            TasksScreenButtonRow(
+            AppLazyButtonRow(
                 modifier = Modifier
                     .padding(taskScreenComponentOuterPadding)
                     .clip(appRoundedShape)
@@ -174,7 +177,7 @@ private fun TasksScreenUi(
                 }
 
                 TasksScreenOption.All_tasks, TasksScreenOption.Upcoming, TasksScreenOption.Skipped -> {
-                    TasksScreenDateFilter(
+                    AppSingleLineDateFilter(
                         modifier = Modifier
                             .padding(taskScreenComponentOuterPadding)
                             .fillMaxWidth()
@@ -184,10 +187,19 @@ private fun TasksScreenUi(
                                 color = appSubtleTextColor,
                                 shape = appRoundedShape
                             )
-                            .padding(tasksScreenDateFilterInnerPadding),
+                            .padding(appDateFilterInnerPadding),
                         selectedFilterDateText = state.selectedFilterDateText,
                         selectedFilterDateDayTextId = state.selectedFilterDateDayText,
-                        proceedIntent = proceedIntent
+                        onPickerVisibilityChange = {
+                            proceedIntent(
+                                ITasksScreenIntent.UpdateDateFilterPickerVisibility
+                            )
+                        },
+                        onCancel = {
+                            proceedIntent(
+                                ITasksScreenIntent.UpdateSelectedFilterDate(null)
+                            )
+                        }
                     )
                 }
             }
@@ -218,7 +230,7 @@ private fun TasksScreenUi(
             }
 
             if (state.isDatePickerVisible) {
-                TasksScreenDatePicker(
+                AppDatePicker(
                     onDismiss = {
                         proceedIntent(
                             ITasksScreenIntent.UpdateDatePickerVisibility()
@@ -234,7 +246,7 @@ private fun TasksScreenUi(
             }
 
             if (state.isDateFilterPickerVisible) {
-                TasksScreenDatePicker(
+                AppDatePicker(
                     onDismiss = {
                         proceedIntent(
                             ITasksScreenIntent.UpdateDateFilterPickerVisibility

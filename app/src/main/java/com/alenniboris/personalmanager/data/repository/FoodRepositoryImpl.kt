@@ -34,7 +34,7 @@ class FoodRepositoryImpl @Inject constructor(
                 jsonMapping = { json -> json.fromJson<FoodIntakeModelData>() },
                 modelsMapping = { dataModel -> dataModel.toModelDomain() },
                 filterPredicate = { domainModel ->
-                    domainModel.userId == userId
+                    domainModel.userId == userId && domainModel.markingDate == date
                 },
                 exceptionMapping = { exception ->
                     exception.toCommonException()
@@ -43,8 +43,7 @@ class FoodRepositoryImpl @Inject constructor(
         }
 
     override suspend fun recordFoodIntake(
-        foodIntake: FoodIntakeModelDomain,
-        userId: String
+        foodIntake: FoodIntakeModelDomain
     ): CustomResultModelDomain<Unit, CommonExceptionModelDomain> =
         withContext(dispatchers.IO) {
             return@withContext CommonFunctions.addRecordToTheTable(

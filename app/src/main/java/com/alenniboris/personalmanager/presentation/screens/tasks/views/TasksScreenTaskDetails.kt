@@ -27,7 +27,7 @@ import com.alenniboris.personalmanager.domain.model.task.TaskPriority
 import com.alenniboris.personalmanager.domain.model.task.TaskStatus
 import com.alenniboris.personalmanager.presentation.mapper.toUiColor
 import com.alenniboris.personalmanager.presentation.mapper.toUiString
-import com.alenniboris.personalmanager.presentation.model.TaskModelUi
+import com.alenniboris.personalmanager.presentation.model.task.TaskModelUi
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appDetailsInfoBlockBorderWidth
@@ -39,7 +39,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.appSubtleTextCol
 import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSize
 import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeMedium
 import com.alenniboris.personalmanager.presentation.uikit.theme.taskScreenComponentOuterPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.tasksScreenAddDialogItemPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogItemPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.tasksScreenContentPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.tasksScreenTaskDetailsIconSize
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenCurrentForecastBlockInnerPadding
@@ -64,7 +64,7 @@ fun TasksScreenTaskDetails(
         )
 
         Text(
-            modifier = Modifier.padding(tasksScreenAddDialogItemPadding),
+            modifier = Modifier.padding(addDialogItemPadding),
             text = task.domainModel.title,
             style = bodyStyle.copy(
                 color = appMainTextColor,
@@ -74,7 +74,7 @@ fun TasksScreenTaskDetails(
         )
 
         Text(
-            modifier = Modifier.padding(tasksScreenAddDialogItemPadding),
+            modifier = Modifier.padding(addDialogItemPadding),
             text = task.domainModel.description,
             style = bodyStyle.copy(
                 color = appSubtleTextColor,
@@ -85,7 +85,7 @@ fun TasksScreenTaskDetails(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(tasksScreenAddDialogItemPadding),
+                .padding(addDialogItemPadding),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -124,7 +124,7 @@ fun TasksScreenTaskDetails(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(tasksScreenAddDialogItemPadding),
+                .padding(addDialogItemPadding),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
@@ -162,7 +162,7 @@ fun TasksScreenTaskDetails(
 
         AppDetailsInfoBlock(
             modifier = Modifier
-                .padding(tasksScreenAddDialogItemPadding)
+                .padding(addDialogItemPadding)
                 .clip(appRoundedShape)
                 .border(
                     width = appDetailsInfoBlockBorderWidth,

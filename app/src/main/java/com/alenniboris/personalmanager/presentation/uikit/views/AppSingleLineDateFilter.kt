@@ -1,4 +1,4 @@
-package com.alenniboris.personalmanager.presentation.screens.tasks.views
+package com.alenniboris.personalmanager.presentation.uikit.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -23,7 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.alenniboris.fastbanking.presentation.uikit.theme.bodyStyle
 import com.alenniboris.personalmanager.R
-import com.alenniboris.personalmanager.presentation.screens.tasks.ITasksScreenIntent
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appDetailsInfoBlockBorderWidth
@@ -35,14 +34,15 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSize
 import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeSmall
 import com.alenniboris.personalmanager.presentation.uikit.theme.taskScreenComponentOuterPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.tasksScreenDateFilterButtonInnerPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.tasksScreenDateFilterInnerPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.appDateFilterInnerPadding
 
 @Composable
-fun TasksScreenDateFilter(
+fun AppSingleLineDateFilter(
     modifier: Modifier = Modifier,
     selectedFilterDateText: String?,
     selectedFilterDateDayTextId: Int?,
-    proceedIntent: (ITasksScreenIntent) -> Unit
+    onPickerVisibilityChange: () -> Unit,
+    onCancel: () -> Unit
 ) {
 
     Row(
@@ -61,9 +61,7 @@ fun TasksScreenDateFilter(
                     shape = appRoundedShape
                 )
                 .clickable {
-                    proceedIntent(
-                        ITasksScreenIntent.UpdateDateFilterPickerVisibility
-                    )
+                    onPickerVisibilityChange()
                 }
                 .padding(tasksScreenDateFilterButtonInnerPadding),
             verticalAlignment = Alignment.CenterVertically
@@ -90,17 +88,13 @@ fun TasksScreenDateFilter(
                 modifier = Modifier
                     .padding(appDetailsInfoBlockRightPadding)
                     .clickable {
-                        proceedIntent(
-                            ITasksScreenIntent.UpdateSelectedFilterDate(null)
-                        )
+                        onCancel()
                     },
                 painter = painterResource(R.drawable.cancel_icon),
                 tint = appMainTextColor,
                 contentDescription = stringResource(R.string.picture_description)
             )
-        }
 
-        selectedFilterDateText?.let {
             Text(
                 text = stringResource(R.string.filtered_by_text)
                         + (selectedFilterDateDayTextId?.let { stringResource(it) + ", " } ?: "")
@@ -129,7 +123,7 @@ private fun LightTheme() {
                     .padding(horizontal = 20.dp)
             ) {
 
-                TasksScreenDateFilter(
+                AppSingleLineDateFilter(
                     modifier = Modifier
                         .padding(taskScreenComponentOuterPadding)
                         .fillMaxWidth()
@@ -139,13 +133,14 @@ private fun LightTheme() {
                             color = appSubtleTextColor,
                             shape = appRoundedShape
                         )
-                        .padding(tasksScreenDateFilterInnerPadding),
+                        .padding(appDateFilterInnerPadding),
                     selectedFilterDateText = "12/12/3233",
                     selectedFilterDateDayTextId = null,
-                    proceedIntent = {}
+                    onPickerVisibilityChange = {},
+                    onCancel = {}
                 )
 
-                TasksScreenDateFilter(
+                AppSingleLineDateFilter(
                     modifier = Modifier
                         .padding(taskScreenComponentOuterPadding)
                         .fillMaxWidth()
@@ -155,10 +150,11 @@ private fun LightTheme() {
                             color = appSubtleTextColor,
                             shape = appRoundedShape
                         )
-                        .padding(tasksScreenDateFilterInnerPadding),
+                        .padding(appDateFilterInnerPadding),
                     selectedFilterDateText = null,
                     selectedFilterDateDayTextId = null,
-                    proceedIntent = {}
+                    onPickerVisibilityChange = {},
+                    onCancel = {}
                 )
             }
         }
@@ -179,7 +175,7 @@ private fun DarkTheme() {
                     .padding(horizontal = 20.dp)
             ) {
 
-                TasksScreenDateFilter(
+                AppSingleLineDateFilter(
                     modifier = Modifier
                         .padding(taskScreenComponentOuterPadding)
                         .fillMaxWidth()
@@ -189,13 +185,14 @@ private fun DarkTheme() {
                             color = appSubtleTextColor,
                             shape = appRoundedShape
                         )
-                        .padding(tasksScreenDateFilterInnerPadding),
+                        .padding(appDateFilterInnerPadding),
                     selectedFilterDateText = "12/12/3233",
                     selectedFilterDateDayTextId = null,
-                    proceedIntent = {}
+                    onPickerVisibilityChange = {},
+                    onCancel = {}
                 )
 
-                TasksScreenDateFilter(
+                AppSingleLineDateFilter(
                     modifier = Modifier
                         .padding(taskScreenComponentOuterPadding)
                         .fillMaxWidth()
@@ -205,10 +202,11 @@ private fun DarkTheme() {
                             color = appSubtleTextColor,
                             shape = appRoundedShape
                         )
-                        .padding(tasksScreenDateFilterInnerPadding),
+                        .padding(appDateFilterInnerPadding),
                     selectedFilterDateText = null,
                     selectedFilterDateDayTextId = null,
-                    proceedIntent = {}
+                    onPickerVisibilityChange = {},
+                    onCancel = {}
                 )
             }
         }

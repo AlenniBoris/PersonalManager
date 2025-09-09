@@ -1,4 +1,4 @@
-package com.alenniboris.personalmanager.presentation.model
+package com.alenniboris.personalmanager.presentation.model.task
 
 import com.alenniboris.personalmanager.domain.model.task.TaskModelDomain
 import com.alenniboris.personalmanager.presentation.mapper.toUiPicture

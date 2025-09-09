@@ -1,4 +1,4 @@
-package com.alenniboris.personalmanager.presentation.model
+package com.alenniboris.personalmanager.presentation.model.weather
 
 import android.os.Build
 import androidx.annotation.RequiresApi

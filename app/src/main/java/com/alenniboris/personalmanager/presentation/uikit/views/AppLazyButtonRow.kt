@@ -1,4 +1,4 @@
-package com.alenniboris.personalmanager.presentation.screens.tasks.views
+package com.alenniboris.personalmanager.presentation.uikit.views
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
@@ -37,7 +37,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.buttonRowActiveB
 import com.alenniboris.personalmanager.presentation.uikit.theme.buttonRowBackgroundColor
 
 @Composable
-fun TasksScreenButtonRow(
+fun AppLazyButtonRow(
     modifier: Modifier = Modifier,
     currentElement: ClickableElement,
     listOfElements: List<ClickableElement>,
@@ -100,12 +100,11 @@ private fun LightTheme() {
                     .background(appColor)
             ) {
 
-                TasksScreenButtonRow(
+                AppLazyButtonRow(
                     modifier = Modifier
                         .padding(vertical = 20.dp)
                         .clip(appRoundedShape)
                         .fillMaxWidth()
-                        .horizontalScroll(rememberScrollState())
                         .background(buttonRowBackgroundColor)
                         .padding(appButtonRowInnerPadding),
                     currentElement = ClickableElement(
@@ -135,12 +134,11 @@ private fun LightTheme() {
                     )
                 )
 
-                TasksScreenButtonRow(
+                AppLazyButtonRow(
                     modifier = Modifier
                         .padding(vertical = 20.dp)
                         .clip(appRoundedShape)
                         .fillMaxWidth()
-                        .horizontalScroll(rememberScrollState())
                         .background(buttonRowBackgroundColor)
                         .padding(appButtonRowInnerPadding),
                     currentElement = ClickableElement(
@@ -170,7 +168,7 @@ private fun LightTheme() {
                     )
                 )
 
-                TasksScreenButtonRow(
+                AppLazyButtonRow(
                     modifier = Modifier
                         .padding(vertical = 20.dp)
                         .clip(appRoundedShape)
@@ -210,12 +208,11 @@ private fun DarkTheme() {
                     .background(appColor)
             ) {
 
-                TasksScreenButtonRow(
+                AppLazyButtonRow(
                     modifier = Modifier
                         .padding(vertical = 20.dp)
                         .clip(appRoundedShape)
                         .fillMaxWidth()
-                        .horizontalScroll(rememberScrollState())
                         .background(buttonRowBackgroundColor)
                         .padding(appButtonRowInnerPadding),
                     currentElement = ClickableElement(
@@ -245,7 +242,7 @@ private fun DarkTheme() {
                     )
                 )
 
-                TasksScreenButtonRow(
+                AppLazyButtonRow(
                     modifier = Modifier
                         .padding(vertical = 20.dp)
                         .clip(appRoundedShape)

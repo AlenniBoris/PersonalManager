@@ -1,28 +1,30 @@
 package com.alenniboris.personalmanager.domain.usecase.impl.health
 
-import com.alenniboris.personalmanager.domain.model.TodayHealthStatistics
+import com.alenniboris.personalmanager.domain.model.TodayHealthStatisticsModelDomain
 import com.alenniboris.personalmanager.domain.model.common.CommonExceptionModelDomain
 import com.alenniboris.personalmanager.domain.model.common.CustomResultModelDomain
 import com.alenniboris.personalmanager.domain.model.common.IAppDispatchers
 import com.alenniboris.personalmanager.domain.repository.IFoodRepository
 import com.alenniboris.personalmanager.domain.repository.IHeartRepository
-import com.alenniboris.personalmanager.domain.usecase.logic.health.IGetTodayHealthStatistics
+import com.alenniboris.personalmanager.domain.usecase.logic.health.IGetTodayHealthStatisticsUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.user.IGetCurrentUserUseCase
+import com.alenniboris.personalmanager.domain.utils.LogPrinter
+import com.alenniboris.personalmanager.presentation.screens.login_registration.views.LoginProcessUi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import java.util.Date
 import javax.inject.Inject
 
-class GetTodayHealthStatisticsImpl @Inject constructor(
+class GetTodayHealthStatisticsUseCaseImpl @Inject constructor(
     private val getCurrentUserUseCase: IGetCurrentUserUseCase,
     private val heartRepository: IHeartRepository,
     private val foodRepository: IFoodRepository,
     private val dispatchers: IAppDispatchers
-) : IGetTodayHealthStatistics {
+) : IGetTodayHealthStatisticsUseCase {
 
     override suspend fun invoke(
         date: Date
-    ): CustomResultModelDomain<TodayHealthStatistics, CommonExceptionModelDomain> =
+    ): CustomResultModelDomain<TodayHealthStatisticsModelDomain, CommonExceptionModelDomain> =
         withContext(dispatchers.IO) {
             return@withContext getCurrentUserUseCase.userFlow.value?.let { user ->
 
@@ -51,14 +53,16 @@ class GetTodayHealthStatisticsImpl @Inject constructor(
                     val foodIntakeList = foodIntakeResult.result
 
                     val averageHeartRate =
-                        heartRateList.sumOf { it.heartRate.toDouble() } / heartRateList.size
+                        heartRateList.sumOf { it.heartRate.toDouble() } /
+                                (if (heartRateList.isNotEmpty()) heartRateList.size else 1)
+                    LogPrinter.printLog("!!!", averageHeartRate.toString())
                     val consumedCalories = foodIntakeList.sumOf { it.calories }
                     val consumedProteins = foodIntakeList.sumOf { it.proteins }
                     val consumedFats = foodIntakeList.sumOf { it.fats }
                     val consumedCarbohydrates = foodIntakeList.sumOf { it.carbohydrates }
 
                     CustomResultModelDomain.Success(
-                        TodayHealthStatistics(
+                        TodayHealthStatisticsModelDomain(
                             currentWeight = currentWeight,
                             averageHeartRate = averageHeartRate,
                             consumedCalories = consumedCalories,

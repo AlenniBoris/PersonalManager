@@ -3,9 +3,6 @@ package com.alenniboris.personalmanager.data.model.food
 import com.alenniboris.personalmanager.domain.model.food.FoodIntakeModelDomain
 import com.alenniboris.personalmanager.domain.utils.LogPrinter
 import java.util.Date
-import kotlin.String
-import kotlin.text.toDouble
-import kotlin.text.toLong
 
 data class FoodIntakeModelData(
     val id: String? = null,

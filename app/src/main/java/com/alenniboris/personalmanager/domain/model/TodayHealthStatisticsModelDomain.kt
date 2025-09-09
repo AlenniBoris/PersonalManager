@@ -1,6 +1,6 @@
 package com.alenniboris.personalmanager.domain.model
 
-data class TodayHealthStatistics(
+data class TodayHealthStatisticsModelDomain(
     val currentWeight: Double,
     val averageHeartRate: Double,
     val consumedCalories: Double,

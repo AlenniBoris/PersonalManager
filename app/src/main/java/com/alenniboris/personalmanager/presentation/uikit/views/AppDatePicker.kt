@@ -1,4 +1,4 @@
-package com.alenniboris.personalmanager.presentation.screens.tasks.views
+package com.alenniboris.personalmanager.presentation.uikit.views
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,12 +13,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.presentation.uikit.theme.taskScreenComponentOuterPadding
-import com.alenniboris.personalmanager.presentation.uikit.views.AppCustomButton
 import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TasksScreenDatePicker(
+fun AppDatePicker(
     onDismiss: () -> Unit,
     onSelected: (Date) -> Unit,
     datePickerState: DatePickerState = rememberDatePickerState()

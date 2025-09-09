@@ -25,7 +25,7 @@ import com.alenniboris.fastbanking.presentation.uikit.theme.bodyStyle
 import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.domain.model.weather.HourWeatherForecastModelDomain
 import com.alenniboris.personalmanager.domain.model.weather.WindDirection
-import com.alenniboris.personalmanager.presentation.model.HourWeatherForecastModelUi
+import com.alenniboris.personalmanager.presentation.model.weather.HourWeatherForecastModelUi
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appDetailsInfoBlockBorderWidth

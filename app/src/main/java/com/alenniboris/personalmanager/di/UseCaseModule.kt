@@ -4,6 +4,7 @@ import com.alenniboris.personalmanager.domain.usecase.impl.food.GetFoodIntakeByD
 import com.alenniboris.personalmanager.domain.usecase.impl.food.RecordFoodIntakeUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.food.RemoveFoodIntakeUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.food.UpdateFoodIntakeUseCaseImpl
+import com.alenniboris.personalmanager.domain.usecase.impl.health.GetTodayHealthStatisticsUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.heart.GetHeartRatesByDateUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.tasks.AddTaskUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.tasks.GetAllTasksUseCaseImpl
@@ -21,6 +22,7 @@ import com.alenniboris.personalmanager.domain.usecase.logic.food.IGetFoodIntakeB
 import com.alenniboris.personalmanager.domain.usecase.logic.food.IRecordFoodIntakeUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.food.IRemoveFoodIntakeUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.food.IUpdateFoodIntakeUseCase
+import com.alenniboris.personalmanager.domain.usecase.logic.health.IGetTodayHealthStatisticsUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.heart.IGetHeartRatesByDateUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.tasks.IAddTaskUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.tasks.IGetAllTasksUseCase
@@ -129,4 +131,9 @@ abstract class UseCaseModule {
     abstract fun bindRemoveFoodIntakeUseCase(
         removeFoodIntakeUseCaseImpl: RemoveFoodIntakeUseCaseImpl
     ): IRemoveFoodIntakeUseCase
+
+    @Binds
+    abstract fun bindGetTodayHealthStatisticsUseCase(
+        getTodayHealthStatisticsUseCaseImpl: GetTodayHealthStatisticsUseCaseImpl
+    ): IGetTodayHealthStatisticsUseCase
 }
