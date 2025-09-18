@@ -1,5 +1,6 @@
 package com.alenniboris.personalmanager.di
 
+import com.alenniboris.personalmanager.data.repository.ActivityRepositoryImpl
 import com.alenniboris.personalmanager.data.repository.FoodRepositoryImpl
 import com.alenniboris.personalmanager.data.repository.HeartRepositoryImpl
 import com.alenniboris.personalmanager.data.repository.LocationRepositoryImpl
@@ -7,6 +8,7 @@ import com.alenniboris.personalmanager.data.repository.TasksRepositoryImpl
 import com.alenniboris.personalmanager.data.repository.UserRepositoryImpl
 import com.alenniboris.personalmanager.data.repository.WeatherRepositoryImpl
 import com.alenniboris.personalmanager.data.repository.WeightRepositoryImpl
+import com.alenniboris.personalmanager.domain.repository.IActivityRepository
 import com.alenniboris.personalmanager.domain.repository.IFoodRepository
 import com.alenniboris.personalmanager.domain.repository.IHeartRepository
 import com.alenniboris.personalmanager.domain.repository.ILocationRepository
@@ -51,4 +53,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindFoodRepository(foodRepositoryImpl: FoodRepositoryImpl): IFoodRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindActivityRepository(activityRepositoryImpl: ActivityRepositoryImpl): IActivityRepository
 }

@@ -44,4 +44,16 @@ class HeartRepositoryImpl @Inject constructor(
                 }
             )
         }
+
+    override suspend fun addHeartRate(heartRate: HeartRateModelDomain): CustomResultModelDomain<Unit, CommonExceptionModelDomain> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteHeartRate(heartRate: HeartRateModelDomain): CustomResultModelDomain<Unit, CommonExceptionModelDomain> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getAllHeartRates(userId: String): CustomResultModelDomain<List<HeartRateModelDomain>, CommonExceptionModelDomain> {
+        TODO("Not yet implemented")
+    }
 }

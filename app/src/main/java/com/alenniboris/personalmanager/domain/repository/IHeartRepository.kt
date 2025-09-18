@@ -11,4 +11,16 @@ interface IHeartRepository {
         date: Date,
         userId: String
     ): CustomResultModelDomain<List<HeartRateModelDomain>, CommonExceptionModelDomain>
+
+    suspend fun addHeartRate(
+        heartRate: HeartRateModelDomain
+    ): CustomResultModelDomain<Unit, CommonExceptionModelDomain>
+
+    suspend fun deleteHeartRate(
+        heartRate: HeartRateModelDomain
+    ): CustomResultModelDomain<Unit, CommonExceptionModelDomain>
+
+    suspend fun getAllHeartRates(
+        userId: String
+    ): CustomResultModelDomain<List<HeartRateModelDomain>, CommonExceptionModelDomain>
 }

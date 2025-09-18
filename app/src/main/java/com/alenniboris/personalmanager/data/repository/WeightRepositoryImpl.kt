@@ -47,4 +47,16 @@ class WeightRepositoryImpl @Inject constructor(
                 }
             )
         }
+
+    override suspend fun addWeight(weight: WeightModelDomain): CustomResultModelDomain<Unit, CommonExceptionModelDomain> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteWeight(weight: WeightModelDomain): CustomResultModelDomain<Unit, CommonExceptionModelDomain> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getAllWeights(userId: String): CustomResultModelDomain<List<WeightModelDomain>, CommonExceptionModelDomain> {
+        TODO("Not yet implemented")
+    }
 }

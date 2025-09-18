@@ -12,4 +12,16 @@ interface IWeightRepository {
         endDate: Date,
         userId: String
     ): CustomResultModelDomain<List<WeightModelDomain>, CommonExceptionModelDomain>
+
+    suspend fun addWeight(
+        weight: WeightModelDomain
+    ): CustomResultModelDomain<Unit, CommonExceptionModelDomain>
+
+    suspend fun deleteWeight(
+        weight: WeightModelDomain
+    ): CustomResultModelDomain<Unit, CommonExceptionModelDomain>
+
+    suspend fun getAllWeights(
+        userId: String
+    ): CustomResultModelDomain<List<WeightModelDomain>, CommonExceptionModelDomain>
 }
