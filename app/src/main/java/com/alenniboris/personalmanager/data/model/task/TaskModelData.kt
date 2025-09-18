@@ -1,4 +1,4 @@
-package com.alenniboris.personalmanager.data.model
+package com.alenniboris.personalmanager.data.model.task
 
 import com.alenniboris.personalmanager.domain.model.task.TaskModelDomain
 import com.alenniboris.personalmanager.domain.model.task.TaskPriority

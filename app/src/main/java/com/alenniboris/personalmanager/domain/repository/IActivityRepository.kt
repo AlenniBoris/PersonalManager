@@ -1,6 +1,6 @@
 package com.alenniboris.personalmanager.domain.repository
 
-import com.alenniboris.personalmanager.domain.model.ActivityModelDomain
+import com.alenniboris.personalmanager.domain.model.activity.ActivityModelDomain
 import com.alenniboris.personalmanager.domain.model.common.CommonExceptionModelDomain
 import com.alenniboris.personalmanager.domain.model.common.CustomResultModelDomain
 import java.util.Date

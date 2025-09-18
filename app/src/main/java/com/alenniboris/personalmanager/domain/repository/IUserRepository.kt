@@ -20,4 +20,8 @@ interface IUserRepository {
     ): CustomResultModelDomain<Unit, CommonExceptionModelDomain>
 
     suspend fun signOut(): CustomResultModelDomain<Unit, CommonExceptionModelDomain>
+
+    suspend fun updateUser(
+        user: UserModelDomain
+    ): CustomResultModelDomain<Unit, CommonExceptionModelDomain>
 }

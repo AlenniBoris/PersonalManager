@@ -21,6 +21,7 @@ import com.alenniboris.personalmanager.domain.usecase.impl.user.GetCurrentUserUs
 import com.alenniboris.personalmanager.domain.usecase.impl.user.LoginUserByEmailAndPasswordUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.user.RegisterUserUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.user.SignOutUserUseCaseImpl
+import com.alenniboris.personalmanager.domain.usecase.impl.user.UpdateUserUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.weather_and_location.GetCurrentForecastUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.weather_and_location.GetTodayWeatherForecastUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.weather_and_location.GetWeekWeatherForecastUseCaseImpl
@@ -50,6 +51,7 @@ import com.alenniboris.personalmanager.domain.usecase.logic.user.IGetCurrentUser
 import com.alenniboris.personalmanager.domain.usecase.logic.user.ILoginUserByEmailAndPasswordUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.user.IRegisterUserUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.user.ISignOutUserUseCase
+import com.alenniboris.personalmanager.domain.usecase.logic.user.IUpdateUserUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.weather_and_location.IGetCurrentForecastUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.weather_and_location.IGetTodayWeatherForecastUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.weather_and_location.IGetWeekWeatherForecastUseCase
@@ -213,4 +215,9 @@ abstract class UseCaseModule {
     abstract fun bindDeleteActivityUseCase(
         deleteActivityUseCaseImpl: DeleteActivityUseCaseImpl
     ): IDeleteActivityUseCase
+
+    @Binds
+    abstract fun bindUpdateUserUseCase(
+        updateUserUseCaseImpl: UpdateUserUseCaseImpl
+    ): IUpdateUserUseCase
 }

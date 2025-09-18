@@ -1,9 +1,9 @@
 package com.alenniboris.personalmanager.data.repository
 
 import com.alenniboris.personalmanager.data.mapper.toCommonException
-import com.alenniboris.personalmanager.data.model.TaskModelData
-import com.alenniboris.personalmanager.data.model.toModelData
-import com.alenniboris.personalmanager.data.model.toModelDomain
+import com.alenniboris.personalmanager.data.model.task.TaskModelData
+import com.alenniboris.personalmanager.data.model.task.toModelData
+import com.alenniboris.personalmanager.data.model.task.toModelDomain
 import com.alenniboris.personalmanager.data.utils.CommonFunctions
 import com.alenniboris.personalmanager.data.utils.FirebaseDatabaseValues
 import com.alenniboris.personalmanager.domain.model.common.CommonExceptionModelDomain

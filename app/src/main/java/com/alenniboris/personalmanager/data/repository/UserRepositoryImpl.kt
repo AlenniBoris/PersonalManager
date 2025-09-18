@@ -1,9 +1,9 @@
 package com.alenniboris.personalmanager.data.repository
 
 import com.alenniboris.personalmanager.data.mapper.toCommonException
-import com.alenniboris.personalmanager.data.model.UserModelData
-import com.alenniboris.personalmanager.data.model.toModelData
-import com.alenniboris.personalmanager.data.model.toModelDomain
+import com.alenniboris.personalmanager.data.model.user.UserModelData
+import com.alenniboris.personalmanager.data.model.user.toModelData
+import com.alenniboris.personalmanager.data.model.user.toModelDomain
 import com.alenniboris.personalmanager.data.utils.CommonFunctions
 import com.alenniboris.personalmanager.data.utils.FirebaseDatabaseValues
 import com.alenniboris.personalmanager.domain.model.common.CommonExceptionModelDomain
@@ -173,5 +173,32 @@ class UserRepositoryImpl @Inject constructor(
         withContext(dispatchers.IO) {
             _userFlow.update { null }
             return@withContext CustomResultModelDomain.Success(Unit)
+        }
+
+    override suspend fun updateUser(
+        user: UserModelDomain
+    ): CustomResultModelDomain<Unit, CommonExceptionModelDomain> =
+        withContext(dispatchers.IO) {
+            return@withContext when (
+                val res = CommonFunctions.updateElementValue(
+                    dispatcher = dispatchers.IO,
+                    database = database,
+                    table = FirebaseDatabaseValues.TABLE_USERS,
+                    modelId = user.id,
+                    model = user.toModelData(),
+                    exceptionMapping = { exception ->
+                        exception.toCommonException()
+                    }
+                )
+            ) {
+                is CustomResultModelDomain.Success -> {
+                    _userFlow.update { user }
+                    res
+                }
+
+                is CustomResultModelDomain.Error -> {
+                    res
+                }
+            }
         }
 }

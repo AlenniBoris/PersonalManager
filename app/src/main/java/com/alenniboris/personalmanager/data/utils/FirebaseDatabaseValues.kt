@@ -10,4 +10,5 @@ object FirebaseDatabaseValues {
     const val TABLE_FOOD = "food"
     const val TABLE_HEART_RATE = "heart_rate"
     const val TABLE_WEIGHT = "weight"
+    const val TABLE_ACTIVITY = "activity"
 }

@@ -2,6 +2,7 @@ package com.alenniboris.personalmanager.data.repository
 
 import com.alenniboris.personalmanager.data.mapper.toCommonException
 import com.alenniboris.personalmanager.data.model.weight.WeightModelData
+import com.alenniboris.personalmanager.data.model.weight.toModelData
 import com.alenniboris.personalmanager.data.model.weight.toModelDomain
 import com.alenniboris.personalmanager.data.utils.CommonFunctions
 import com.alenniboris.personalmanager.data.utils.FirebaseDatabaseValues
@@ -48,15 +49,61 @@ class WeightRepositoryImpl @Inject constructor(
             )
         }
 
-    override suspend fun addWeight(weight: WeightModelDomain): CustomResultModelDomain<Unit, CommonExceptionModelDomain> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun addWeight(
+        weight: WeightModelDomain
+    ): CustomResultModelDomain<Unit, CommonExceptionModelDomain> =
+        withContext(dispatchers.IO) {
+            return@withContext CommonFunctions.addRecordToTheTable(
+                dispatcher = dispatchers.IO,
+                database = database,
+                table = FirebaseDatabaseValues.TABLE_WEIGHT,
+                exceptionMapping = { exception ->
+                    exception.toCommonException()
+                },
+                onGeneratingError = {
+                    CommonExceptionModelDomain.UnknownException
+                },
+                editingRecord = { id ->
+                    weight.copy(id = id).toModelData()
+                }
+            )
+        }
 
-    override suspend fun deleteWeight(weight: WeightModelDomain): CustomResultModelDomain<Unit, CommonExceptionModelDomain> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun deleteWeight(
+        weight: WeightModelDomain
+    ): CustomResultModelDomain<Unit, CommonExceptionModelDomain> =
+        withContext(dispatchers.IO) {
+            return@withContext CommonFunctions.removeRecordFromTheTable(
+                dispatcher = dispatchers.IO,
+                database = database,
+                table = FirebaseDatabaseValues.TABLE_WEIGHT,
+                recordId = weight.id,
+                exceptionMapping = { exception ->
+                    exception.toCommonException()
+                }
+            )
+        }
 
-    override suspend fun getAllWeights(userId: String): CustomResultModelDomain<List<WeightModelDomain>, CommonExceptionModelDomain> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getAllWeights(
+        userId: String
+    ): CustomResultModelDomain<List<WeightModelDomain>, CommonExceptionModelDomain> =
+        withContext(dispatchers.IO) {
+            return@withContext CommonFunctions.requestListOfElements(
+                dispatcher = dispatchers.IO,
+                database = database,
+                table = FirebaseDatabaseValues.TABLE_WEIGHT,
+                jsonMapping = { json ->
+                    json.fromJson<WeightModelData>()
+                },
+                modelsMapping = { dataModel ->
+                    dataModel.toModelDomain()
+                },
+                filterPredicate = { domainModel ->
+                    domainModel.userId == userId
+                },
+                exceptionMapping = { exception ->
+                    exception.toCommonException()
+                }
+            )
+        }
 }

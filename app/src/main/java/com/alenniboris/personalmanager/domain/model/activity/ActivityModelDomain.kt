@@ -1,4 +1,4 @@
-package com.alenniboris.personalmanager.domain.model
+package com.alenniboris.personalmanager.domain.model.activity
 
 import java.util.Date
 

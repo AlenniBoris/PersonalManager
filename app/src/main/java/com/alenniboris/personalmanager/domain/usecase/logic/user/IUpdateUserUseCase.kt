@@ -1,12 +1,11 @@
-package com.alenniboris.personalmanager.domain.usecase.logic.activity
+package com.alenniboris.personalmanager.domain.usecase.logic.user
 
-import com.alenniboris.personalmanager.domain.model.activity.ActivityModelDomain
 import com.alenniboris.personalmanager.domain.model.common.CommonExceptionModelDomain
 import com.alenniboris.personalmanager.domain.model.common.CustomResultModelDomain
+import com.alenniboris.personalmanager.domain.model.user.UserModelDomain
 
-interface IDeleteActivityUseCase {
-
+interface IUpdateUserUseCase {
     suspend fun invoke(
-        activity: ActivityModelDomain
+        user: UserModelDomain
     ): CustomResultModelDomain<Unit, CommonExceptionModelDomain>
 }
