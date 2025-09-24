@@ -4,14 +4,15 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.ui.graphics.Color
 import com.alenniboris.personalmanager.domain.model.food.FoodIntakeModelDomain
+import com.alenniboris.personalmanager.domain.utils.stripTime
 import com.alenniboris.personalmanager.presentation.mapper.WeightMapper
-import com.alenniboris.personalmanager.presentation.mapper.stripTime
 import com.alenniboris.personalmanager.presentation.mapper.toDayType
 import com.alenniboris.personalmanager.presentation.model.food.FoodIntakeModelUi
 import com.alenniboris.personalmanager.presentation.model.health.TodayHealthStatisticsModelUi
 import com.alenniboris.personalmanager.presentation.model.heart.HeartRateModelUi
 import com.alenniboris.personalmanager.presentation.model.user.UserModelUi
 import com.alenniboris.personalmanager.presentation.model.weight.WeightModelUi
+import com.alenniboris.personalmanager.presentation.uikit.utils.ScreensCommonUtils
 import com.alenniboris.personalmanager.presentation.uikit.values.toUiString
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -27,7 +28,7 @@ data class HealthScreenState(
     val todayHealthStatistics: TodayHealthStatisticsModelUi = TodayHealthStatisticsModelUi(),
 
     val isWeightDataLoading: Boolean = false,
-    val weightChartStartDate: Date = HealthScreenCommon.getDateWeekAgo(),
+    val weightChartStartDate: Date = ScreensCommonUtils.getDateWeekAgo(),
     val weightChartEndDate: Date = Calendar.getInstance().time,
     val weightChartList: List<WeightModelUi> = emptyList(),
     val isWeightChartStartDatePickerVisible: Boolean = false,
@@ -67,25 +68,25 @@ data class HealthScreenState(
                 id = this.id,
                 userId = this.userId,
                 title = this.title,
-                proteins = if (this.proteins.isEmpty()) HealthScreenCommon.ZERO_DOUBLE_VALUE else this.proteins.toDouble(),
-                fats = if (this.fats.isEmpty()) HealthScreenCommon.ZERO_DOUBLE_VALUE else this.fats.toDouble(),
-                carbohydrates = if (this.carbohydrates.isEmpty()) HealthScreenCommon.ZERO_DOUBLE_VALUE else this.carbohydrates.toDouble(),
+                proteins = if (this.proteins.isEmpty()) ScreensCommonUtils.ZERO_DOUBLE_VALUE else this.proteins.toDouble(),
+                fats = if (this.fats.isEmpty()) ScreensCommonUtils.ZERO_DOUBLE_VALUE else this.fats.toDouble(),
+                carbohydrates = if (this.carbohydrates.isEmpty()) ScreensCommonUtils.ZERO_DOUBLE_VALUE else this.carbohydrates.toDouble(),
                 markingDate = this.markingDate,
                 markingTime = this.markingTime,
-                calories = if (this.calories.isEmpty()) HealthScreenCommon.ZERO_DOUBLE_VALUE else this.calories.toDouble()
+                calories = if (this.calories.isEmpty()) ScreensCommonUtils.ZERO_DOUBLE_VALUE else this.calories.toDouble()
             )
     }
 
     val weightChartStartDateText: String =
         SimpleDateFormat(
-            HealthScreenCommon.SIMPLE_DATE_PATTERN, Locale.getDefault()
+            ScreensCommonUtils.SIMPLE_DATE_PATTERN, Locale.getDefault()
         ).format(weightChartStartDate)
 
     @RequiresApi(Build.VERSION_CODES.O)
     val weightChartStartDateDayText: Int = weightChartStartDate.toDayType().toUiString()
     val weightChartEndDateText: String =
         SimpleDateFormat(
-            HealthScreenCommon.SIMPLE_DATE_PATTERN, Locale.getDefault()
+            ScreensCommonUtils.SIMPLE_DATE_PATTERN, Locale.getDefault()
         ).format(weightChartEndDate)
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -93,18 +94,18 @@ data class HealthScreenState(
 
     val weightChange: Double =
         (weightChartList.lastOrNull()?.weightValue
-            ?: HealthScreenCommon.ZERO_DOUBLE_VALUE) - (weightChartList.firstOrNull()?.weightValue
-            ?: HealthScreenCommon.ZERO_DOUBLE_VALUE)
+            ?: ScreensCommonUtils.ZERO_DOUBLE_VALUE) - (weightChartList.firstOrNull()?.weightValue
+            ?: ScreensCommonUtils.ZERO_DOUBLE_VALUE)
     val weightChangeText: String = "$weightChange kg"
     val weightChangeIcon: Int = WeightMapper.getWeightChangeIcon(weightChange = weightChange)
     val weightChangeColor: Color = WeightMapper.getWeightChangeColor(weightChange = weightChange)
     val currentWeight: Double =
-        weightChartList.lastOrNull()?.weightValue ?: HealthScreenCommon.ZERO_DOUBLE_VALUE
+        weightChartList.lastOrNull()?.weightValue ?: ScreensCommonUtils.ZERO_DOUBLE_VALUE
     val currentWeightText: String = currentWeight.toString()
 
     val heartRateChartDateText: String =
         SimpleDateFormat(
-            HealthScreenCommon.SIMPLE_DATE_PATTERN, Locale.getDefault()
+            ScreensCommonUtils.SIMPLE_DATE_PATTERN, Locale.getDefault()
         ).format(heartRateChartDate)
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -112,7 +113,7 @@ data class HealthScreenState(
 
     val foodIntakeDateText: String =
         SimpleDateFormat(
-            HealthScreenCommon.SIMPLE_DATE_PATTERN, Locale.getDefault()
+            ScreensCommonUtils.SIMPLE_DATE_PATTERN, Locale.getDefault()
         ).format(foodIntakeDate)
 
     val totalCaloriesText = foodIntakeList.sumOf { it.caloriesValue }.toString()

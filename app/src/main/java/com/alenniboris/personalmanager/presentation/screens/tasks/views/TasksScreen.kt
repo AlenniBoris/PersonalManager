@@ -27,6 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.domain.utils.LogPrinter
+import com.alenniboris.personalmanager.presentation.screens.destinations.PersonalScreenDestination
 import com.alenniboris.personalmanager.presentation.screens.tasks.ITasksScreenEvent
 import com.alenniboris.personalmanager.presentation.screens.tasks.ITasksScreenIntent
 import com.alenniboris.personalmanager.presentation.screens.tasks.TasksScreenOption
@@ -54,13 +55,16 @@ import com.alenniboris.personalmanager.presentation.uikit.views.AppLazyButtonRow
 import com.alenniboris.personalmanager.presentation.uikit.views.AppSingleLineDateFilter
 import com.alenniboris.personalmanager.presentation.uikit.views.AppTopBar
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.launch
 
 @Composable
 @Destination(route = TasksScreenRoute)
 @RequiresApi(Build.VERSION_CODES.O)
-fun TasksScreen() {
+fun TasksScreen(
+    navigator: DestinationsNavigator
+) {
 
     val viewModel: TasksScreenViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -75,6 +79,11 @@ fun TasksScreen() {
                     tag = "!!!",
                     message = context.getString(coming.messageId)
                 )
+            }
+        }
+        launch {
+            event.filterIsInstance<ITasksScreenEvent.OpenPersonalScreen>().collect {
+                navigator.navigate(PersonalScreenDestination)
             }
         }
     }
@@ -110,7 +119,11 @@ private fun TasksScreenUi(
             secondButtonPainter = painterResource(R.drawable.settings_icon),
             onSecondClicked = {},
             thirdButtonPainter = painterResource(R.drawable.person_icon),
-            onThirdClicked = {}
+            onThirdClicked = {
+                proceedIntent(
+                    ITasksScreenIntent.OpenPersonalScreen
+                )
+            }
         )
 
         Column(

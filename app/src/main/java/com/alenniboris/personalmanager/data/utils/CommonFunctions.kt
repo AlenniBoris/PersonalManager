@@ -122,7 +122,8 @@ object CommonFunctions {
         table: String,
         jsonMapping: (String) -> DataModel,
         modelsMapping: (DataModel) -> DomainModel?,
-        filterPredicate: (DomainModel) -> Boolean,
+        filterPredicate: (DomainModel) -> Boolean = { true },
+        sortComparator: Comparator<DomainModel>? = null,
         exceptionMapping: (Throwable) -> ExceptionModel
     ): CustomResultModelDomain<List<DomainModel>, ExceptionModel> = withContext(dispatcher) {
         runCatching {
@@ -136,6 +137,11 @@ object CommonFunctions {
                 .map { jsonMapping(it.value.toJson()) }
                 .mapNotNull { modelsMapping(it) }
                 .filter { filterPredicate(it) }
+                .let { list ->
+                    sortComparator?.let {
+                        list.sortedWith(sortComparator)
+                    } ?: list
+                }
 
             return@withContext CustomResultModelDomain.Success(
                 elements

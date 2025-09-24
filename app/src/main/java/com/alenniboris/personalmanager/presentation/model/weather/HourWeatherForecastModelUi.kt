@@ -3,6 +3,7 @@ package com.alenniboris.personalmanager.presentation.model.weather
 import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.domain.model.weather.HourWeatherForecastModelDomain
 import com.alenniboris.personalmanager.presentation.mapper.toUiString
+import com.alenniboris.personalmanager.presentation.uikit.utils.ScreensCommonUtils
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -12,7 +13,7 @@ data class HourWeatherForecastModelUi(
 
     val timeText = domainModel?.hourTime?.let {
         SimpleDateFormat(
-            "HH:mm", Locale.getDefault()
+            ScreensCommonUtils.SIMPLE_HOUR_PATTERN, Locale.getDefault()
         ).format(it)
     }
     val temperatureText = domainModel?.temperature?.toInt()?.let { "$it°" }

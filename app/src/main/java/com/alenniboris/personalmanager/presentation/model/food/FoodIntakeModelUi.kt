@@ -1,7 +1,7 @@
 package com.alenniboris.personalmanager.presentation.model.food
 
 import com.alenniboris.personalmanager.domain.model.food.FoodIntakeModelDomain
-import com.alenniboris.personalmanager.presentation.screens.health_screen.HealthScreenCommon
+import com.alenniboris.personalmanager.presentation.uikit.utils.ScreensCommonUtils
 import java.text.SimpleDateFormat
 import java.util.Locale
 import kotlin.math.roundToInt
@@ -25,7 +25,7 @@ data class FoodIntakeModelUi(
 
     val dateText: String =
         SimpleDateFormat(
-            HealthScreenCommon.COMBINED_DATE_PATTERN,
+            ScreensCommonUtils.COMBINED_DATE_PATTERN,
             Locale.getDefault()
         ).format(domainModel.markingTime)
 }

@@ -19,7 +19,7 @@ interface IUserRepository {
         password: String
     ): CustomResultModelDomain<Unit, CommonExceptionModelDomain>
 
-    suspend fun signOut(): CustomResultModelDomain<Unit, CommonExceptionModelDomain>
+    fun signOut()
 
     suspend fun updateUser(
         user: UserModelDomain

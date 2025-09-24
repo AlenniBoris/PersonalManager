@@ -38,6 +38,7 @@ class TasksRepositoryImpl @Inject constructor(
                 filterPredicate = { domainModel ->
                     domainModel.userId == userId
                 },
+                sortComparator = compareByDescending { it.createdDate.time },
                 exceptionMapping = { exception ->
                     exception.toCommonException()
                 }

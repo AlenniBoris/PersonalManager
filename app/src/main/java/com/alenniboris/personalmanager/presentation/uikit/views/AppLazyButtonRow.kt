@@ -3,7 +3,7 @@ package com.alenniboris.personalmanager.presentation.uikit.views
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -53,7 +52,8 @@ fun AppLazyButtonRow(
 
     LazyRow(
         modifier = modifier,
-        state = itemsLazyListState
+        state = itemsLazyListState,
+        horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         items(listOfElements) { element ->
 
@@ -154,15 +154,7 @@ private fun LightTheme() {
                             text = "qwdkmwqdlkwd2",
                             onClick = {}
                         ), ClickableElement(
-                            text = "3wqlkmd",
-                            onClick = {}
-                        ),
-                        ClickableElement(
-                            text = "4",
-                            onClick = {}
-                        ),
-                        ClickableElement(
-                            text = "5qdlkmdl",
+                            text = "3wql",
                             onClick = {}
                         )
                     )

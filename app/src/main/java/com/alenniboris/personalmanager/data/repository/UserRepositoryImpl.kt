@@ -169,11 +169,9 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun signOut(): CustomResultModelDomain<Unit, CommonExceptionModelDomain> =
-        withContext(dispatchers.IO) {
-            _userFlow.update { null }
-            return@withContext CustomResultModelDomain.Success(Unit)
-        }
+    override fun signOut(){
+        _userFlow.update { null }
+    }
 
     override suspend fun updateUser(
         user: UserModelDomain

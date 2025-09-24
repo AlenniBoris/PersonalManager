@@ -13,7 +13,9 @@ data class UserModelDomain(
     val fitnessGoal: FitnessGoal,
     val neededProteins: Double,
     val neededFats: Double,
-    val neededCarbohydrates: Double
+    val neededCarbohydrates: Double,
+    val gender: UserGender,
+    val password: String
 )
 
 fun UserModelDomain.checkRegistrationFieldsFilled(): Boolean =

@@ -4,6 +4,7 @@ import com.alenniboris.personalmanager.domain.model.common.CommonExceptionModelD
 import com.alenniboris.personalmanager.domain.model.common.CustomResultModelDomain
 import com.alenniboris.personalmanager.domain.model.common.IAppDispatchers
 import com.alenniboris.personalmanager.domain.model.weight.WeightModelDomain
+import com.alenniboris.personalmanager.domain.repository.IUserRepository
 import com.alenniboris.personalmanager.domain.repository.IWeightRepository
 import com.alenniboris.personalmanager.domain.usecase.logic.user.IGetCurrentUserUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.weight.IAddWeightUseCase
@@ -12,6 +13,7 @@ import javax.inject.Inject
 
 class AddWeightUseCaseImpl @Inject constructor(
     private val weightRepository: IWeightRepository,
+    private val userRepository: IUserRepository,
     private val getCurrentUserUseCase: IGetCurrentUserUseCase,
     private val dispatchers: IAppDispatchers
 ) : IAddWeightUseCase {
@@ -21,11 +23,27 @@ class AddWeightUseCaseImpl @Inject constructor(
     ): CustomResultModelDomain<Unit, CommonExceptionModelDomain> =
         withContext(dispatchers.IO) {
             return@withContext getCurrentUserUseCase.userFlow.value?.let { user ->
-                weightRepository.addWeight(
-                    weight = weight.copy(
-                        userId = user.id
+                when (
+                    val weightResult = weightRepository.addWeight(
+                        weight = weight.copy(
+                            userId = user.id
+                        )
                     )
-                )
+                ) {
+                    is CustomResultModelDomain.Success -> {
+                        userRepository.updateUser(
+                            user = user.copy(
+                                weight = weight.weight
+                            )
+                        )
+                    }
+
+                    is CustomResultModelDomain.Error -> {
+                        CustomResultModelDomain.Error(
+                            weightResult.exception
+                        )
+                    }
+                }
             } ?: CustomResultModelDomain.Error(
                 CommonExceptionModelDomain.ErrorGettingData
             )

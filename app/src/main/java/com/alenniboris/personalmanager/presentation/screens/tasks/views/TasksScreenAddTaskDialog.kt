@@ -38,7 +38,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeSmall
 import com.alenniboris.personalmanager.presentation.uikit.theme.buttonRowBackgroundColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.enterTextFieldColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogItemPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.tasksScreenAddDialogProgressHeight
+import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogProgressHeight
 import com.alenniboris.personalmanager.presentation.uikit.views.AppCustomButton
 import com.alenniboris.personalmanager.presentation.uikit.views.AppLazyButtonRow
 import com.alenniboris.personalmanager.presentation.uikit.views.AppProgressAnimation
@@ -83,7 +83,7 @@ private fun AddTaskDialogUi(
         AppProgressAnimation(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(tasksScreenAddDialogProgressHeight)
+                .height(addDialogProgressHeight)
         )
     } else {
 

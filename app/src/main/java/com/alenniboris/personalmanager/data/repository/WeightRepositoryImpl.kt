@@ -43,6 +43,7 @@ class WeightRepositoryImpl @Inject constructor(
                             (domainModel.markingDate.time >= startDate.time &&
                                     domainModel.markingDate.time <= endDate.time)
                 },
+                sortComparator = compareByDescending { it.markingTime },
                 exceptionMapping = { exception ->
                     exception.toCommonException()
                 }
@@ -101,6 +102,7 @@ class WeightRepositoryImpl @Inject constructor(
                 filterPredicate = { domainModel ->
                     domainModel.userId == userId
                 },
+                sortComparator = compareByDescending { it.markingTime },
                 exceptionMapping = { exception ->
                     exception.toCommonException()
                 }

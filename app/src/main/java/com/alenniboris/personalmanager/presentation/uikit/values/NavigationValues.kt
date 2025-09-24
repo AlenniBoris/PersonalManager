@@ -5,3 +5,8 @@ const val HomeScreenRoute = "home_screen"
 const val WeatherScreenRoute = "weather_screen"
 const val TasksScreenRoute = "tasks_screen"
 const val HealthScreenRoute = "health_screen"
+const val PersonalScreenRoute = "personal_screen"
+
+val screenRoutesWithoutBottomBar = listOf(
+    PersonalScreenRoute
+)

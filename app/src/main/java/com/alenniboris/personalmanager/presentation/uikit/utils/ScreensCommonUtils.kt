@@ -1,11 +1,11 @@
-package com.alenniboris.personalmanager.presentation.screens.health_screen
+package com.alenniboris.personalmanager.presentation.uikit.utils
 
-import com.alenniboris.personalmanager.presentation.mapper.stripTime
+import com.alenniboris.personalmanager.domain.utils.stripTime
 import java.util.Calendar
 import java.util.Date
 import kotlin.math.roundToInt
 
-object HealthScreenCommon {
+object ScreensCommonUtils {
 
     const val SIMPLE_DATE_PATTERN = "dd.MM.yyyy"
     const val SIMPLE_HOUR_PATTERN = "HH:mm"

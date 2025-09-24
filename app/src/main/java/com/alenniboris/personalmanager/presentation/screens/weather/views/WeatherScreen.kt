@@ -31,9 +31,10 @@ import com.alenniboris.personalmanager.domain.model.weather.DayWeatherForecastMo
 import com.alenniboris.personalmanager.domain.model.weather.HourWeatherForecastModelDomain
 import com.alenniboris.personalmanager.domain.model.weather.WindDirection
 import com.alenniboris.personalmanager.domain.utils.LogPrinter
+import com.alenniboris.personalmanager.presentation.model.user.UserModelUi
 import com.alenniboris.personalmanager.presentation.model.weather.DayWeatherForecastModelUi
 import com.alenniboris.personalmanager.presentation.model.weather.HourWeatherForecastModelUi
-import com.alenniboris.personalmanager.presentation.model.user.UserModelUi
+import com.alenniboris.personalmanager.presentation.screens.destinations.PersonalScreenDestination
 import com.alenniboris.personalmanager.presentation.screens.weather.IWeatherScreenEvent
 import com.alenniboris.personalmanager.presentation.screens.weather.IWeatherScreenIntent
 import com.alenniboris.personalmanager.presentation.screens.weather.WeatherScreenOptions
@@ -44,14 +45,14 @@ import com.alenniboris.personalmanager.presentation.uikit.model.ClickableElement
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
 import com.alenniboris.personalmanager.presentation.uikit.theme.appButtonRowInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.appDetailsInfoBlockBorderWidth
 import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.appRoundedShape
 import com.alenniboris.personalmanager.presentation.uikit.theme.appSubtleTextColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.buttonRowBackgroundColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.topBarInnerPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.appDetailsInfoBlockBorderWidth
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockOuterPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.appRoundedShape
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenCardColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenColumnInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenWeatherCardInnerPadding
@@ -81,6 +82,11 @@ fun WeatherScreen(
         launch {
             event.filterIsInstance<IWeatherScreenEvent.ShowToast>().collect { coming ->
                 LogPrinter.printLog("!!!", context.getString(coming.messageId))
+            }
+        }
+        launch {
+            event.filterIsInstance<IWeatherScreenEvent.OpenPersonalScreen>().collect {
+                navigator.navigate(PersonalScreenDestination)
             }
         }
     }
@@ -116,7 +122,11 @@ private fun WeatherScreenUi(
             secondButtonPainter = painterResource(R.drawable.settings_icon),
             onSecondClicked = {},
             thirdButtonPainter = painterResource(R.drawable.person_icon),
-            onThirdClicked = {}
+            onThirdClicked = {
+                proceedIntent(
+                    IWeatherScreenIntent.OpenPersonalScreen
+                )
+            }
         )
 
         Column(

@@ -6,7 +6,7 @@ import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.domain.model.task.TaskModelDomain
 import com.alenniboris.personalmanager.domain.model.task.TaskPriority
 import com.alenniboris.personalmanager.domain.model.task.TaskStatus
-import com.alenniboris.personalmanager.presentation.mapper.stripTime
+import com.alenniboris.personalmanager.domain.utils.stripTime
 import com.alenniboris.personalmanager.presentation.mapper.toDayType
 import com.alenniboris.personalmanager.presentation.model.task.TaskModelUi
 import com.alenniboris.personalmanager.presentation.model.user.UserModelUi

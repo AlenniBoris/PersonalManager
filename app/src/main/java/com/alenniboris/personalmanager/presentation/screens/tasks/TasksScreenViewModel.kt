@@ -59,6 +59,7 @@ class TasksScreenViewModel @Inject constructor(
 
     fun proceedIntent(intent: ITasksScreenIntent) {
         when (intent) {
+            is ITasksScreenIntent.OpenPersonalScreen -> openPersonalScreen()
             is ITasksScreenIntent.UpdateScreenOption -> updateScreenOption(intent.option)
             is ITasksScreenIntent.UpdateAddTaskDialogVisibility -> updateAddTaskDialogVisibility()
             is ITasksScreenIntent.UpdateAddTaskDate -> updateAddTaskDate(intent.newValue)
@@ -82,6 +83,10 @@ class TasksScreenViewModel @Inject constructor(
             is ITasksScreenIntent.UpdateDateFilterPickerVisibility -> updateDateFilterPickerVisibility()
             is ITasksScreenIntent.UpdateSelectedFilterDate -> updateSelectedFilterDate(intent.date)
         }
+    }
+
+    private fun openPersonalScreen() {
+        _event.emit(ITasksScreenEvent.OpenPersonalScreen)
     }
 
     private fun updateSelectedFilterDate(date: Date?) {
@@ -196,8 +201,8 @@ class TasksScreenViewModel @Inject constructor(
                     )
                 ) {
                     is CustomResultModelDomain.Success -> {
-                        selectEditedTask(null)
                         loadTasks()
+                        selectEditedTask(null)
                     }
 
                     is CustomResultModelDomain.Error -> {
@@ -270,8 +275,8 @@ class TasksScreenViewModel @Inject constructor(
                 )
             ) {
                 is CustomResultModelDomain.Success -> {
-                    updateAddTaskDialogVisibility()
                     loadTasks()
+                    updateAddTaskDialogVisibility()
                 }
 
                 is CustomResultModelDomain.Error -> {

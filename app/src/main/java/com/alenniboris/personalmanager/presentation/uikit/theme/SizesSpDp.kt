@@ -73,7 +73,7 @@ val taskItemUiDetailsItemIconPadding = PaddingValues(end = 5.dp)
 val tasksScreenContentListFirstPadding = PaddingValues(top = 10.dp, bottom = 10.dp)
 val tasksScreenContentListPadding = PaddingValues(top = 5.dp, bottom = 5.dp)
 val addDialogItemPadding = PaddingValues(top = 15.dp)
-val tasksScreenAddDialogProgressHeight = 300.dp
+val addDialogProgressHeight = 300.dp
 val tasksScreenTaskItemButtonPadding = PaddingValues(start = 10.dp)
 val tasksScreenPieChartRadius = 100.dp
 val tasksScreenPieChartPadding = PaddingValues(bottom = 15.dp)
@@ -111,3 +111,12 @@ val healthScreenNutritionOptionFoodItemRowPadding = PaddingValues(top = 10.dp)
 val healthScreenFoodAddDialogItemStartPadding = PaddingValues(start = 10.dp)
 val healthScreenFoodDetailsStartPadding = PaddingValues(start = 10.dp)
 val healthScreenFoodDetailsColorRadius = 24.dp
+val personalScreenContentPadding = PaddingValues(horizontal = 15.dp)
+val personalScreenContentItemVerticalPadding = PaddingValues(vertical = 10.dp)
+val personalScreenProfileOptionIconSize = 50.dp
+val personalScreenInfoTextTopPadding = PaddingValues(top = 10.dp)
+val personalScreenProfileOptionTextStartPadding = PaddingValues(start = 10.dp)
+val personalScreenProfileOptionEditIconInnerPadding = PaddingValues(all = 5.dp)
+val personalScreenInfoBlockInnerPadding =
+    PaddingValues(horizontal = 15.dp, vertical = 15.dp)
+val personalScreenListItemPadding = PaddingValues(top = 10.dp)

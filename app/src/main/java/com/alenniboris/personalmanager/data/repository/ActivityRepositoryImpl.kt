@@ -40,6 +40,7 @@ class ActivityRepositoryImpl @Inject constructor(
                 filterPredicate = { domainModel ->
                     domainModel.userId == userId && domainModel.markingDate == date
                 },
+                sortComparator = compareByDescending { it.markingTime },
                 exceptionMapping = { exception ->
                     exception.toCommonException()
                 }
@@ -88,7 +89,7 @@ class ActivityRepositoryImpl @Inject constructor(
             return@withContext CommonFunctions.requestListOfElements(
                 dispatcher = dispatchers.IO,
                 database = database,
-                table = FirebaseDatabaseValues.TABLE_HEART_RATE,
+                table = FirebaseDatabaseValues.TABLE_ACTIVITY,
                 jsonMapping = { json ->
                     json.fromJson<ActivityModelData>()
                 },
@@ -98,6 +99,7 @@ class ActivityRepositoryImpl @Inject constructor(
                 filterPredicate = { domainModel ->
                     domainModel.userId == userId
                 },
+                sortComparator = compareByDescending { it.markingTime },
                 exceptionMapping = { exception ->
                     exception.toCommonException()
                 }

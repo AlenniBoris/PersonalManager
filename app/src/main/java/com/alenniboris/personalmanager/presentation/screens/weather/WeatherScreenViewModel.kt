@@ -163,7 +163,14 @@ class WeatherScreenViewModel @Inject constructor(
             is IWeatherScreenIntent.ChangeViewedOption -> changeViewedOption(intent.option)
             is IWeatherScreenIntent.UpdateSelectedDay -> updateSelectedDay(intent.selected)
             is IWeatherScreenIntent.UpdateSelectedHour -> updateSelectedHour(intent.selected)
+            is IWeatherScreenIntent.OpenPersonalScreen -> openPersonalScreen()
         }
+    }
+
+    private fun openPersonalScreen() {
+        _event.emit(
+            IWeatherScreenEvent.OpenPersonalScreen
+        )
     }
 
     private fun updateSelectedHour(hourForecast: HourWeatherForecastModelUi?) {

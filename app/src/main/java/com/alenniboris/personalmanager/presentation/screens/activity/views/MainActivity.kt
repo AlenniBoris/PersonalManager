@@ -50,6 +50,7 @@ import com.alenniboris.personalmanager.presentation.uikit.values.HealthScreenRou
 import com.alenniboris.personalmanager.presentation.uikit.values.HomeScreenRoute
 import com.alenniboris.personalmanager.presentation.uikit.values.TasksScreenRoute
 import com.alenniboris.personalmanager.presentation.uikit.values.WeatherScreenRoute
+import com.alenniboris.personalmanager.presentation.uikit.values.screenRoutesWithoutBottomBar
 import com.alenniboris.personalmanager.presentation.uikit.values.toModelUi
 import com.alenniboris.personalmanager.presentation.uikit.views.AppBottomBar
 import com.alenniboris.personalmanager.presentation.uikit.views.AppPermissionRationaleDialog
@@ -179,7 +180,7 @@ private fun AppUi(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            if (isAuthenticated) {
+            if (isAuthenticated && !screenRoutesWithoutBottomBar.contains(currentRoute)) {
                 AppBottomBar(
                     modifier = Modifier
                         .fillMaxWidth()

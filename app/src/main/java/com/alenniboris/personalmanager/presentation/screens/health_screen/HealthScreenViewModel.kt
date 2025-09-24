@@ -13,7 +13,7 @@ import com.alenniboris.personalmanager.domain.usecase.logic.heart.IGetHeartRates
 import com.alenniboris.personalmanager.domain.usecase.logic.user.IGetCurrentUserUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.weight.IGetWeightsListByDateRangeUseCase
 import com.alenniboris.personalmanager.domain.utils.SingleFlowEvent
-import com.alenniboris.personalmanager.presentation.mapper.stripTime
+import com.alenniboris.personalmanager.domain.utils.stripTime
 import com.alenniboris.personalmanager.presentation.mapper.toUiString
 import com.alenniboris.personalmanager.presentation.model.food.FoodIntakeModelUi
 import com.alenniboris.personalmanager.presentation.model.food.toModelUi
@@ -21,10 +21,15 @@ import com.alenniboris.personalmanager.presentation.model.health.toModelUi
 import com.alenniboris.personalmanager.presentation.model.heart.toModelUi
 import com.alenniboris.personalmanager.presentation.model.user.toModelUi
 import com.alenniboris.personalmanager.presentation.model.weight.toModelUi
+import com.alenniboris.personalmanager.presentation.uikit.utils.ScreensCommonUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.buffer
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -66,11 +71,24 @@ class HealthScreenViewModel @Inject constructor(
     private var _foodDataLoadingJob: Job? = null
 
     init {
-        loadData()
+        viewModelScope.launch {
+            _state.map { it.screenOption }
+                .buffer(onBufferOverflow = BufferOverflow.DROP_OLDEST)
+                .distinctUntilChanged()
+                .collect { option ->
+                    when (option) {
+                        HealthScreenOption.Overview -> loadTodayHealthStatistics()
+                        HealthScreenOption.Weight -> loadWeightData()
+                        HealthScreenOption.Activity -> loadHeartRateData()
+                        HealthScreenOption.Nutrition -> loadFoodData()
+                    }
+                }
+        }
     }
 
     fun proceedIntent(intent: IHealthScreenIntent) {
         when (intent) {
+            is IHealthScreenIntent.OpenPersonalScreen -> openPersonalScreen()
             is IHealthScreenIntent.ChangeScreenOption -> changeScreenOption(intent.option)
             is IHealthScreenIntent.ProceedFoodIntakeAdd -> proceedFoodIntakeAdd()
             is IHealthScreenIntent.ProceedFoodIntakeDelete ->
@@ -149,6 +167,10 @@ class HealthScreenViewModel @Inject constructor(
         }
     }
 
+    private fun openPersonalScreen() {
+        _event.emit(IHealthScreenEvent.OpenPersonalScreen)
+    }
+
     private fun updateFoodIntakeFilterDateToDefault() {
         _state.update {
             it.copy(foodIntakeDate = Calendar.getInstance().time.stripTime())
@@ -184,7 +206,7 @@ class HealthScreenViewModel @Inject constructor(
     private fun updateWeightChartStartDate(newValue: Date) {
         _state.update {
             it.copy(
-                weightChartStartDate = newValue ?: HealthScreenCommon.getDateWeekAgo()
+                weightChartStartDate = newValue ?: ScreensCommonUtils.getDateWeekAgo()
             )
         }
         loadWeightData()
@@ -194,7 +216,7 @@ class HealthScreenViewModel @Inject constructor(
     private fun updateWeightChartStartDateToDefault() {
         _state.update {
             it.copy(
-                weightChartStartDate = HealthScreenCommon.getDateWeekAgo()
+                weightChartStartDate = ScreensCommonUtils.getDateWeekAgo()
             )
         }
         loadWeightData()
@@ -481,15 +503,6 @@ class HealthScreenViewModel @Inject constructor(
         }
     }
 
-    private fun loadData() {
-        when (_state.value.screenOption) {
-            HealthScreenOption.Overview -> loadTodayHealthStatistics()
-            HealthScreenOption.Weight -> loadWeightData()
-            HealthScreenOption.Activity -> loadHeartRateData()
-            HealthScreenOption.Nutrition -> loadFoodData()
-        }
-    }
-
     private fun loadTodayHealthStatistics() {
         _todayHealthStatisticsLoadingJob?.cancel()
         _todayHealthStatisticsLoadingJob = viewModelScope.launch {
@@ -621,6 +634,5 @@ class HealthScreenViewModel @Inject constructor(
                 screenOption = option
             )
         }
-        loadData()
     }
 }

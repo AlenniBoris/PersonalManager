@@ -1,6 +1,7 @@
 package com.alenniboris.personalmanager.presentation.model.user
 
 import com.alenniboris.personalmanager.domain.model.user.FitnessGoal
+import com.alenniboris.personalmanager.domain.model.user.UserGender
 import com.alenniboris.personalmanager.domain.model.user.UserModelDomain
 
 data class UserModelUi(
@@ -16,8 +17,18 @@ data class UserModelUi(
     val fitnessGoal: FitnessGoal = FitnessGoal.Support,
     val neededProteins: Double = 0.0,
     val neededFats: Double = 0.0,
-    val neededCarbohydrates: Double = 0.0
-)
+    val neededCarbohydrates: Double = 0.0,
+    val gender: UserGender = UserGender.Male,
+    val password: String = ""
+) {
+    val heightText = "${height.toInt()} "
+    val weightText = "${weight.toInt()} "
+    val ageText = "$age "
+    val caloriesIntakeText = caloriesIntake.toString()
+    val neededProteinsText = "$neededProteins g"
+    val neededFatsText = "$neededFats g"
+    val neededCarbohydratesText = "$neededCarbohydrates g"
+}
 
 fun UserModelUi.toDomainModel() =
     UserModelDomain(
@@ -33,7 +44,9 @@ fun UserModelUi.toDomainModel() =
         fitnessGoal = this.fitnessGoal,
         neededProteins = this.neededProteins,
         neededFats = this.neededFats,
-        neededCarbohydrates = this.neededCarbohydrates
+        neededCarbohydrates = this.neededCarbohydrates,
+        gender = this.gender,
+        password = this.password
     )
 
 fun UserModelDomain.toModelUi() =
@@ -44,5 +57,13 @@ fun UserModelDomain.toModelUi() =
         age = this.age,
         phoneNumber = this.phoneNumber,
         height = this.height,
-        address = this.address
+        address = this.address,
+        weight = this.weight,
+        caloriesIntake = this.caloriesIntake,
+        fitnessGoal = this.fitnessGoal,
+        neededProteins = this.neededProteins,
+        neededFats = this.neededFats,
+        neededCarbohydrates = this.neededCarbohydrates,
+        gender = this.gender,
+        password = this.password
     )

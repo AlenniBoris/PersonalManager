@@ -6,6 +6,7 @@ import com.alenniboris.personalmanager.presentation.model.task.TaskModelUi
 import java.util.Date
 
 sealed interface ITasksScreenIntent {
+    data object OpenPersonalScreen: ITasksScreenIntent
     data class UpdateScreenOption(val option: TasksScreenOption) : ITasksScreenIntent
     data object UpdateAddTaskDialogVisibility : ITasksScreenIntent
 

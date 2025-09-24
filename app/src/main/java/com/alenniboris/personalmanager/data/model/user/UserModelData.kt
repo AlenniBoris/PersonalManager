@@ -1,6 +1,7 @@
 package com.alenniboris.personalmanager.data.model.user
 
 import com.alenniboris.personalmanager.domain.model.user.FitnessGoal
+import com.alenniboris.personalmanager.domain.model.user.UserGender
 import com.alenniboris.personalmanager.domain.model.user.UserModelDomain
 import com.alenniboris.personalmanager.domain.utils.LogPrinter
 
@@ -18,7 +19,8 @@ data class UserModelData(
     val fitnessGoal: String? = null,
     val neededProteins: String? = null,
     val neededFats: String? = null,
-    val neededCarbohydrates: String? = null
+    val neededCarbohydrates: String? = null,
+    val gender: String? = null
 ) {
 
     fun toUpdatesMap(): Map<String, String?> =
@@ -33,7 +35,8 @@ data class UserModelData(
             "address" to address,
             "weight" to weight,
             "fitnessGoal" to fitnessGoal,
-            "caloriesIntake" to caloriesIntake
+            "caloriesIntake" to caloriesIntake,
+            "gender" to gender
         )
 }
 
@@ -58,7 +61,13 @@ fun UserModelData.toModelDomain(): UserModelDomain? =
             },
             neededProteins = this.neededProteins!!.toDouble(),
             neededFats = this.neededFats!!.toDouble(),
-            neededCarbohydrates = this.neededCarbohydrates!!.toDouble()
+            neededCarbohydrates = this.neededCarbohydrates!!.toDouble(),
+            gender = when (this.gender!!) {
+                "Male" -> UserGender.Male
+                "Female" -> UserGender.Female
+                else -> UserGender.Male
+            },
+            password = this.password!!
         )
     }.getOrElse {
         LogPrinter.printLog(
@@ -76,7 +85,7 @@ fun UserModelDomain.toModelData(): UserModelData =
         id = this.id,
         name = this.name,
         email = this.email,
-        password = "",
+        password = this.password,
         age = this.age.toString(),
         phone = this.phoneNumber,
         height = this.height.toString(),
@@ -86,5 +95,6 @@ fun UserModelDomain.toModelData(): UserModelData =
         caloriesIntake = this.caloriesIntake.toString(),
         neededProteins = this.neededProteins.toString(),
         neededFats = this.neededFats.toString(),
-        neededCarbohydrates = this.neededCarbohydrates.toString()
+        neededCarbohydrates = this.neededCarbohydrates.toString(),
+        gender = this.gender.name
     )

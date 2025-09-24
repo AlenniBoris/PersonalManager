@@ -4,6 +4,7 @@ import com.alenniboris.personalmanager.presentation.model.food.FoodIntakeModelUi
 import java.util.Date
 
 sealed interface IHealthScreenIntent {
+    data object OpenPersonalScreen: IHealthScreenIntent
     data class ChangeScreenOption(val option: HealthScreenOption) : IHealthScreenIntent
     data class UpdateWeightChartStartDate(val date: Date) : IHealthScreenIntent
     data object UpdateWeightChartStartDateToDefault : IHealthScreenIntent

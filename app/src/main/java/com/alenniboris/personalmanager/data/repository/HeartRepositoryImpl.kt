@@ -40,6 +40,7 @@ class HeartRepositoryImpl @Inject constructor(
                 filterPredicate = { domainModel ->
                     domainModel.userId == userId && domainModel.markingDate == date
                 },
+                sortComparator = compareByDescending { it.markingTime },
                 exceptionMapping = { exception ->
                     exception.toCommonException()
                 }
@@ -98,6 +99,7 @@ class HeartRepositoryImpl @Inject constructor(
                 filterPredicate = { domainModel ->
                     domainModel.userId == userId
                 },
+                sortComparator = compareByDescending { it.markingTime },
                 exceptionMapping = { exception ->
                     exception.toCommonException()
                 }

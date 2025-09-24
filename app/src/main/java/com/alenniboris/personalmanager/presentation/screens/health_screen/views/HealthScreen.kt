@@ -34,6 +34,7 @@ import com.alenniboris.personalmanager.presentation.model.food.FoodIntakeModelUi
 import com.alenniboris.personalmanager.presentation.model.health.TodayHealthStatisticsModelUi
 import com.alenniboris.personalmanager.presentation.model.heart.HeartRateModelUi
 import com.alenniboris.personalmanager.presentation.model.weight.WeightModelUi
+import com.alenniboris.personalmanager.presentation.screens.destinations.PersonalScreenDestination
 import com.alenniboris.personalmanager.presentation.screens.health_screen.HealthScreenOption
 import com.alenniboris.personalmanager.presentation.screens.health_screen.HealthScreenState
 import com.alenniboris.personalmanager.presentation.screens.health_screen.HealthScreenViewModel
@@ -55,6 +56,7 @@ import com.alenniboris.personalmanager.presentation.uikit.views.AppBottomSheet
 import com.alenniboris.personalmanager.presentation.uikit.views.AppLazyButtonRow
 import com.alenniboris.personalmanager.presentation.uikit.views.AppTopBar
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -62,7 +64,9 @@ import java.util.Calendar
 @Composable
 @Destination(route = HealthScreenRoute)
 @RequiresApi(Build.VERSION_CODES.O)
-fun HealthScreen() {
+fun HealthScreen(
+    navigator: DestinationsNavigator
+) {
 
     val viewModel: HealthScreenViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -77,6 +81,11 @@ fun HealthScreen() {
                     tag = "!!!",
                     message = context.getString(coming.messageId)
                 )
+            }
+        }
+        launch {
+            event.filterIsInstance<IHealthScreenEvent.OpenPersonalScreen>().collect {
+                navigator.navigate(PersonalScreenDestination)
             }
         }
     }
@@ -149,7 +158,11 @@ private fun HealthScreenUi(
             secondButtonPainter = painterResource(R.drawable.settings_icon),
             onSecondClicked = {},
             thirdButtonPainter = painterResource(R.drawable.person_icon),
-            onThirdClicked = {}
+            onThirdClicked = {
+                proceedIntent(
+                    IHealthScreenIntent.OpenPersonalScreen
+                )
+            }
         )
 
         Column(

@@ -25,7 +25,7 @@ import com.alenniboris.fastbanking.presentation.uikit.theme.bodyStyle
 import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.domain.model.food.FoodIntakeModelDomain
 import com.alenniboris.personalmanager.presentation.model.food.FoodIntakeModelUi
-import com.alenniboris.personalmanager.presentation.screens.health_screen.HealthScreenCommon
+import com.alenniboris.personalmanager.presentation.uikit.utils.ScreensCommonUtils
 import com.alenniboris.personalmanager.presentation.screens.health_screen.IHealthScreenIntent
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
 import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogItemPadding
@@ -38,7 +38,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeMediu
 import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeSmall
 import com.alenniboris.personalmanager.presentation.uikit.theme.enterTextFieldColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenFoodAddDialogItemStartPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.tasksScreenAddDialogProgressHeight
+import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogProgressHeight
 import com.alenniboris.personalmanager.presentation.uikit.views.AppCustomButton
 import com.alenniboris.personalmanager.presentation.uikit.views.AppDoubleInputField
 import com.alenniboris.personalmanager.presentation.uikit.views.AppProgressAnimation
@@ -86,7 +86,7 @@ private fun UpdateFoodDialogUi(
         AppProgressAnimation(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(tasksScreenAddDialogProgressHeight)
+                .height(addDialogProgressHeight)
         )
     } else {
 
@@ -162,7 +162,7 @@ private fun UpdateFoodDialogUi(
                     onValueChanged = {
                         proceedIntent(
                             IHealthScreenIntent.UpdateFoodIntakeUpdateModelCalories(
-                                newValue = HealthScreenCommon.sanitizeCaloriesInputForTextField(
+                                newValue = ScreensCommonUtils.sanitizeCaloriesInputForTextField(
                                     it
                                 )
                             )
@@ -240,7 +240,7 @@ private fun UpdateFoodDialogUi(
                         .weight(1f)
                 ) {
                     Text(
-                        text = stringResource(R.string.proteins_section_text),
+                        text = stringResource(R.string.carbs_section_text),
                         style = bodyStyle.copy(
                             color = appMainTextColor,
                             fontSize = appTextSizeSmall
@@ -349,7 +349,7 @@ private fun DarkTheme() {
                             title = "kjsdcnkjds",
                             proteins = 112.3,
                             fats = 122.3,
-                            carbohydrates = 17.0,
+                            carbohydrates = 0.0,
                             markingDate = Calendar.getInstance().time,
                             markingTime = Calendar.getInstance().time,
                             calories = 12112.3
