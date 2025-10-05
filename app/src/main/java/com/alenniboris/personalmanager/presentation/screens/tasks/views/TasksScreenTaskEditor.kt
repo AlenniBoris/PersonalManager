@@ -39,7 +39,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeSmall
 import com.alenniboris.personalmanager.presentation.uikit.theme.buttonRowBackgroundColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.enterTextFieldColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.taskScreenComponentOuterPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogItemPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.appDialogItemPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogProgressHeight
 import com.alenniboris.personalmanager.presentation.uikit.theme.tasksScreenContentPadding
 import com.alenniboris.personalmanager.presentation.uikit.views.AppCustomButton
@@ -77,7 +77,7 @@ fun TasksScreenTaskEditor(
             )
 
             Text(
-                modifier = Modifier.padding(addDialogItemPadding),
+                modifier = Modifier.padding(appDialogItemPadding),
                 text = stringResource(R.string.edit_task_explanation_text),
                 style = bodyStyle.copy(
                     color = appSubtleTextColor,
@@ -87,7 +87,7 @@ fun TasksScreenTaskEditor(
 
             Column(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
             ) {
                 Text(
                     text = stringResource(R.string.title_text),
@@ -116,7 +116,7 @@ fun TasksScreenTaskEditor(
 
             Column(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
             ) {
                 Text(
                     text = stringResource(R.string.description_text),
@@ -145,7 +145,7 @@ fun TasksScreenTaskEditor(
 
             Column(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
             ) {
                 Text(
                     text = stringResource(R.string.status_text),
@@ -179,7 +179,7 @@ fun TasksScreenTaskEditor(
 
             Column(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
             ) {
                 Text(
                     text = stringResource(R.string.priority_text),
@@ -213,7 +213,7 @@ fun TasksScreenTaskEditor(
 
             Column(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
             ) {
                 Text(
                     text = stringResource(R.string.due_date_text),
@@ -242,7 +242,7 @@ fun TasksScreenTaskEditor(
 
             Column(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
             ) {
                 Text(
                     text = stringResource(R.string.due_time_text),
@@ -271,7 +271,7 @@ fun TasksScreenTaskEditor(
 
             AppCustomButton(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .fillMaxWidth(),
                 onClick = {
                     proceedIntent(
@@ -284,7 +284,7 @@ fun TasksScreenTaskEditor(
 
             AppCustomButton(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .fillMaxWidth(),
                 onClick = {
                     proceedIntent(

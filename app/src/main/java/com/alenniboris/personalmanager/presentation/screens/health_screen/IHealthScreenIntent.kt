@@ -1,6 +1,7 @@
 package com.alenniboris.personalmanager.presentation.screens.health_screen
 
 import com.alenniboris.personalmanager.presentation.model.food.FoodIntakeModelUi
+import com.alenniboris.personalmanager.presentation.screens.weather.IWeatherScreenIntent
 import java.util.Date
 
 sealed interface IHealthScreenIntent {
@@ -39,4 +40,5 @@ sealed interface IHealthScreenIntent {
     data class UpdateFoodIntakeUpdateModelCarbs(val newValue: String) : IHealthScreenIntent
     data class UpdateFoodIntakeUpdateModelCalories(val newValue: String) : IHealthScreenIntent
     data class UpdateFoodIntakeUpdateModelTitle(val newValue: String) : IHealthScreenIntent
+    data object ChangeSettingsDialogVisibility: IHealthScreenIntent
 }

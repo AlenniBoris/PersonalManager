@@ -37,7 +37,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeMediu
 import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeSmall
 import com.alenniboris.personalmanager.presentation.uikit.theme.buttonRowBackgroundColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.enterTextFieldColor
-import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogItemPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.appDialogItemPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogProgressHeight
 import com.alenniboris.personalmanager.presentation.uikit.views.AppCustomButton
 import com.alenniboris.personalmanager.presentation.uikit.views.AppLazyButtonRow
@@ -102,7 +102,7 @@ private fun AddTaskDialogUi(
             )
 
             Text(
-                modifier = Modifier.padding(addDialogItemPadding),
+                modifier = Modifier.padding(appDialogItemPadding),
                 text = stringResource(R.string.create_new_task_text),
                 style = bodyStyle.copy(
                     color = appSubtleTextColor,
@@ -112,7 +112,7 @@ private fun AddTaskDialogUi(
 
             Column(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
             ) {
                 Text(
                     text = stringResource(R.string.title_text),
@@ -141,7 +141,7 @@ private fun AddTaskDialogUi(
 
             Column(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
             ) {
                 Text(
                     text = stringResource(R.string.description_text),
@@ -170,7 +170,7 @@ private fun AddTaskDialogUi(
 
             Column(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
             ) {
                 Text(
                     text = stringResource(R.string.priority_text),
@@ -204,7 +204,7 @@ private fun AddTaskDialogUi(
 
             Column(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
             ) {
                 Text(
                     text = stringResource(R.string.due_date_text),
@@ -231,7 +231,7 @@ private fun AddTaskDialogUi(
 
             Column(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
             ) {
                 Text(
                     text = stringResource(R.string.due_time_text),
@@ -258,7 +258,7 @@ private fun AddTaskDialogUi(
 
             AppCustomButton(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .fillMaxWidth(),
                 onClick = {
                     proceedIntent(
@@ -271,7 +271,7 @@ private fun AddTaskDialogUi(
 
             AppCustomButton(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .fillMaxWidth(),
                 onClick = {
                     proceedIntent(

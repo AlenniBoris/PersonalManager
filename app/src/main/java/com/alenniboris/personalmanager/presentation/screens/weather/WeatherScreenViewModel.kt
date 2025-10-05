@@ -160,11 +160,16 @@ class WeatherScreenViewModel @Inject constructor(
 
     fun proceedIntent(intent: IWeatherScreenIntent) {
         when (intent) {
+            is IWeatherScreenIntent.ChangeSettingsDialogVisibility -> changeSettingsDialogVisibility()
             is IWeatherScreenIntent.ChangeViewedOption -> changeViewedOption(intent.option)
             is IWeatherScreenIntent.UpdateSelectedDay -> updateSelectedDay(intent.selected)
             is IWeatherScreenIntent.UpdateSelectedHour -> updateSelectedHour(intent.selected)
             is IWeatherScreenIntent.OpenPersonalScreen -> openPersonalScreen()
         }
+    }
+
+    private fun changeSettingsDialogVisibility() {
+        _state.update { it.copy(isSettingsVisible = !it.isSettingsVisible) }
     }
 
     private fun openPersonalScreen() {

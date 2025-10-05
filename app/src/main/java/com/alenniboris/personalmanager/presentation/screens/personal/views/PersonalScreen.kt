@@ -44,6 +44,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.topBarInnerPaddi
 import com.alenniboris.personalmanager.presentation.uikit.values.PersonalScreenRoute
 import com.alenniboris.personalmanager.presentation.uikit.views.AppDatePicker
 import com.alenniboris.personalmanager.presentation.uikit.views.AppLazyButtonRow
+import com.alenniboris.personalmanager.presentation.uikit.views.AppSettingsDialog
 import com.alenniboris.personalmanager.presentation.uikit.views.AppTopBar
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -90,6 +91,16 @@ private fun PersonalScreenUi(
     state: PersonalScreenState,
     proceedIntent: (IPersonalScreenIntent) -> Unit
 ) {
+
+    if (state.isSettingsVisible){
+        AppSettingsDialog(
+            onDismiss = {
+                proceedIntent(
+                    IPersonalScreenIntent.ChangeSettingsDialogVisibility
+                )
+            }
+        )
+    }
 
     if (state.isUserUpdateDialogVisible) {
         PersonalScreenUserUpdateDialog(
@@ -217,7 +228,11 @@ private fun PersonalScreenUi(
                 )
             },
             secondButtonPainter = painterResource(R.drawable.settings_icon),
-            onSecondClicked = {},
+            onSecondClicked = {
+                proceedIntent(
+                    IPersonalScreenIntent.ChangeSettingsDialogVisibility
+                )
+            },
             thirdButtonPainter = painterResource(R.drawable.exit_app_icon),
             onThirdClicked = {
                 proceedIntent(

@@ -54,6 +54,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.topBarInnerPaddi
 import com.alenniboris.personalmanager.presentation.uikit.values.HealthScreenRoute
 import com.alenniboris.personalmanager.presentation.uikit.views.AppBottomSheet
 import com.alenniboris.personalmanager.presentation.uikit.views.AppLazyButtonRow
+import com.alenniboris.personalmanager.presentation.uikit.views.AppSettingsDialog
 import com.alenniboris.personalmanager.presentation.uikit.views.AppTopBar
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -103,6 +104,16 @@ private fun HealthScreenUi(
     state: HealthScreenState,
     proceedIntent: (IHealthScreenIntent) -> Unit
 ) {
+
+    if (state.isSettingsVisible) {
+        AppSettingsDialog(
+            onDismiss = {
+                proceedIntent(
+                    IHealthScreenIntent.ChangeSettingsDialogVisibility
+                )
+            }
+        )
+    }
 
     state.foodIntakeDetailsSelected?.let { food ->
         AppBottomSheet(
@@ -156,7 +167,11 @@ private fun HealthScreenUi(
             headerTextString = stringResource(R.string.app_name),
             subtleText = stringResource(R.string.hello_text) + state.user?.name,
             secondButtonPainter = painterResource(R.drawable.settings_icon),
-            onSecondClicked = {},
+            onSecondClicked = {
+                proceedIntent(
+                    IHealthScreenIntent.ChangeSettingsDialogVisibility
+                )
+            },
             thirdButtonPainter = painterResource(R.drawable.person_icon),
             onThirdClicked = {
                 proceedIntent(

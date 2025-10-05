@@ -164,7 +164,13 @@ class HealthScreenViewModel @Inject constructor(
 
             is IHealthScreenIntent.UpdateFoodIntakeUpdateModelTitle ->
                 updateFoodIntakeUpdateModelTitle(intent.newValue)
+            is IHealthScreenIntent.ChangeSettingsDialogVisibility ->
+                changeSettingsDialogVisibility()
         }
+    }
+
+    private fun changeSettingsDialogVisibility() {
+        _state.update { it.copy(isSettingsVisible = !it.isSettingsVisible) }
     }
 
     private fun openPersonalScreen() {

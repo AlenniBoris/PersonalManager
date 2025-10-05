@@ -82,8 +82,14 @@ class TasksScreenViewModel @Inject constructor(
             is ITasksScreenIntent.UpdateSelectedTask -> updateSelectedTask(intent.task)
             is ITasksScreenIntent.UpdateDateFilterPickerVisibility -> updateDateFilterPickerVisibility()
             is ITasksScreenIntent.UpdateSelectedFilterDate -> updateSelectedFilterDate(intent.date)
+            is ITasksScreenIntent.ChangeSettingsDialogVisibility -> changeSettingsDialogVisibility()
         }
     }
+
+    private fun changeSettingsDialogVisibility() {
+        _state.update { it.copy(isSettingsVisible = !it.isSettingsVisible) }
+    }
+
 
     private fun openPersonalScreen() {
         _event.emit(ITasksScreenEvent.OpenPersonalScreen)

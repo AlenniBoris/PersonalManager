@@ -23,22 +23,18 @@ data class HealthScreenState(
     val screenOption: HealthScreenOption = HealthScreenOption.Overview,
     val listOfScreenOption: List<HealthScreenOption> = HealthScreenOption.entries.toList(),
     val user: UserModelUi? = null,
-
     val isTodayStatisticsLoading: Boolean = false,
     val todayHealthStatistics: TodayHealthStatisticsModelUi = TodayHealthStatisticsModelUi(),
-
     val isWeightDataLoading: Boolean = false,
     val weightChartStartDate: Date = ScreensCommonUtils.getDateWeekAgo(),
     val weightChartEndDate: Date = Calendar.getInstance().time,
     val weightChartList: List<WeightModelUi> = emptyList(),
     val isWeightChartStartDatePickerVisible: Boolean = false,
     val isWeightChartEndDatePickerVisible: Boolean = false,
-
     val isHeartRateDataLoading: Boolean = false,
     val heartRateChartDate: Date = Calendar.getInstance().time.stripTime(),
     val heartRateChartList: List<HeartRateModelUi> = emptyList(),
     val isHeartRateDatePickerVisible: Boolean = false,
-
     val isFoodDataLoading: Boolean = false,
     val foodIntakeDate: Date = Calendar.getInstance().time.stripTime(),
     val foodIntakeList: List<FoodIntakeModelUi> = emptyList(),
@@ -48,7 +44,8 @@ data class HealthScreenState(
     val foodIntakeAddModel: FoodIntakeAddModel = FoodIntakeAddModel(),
     val foodIntakeDetailsSelected: FoodIntakeModelUi? = null,
     val foodIntakeUpdateSelected: FoodIntakeModelUi? = null,
-    val isFoodIntakeDatePickerVisible: Boolean = false
+    val isFoodIntakeDatePickerVisible: Boolean = false,
+    val isSettingsVisible: Boolean = false
 ) {
 
     data class FoodIntakeAddModel(

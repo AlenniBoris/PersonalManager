@@ -5,6 +5,7 @@ import com.alenniboris.personalmanager.domain.model.user.UserGender
 import com.alenniboris.personalmanager.presentation.model.activity.ActivityModelUi
 import com.alenniboris.personalmanager.presentation.model.heart.HeartRateModelUi
 import com.alenniboris.personalmanager.presentation.model.weight.WeightModelUi
+import com.alenniboris.personalmanager.presentation.screens.tasks.ITasksScreenIntent
 import java.util.Date
 
 sealed interface IPersonalScreenIntent {
@@ -23,6 +24,7 @@ sealed interface IPersonalScreenIntent {
     data class ChangeUserUpdateModelAddress(val newValue: String) : IPersonalScreenIntent
     data class ChangeUserUpdateModelFitnessGoal(val newValue: FitnessGoal) : IPersonalScreenIntent
     data class ChangeUserUpdateModelGender(val newValue: UserGender) : IPersonalScreenIntent
+    data object ChangeSettingsDialogVisibility: IPersonalScreenIntent
 
 
     data class UpdateWeightsSelectedDate(val date: Date?) : IPersonalScreenIntent

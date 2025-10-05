@@ -357,7 +357,14 @@ class PersonalScreenViewModel @Inject constructor(
 
             is IPersonalScreenIntent.ChangeUserUpdateModelGender ->
                 changeUserUpdateModelGender(intent.newValue)
+
+            is IPersonalScreenIntent.ChangeSettingsDialogVisibility ->
+                changeSettingsDialogVisibility()
         }
+    }
+
+    private fun changeSettingsDialogVisibility() {
+        _state.update { it.copy(isSettingsVisible = !it.isSettingsVisible) }
     }
 
     private fun changeUserUpdateModelFitnessGoal(newValue: FitnessGoal) {

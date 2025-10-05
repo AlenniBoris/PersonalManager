@@ -1,6 +1,7 @@
 package com.alenniboris.personalmanager.presentation.uikit.theme
 
 import androidx.compose.ui.graphics.Color
+import com.alenniboris.personalmanager.presentation.uikit.utils.currentThemeMode
 
 private val AppColorLight = Color(0xFFFFFFFF)
 private val AppColorDark = Color(0xFF000000)

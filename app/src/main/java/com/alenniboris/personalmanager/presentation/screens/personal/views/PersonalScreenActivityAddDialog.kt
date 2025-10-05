@@ -22,7 +22,7 @@ import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.presentation.screens.personal.IPersonalScreenIntent
 import com.alenniboris.personalmanager.presentation.screens.personal.PersonalScreenState
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
-import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogItemPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.appDialogItemPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogProgressHeight
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
@@ -94,7 +94,7 @@ private fun ActivityAddDialogUi(
             )
 
             Text(
-                modifier = Modifier.padding(addDialogItemPadding),
+                modifier = Modifier.padding(appDialogItemPadding),
                 text = stringResource(R.string.add_activity_description),
                 style = bodyStyle.copy(
                     color = appSubtleTextColor,
@@ -104,7 +104,7 @@ private fun ActivityAddDialogUi(
 
             AppTextField(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .fillMaxWidth()
                     .clip(appRoundedShape)
                     .background(color = enterTextFieldColor),
@@ -119,7 +119,7 @@ private fun ActivityAddDialogUi(
 
             Row(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -156,7 +156,7 @@ private fun ActivityAddDialogUi(
 
             AppCustomButton(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .fillMaxWidth(),
                 onClick = {
                     proceedIntent(
@@ -169,7 +169,7 @@ private fun ActivityAddDialogUi(
 
             AppCustomButton(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .fillMaxWidth(),
                 onClick = {
                     proceedIntent(

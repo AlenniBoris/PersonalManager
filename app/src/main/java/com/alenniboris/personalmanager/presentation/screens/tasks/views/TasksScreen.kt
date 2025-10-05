@@ -38,6 +38,7 @@ import com.alenniboris.personalmanager.presentation.uikit.model.ClickableElement
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
 import com.alenniboris.personalmanager.presentation.uikit.theme.appButtonRowInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.appDateFilterInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.appDetailsInfoBlockBorderWidth
 import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appRoundedShape
@@ -45,13 +46,13 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.appSubtleTextCol
 import com.alenniboris.personalmanager.presentation.uikit.theme.buttonRowBackgroundColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.taskScreenComponentOuterPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.tasksScreenContentPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.appDateFilterInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.topBarInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.values.TasksScreenRoute
 import com.alenniboris.personalmanager.presentation.uikit.views.AppBottomSheet
 import com.alenniboris.personalmanager.presentation.uikit.views.AppCustomButton
 import com.alenniboris.personalmanager.presentation.uikit.views.AppDatePicker
 import com.alenniboris.personalmanager.presentation.uikit.views.AppLazyButtonRow
+import com.alenniboris.personalmanager.presentation.uikit.views.AppSettingsDialog
 import com.alenniboris.personalmanager.presentation.uikit.views.AppSingleLineDateFilter
 import com.alenniboris.personalmanager.presentation.uikit.views.AppTopBar
 import com.ramcosta.composedestinations.annotation.Destination
@@ -102,6 +103,16 @@ private fun TasksScreenUi(
     proceedIntent: (ITasksScreenIntent) -> Unit
 ) {
 
+    if (state.isSettingsVisible) {
+        AppSettingsDialog(
+            onDismiss = {
+                proceedIntent(
+                    ITasksScreenIntent.ChangeSettingsDialogVisibility
+                )
+            }
+        )
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -117,7 +128,11 @@ private fun TasksScreenUi(
             headerTextString = stringResource(R.string.app_name),
             subtleText = stringResource(R.string.hello_text) + state.user?.name,
             secondButtonPainter = painterResource(R.drawable.settings_icon),
-            onSecondClicked = {},
+            onSecondClicked = {
+                proceedIntent(
+                    ITasksScreenIntent.ChangeSettingsDialogVisibility
+                )
+            },
             thirdButtonPainter = painterResource(R.drawable.person_icon),
             onThirdClicked = {
                 proceedIntent(

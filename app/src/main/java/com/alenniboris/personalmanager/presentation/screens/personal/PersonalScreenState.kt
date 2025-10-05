@@ -22,6 +22,7 @@ import java.util.Locale
 import kotlin.math.roundToInt
 
 data class PersonalScreenState(
+    val isSettingsVisible: Boolean = false,
     val currentOption: PersonalScreenOption = PersonalScreenOption.Profile,
     val listOfScreenOptions: List<PersonalScreenOption> = PersonalScreenOption.entries.toList(),
     val user: UserModelUi = UserModelUi(),

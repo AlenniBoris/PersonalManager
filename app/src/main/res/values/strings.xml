@@ -81,9 +81,9 @@
     <string name="skipped_task_text">skipped</string>
     <string name="pending_task_text">pending</string>
     <string name="completed_task_text">completed</string>
-    <string name="task_low_priority_text">low</string>
-    <string name="task_medium_priority_text">medium</string>
-    <string name="task_high_priority_text">high</string>
+    <string name="task_low_priority_text">Low</string>
+    <string name="task_medium_priority_text">Medium</string>
+    <string name="task_high_priority_text">High</string>
     <string name="create_new_task_text">Create new task and focus</string>
     <string name="add_title_text">Enter title</string>
     <string name="title_text">Title</string>
@@ -173,4 +173,7 @@
     <string name="male_gender_text">Male</string>
     <string name="female_gender_text">Female</string>
     <string name="recommended_intake_text">Recommended daily intake</string>
+    <string name="russian_language_text">Русский</string>
+    <string name="english_language_text">English</string>
+    <string name="settings_header">Settings</string>
 </resources>

@@ -59,6 +59,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenWea
 import com.alenniboris.personalmanager.presentation.uikit.values.WeatherScreenRoute
 import com.alenniboris.personalmanager.presentation.uikit.views.AppBottomSheet
 import com.alenniboris.personalmanager.presentation.uikit.views.AppButtonRow
+import com.alenniboris.personalmanager.presentation.uikit.views.AppSettingsDialog
 import com.alenniboris.personalmanager.presentation.uikit.views.AppTopBar
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -105,6 +106,16 @@ private fun WeatherScreenUi(
     proceedIntent: (IWeatherScreenIntent) -> Unit = {}
 ) {
 
+    if (state.isSettingsVisible) {
+        AppSettingsDialog(
+            onDismiss = {
+                proceedIntent(
+                    IWeatherScreenIntent.ChangeSettingsDialogVisibility
+                )
+            }
+        )
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -120,7 +131,11 @@ private fun WeatherScreenUi(
             headerTextString = stringResource(R.string.app_name),
             subtleText = stringResource(R.string.hello_text) + state.user?.name,
             secondButtonPainter = painterResource(R.drawable.settings_icon),
-            onSecondClicked = {},
+            onSecondClicked = {
+                proceedIntent(
+                    IWeatherScreenIntent.ChangeSettingsDialogVisibility
+                )
+            },
             thirdButtonPainter = painterResource(R.drawable.person_icon),
             onThirdClicked = {
                 proceedIntent(

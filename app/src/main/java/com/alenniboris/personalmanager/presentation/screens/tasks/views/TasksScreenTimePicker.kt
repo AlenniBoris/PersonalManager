@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appRoundedShape
-import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogItemPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.appDialogItemPadding
 import com.alenniboris.personalmanager.presentation.uikit.views.AppCustomButton
 import java.util.Date
 import kotlin.time.Duration.Companion.hours
@@ -52,7 +52,7 @@ fun TasksScreenTimePicker(
 
                 AppCustomButton(
                     modifier = Modifier
-                        .padding(addDialogItemPadding)
+                        .padding(appDialogItemPadding)
                         .fillMaxWidth(),
                     onClick = {
                         onSelected(
@@ -67,7 +67,7 @@ fun TasksScreenTimePicker(
 
                 AppCustomButton(
                     modifier = Modifier
-                        .padding(addDialogItemPadding)
+                        .padding(appDialogItemPadding)
                         .fillMaxWidth(),
                     onClick = {
                         onDismiss()

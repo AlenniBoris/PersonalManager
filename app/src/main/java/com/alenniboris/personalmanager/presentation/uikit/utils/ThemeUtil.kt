@@ -1,4 +1,4 @@
-package com.alenniboris.personalmanager.presentation.uikit.theme
+package com.alenniboris.personalmanager.presentation.uikit.utils
 
 import android.content.Context
 import com.alenniboris.personalmanager.R

@@ -8,4 +8,5 @@ sealed interface IWeatherScreenIntent {
     data class UpdateSelectedHour(val selected: HourWeatherForecastModelUi?) : IWeatherScreenIntent
     data class UpdateSelectedDay(val selected: DayWeatherForecastModelUi?) : IWeatherScreenIntent
     data object OpenPersonalScreen : IWeatherScreenIntent
+    data object ChangeSettingsDialogVisibility: IWeatherScreenIntent
 }

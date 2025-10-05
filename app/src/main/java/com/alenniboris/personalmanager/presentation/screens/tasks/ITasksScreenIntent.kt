@@ -3,9 +3,11 @@ package com.alenniboris.personalmanager.presentation.screens.tasks
 import com.alenniboris.personalmanager.domain.model.task.TaskPriority
 import com.alenniboris.personalmanager.domain.model.task.TaskStatus
 import com.alenniboris.personalmanager.presentation.model.task.TaskModelUi
+import com.alenniboris.personalmanager.presentation.screens.weather.IWeatherScreenIntent
 import java.util.Date
 
 sealed interface ITasksScreenIntent {
+    data object ChangeSettingsDialogVisibility: ITasksScreenIntent
     data object OpenPersonalScreen: ITasksScreenIntent
     data class UpdateScreenOption(val option: TasksScreenOption) : ITasksScreenIntent
     data object UpdateAddTaskDialogVisibility : ITasksScreenIntent

@@ -30,7 +30,7 @@ import com.alenniboris.personalmanager.presentation.model.user.UserModelUi
 import com.alenniboris.personalmanager.presentation.screens.personal.IPersonalScreenIntent
 import com.alenniboris.personalmanager.presentation.uikit.model.ClickableElement
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
-import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogItemPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.appDialogItemPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogProgressHeight
 import com.alenniboris.personalmanager.presentation.uikit.theme.appButtonRowInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
@@ -114,7 +114,7 @@ private fun UpdateDialogUi(
             )
 
             Text(
-                modifier = Modifier.padding(addDialogItemPadding),
+                modifier = Modifier.padding(appDialogItemPadding),
                 text = stringResource(R.string.edit_profile_description),
                 style = bodyStyle.copy(
                     color = appSubtleTextColor,
@@ -124,7 +124,7 @@ private fun UpdateDialogUi(
 
             AppTextField(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .fillMaxWidth()
                     .clip(appRoundedShape)
                     .background(color = enterTextFieldColor),
@@ -139,7 +139,7 @@ private fun UpdateDialogUi(
 
             AppTextField(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .fillMaxWidth()
                     .clip(appRoundedShape)
                     .background(color = enterTextFieldColor),
@@ -154,7 +154,7 @@ private fun UpdateDialogUi(
 
             Row(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -191,7 +191,7 @@ private fun UpdateDialogUi(
 
             AppDoubleInputField(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .fillMaxWidth()
                     .clip(appRoundedShape)
                     .background(color = enterTextFieldColor),
@@ -206,7 +206,7 @@ private fun UpdateDialogUi(
 
             AppTextField(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .fillMaxWidth()
                     .clip(appRoundedShape)
                     .background(color = enterTextFieldColor),
@@ -221,7 +221,7 @@ private fun UpdateDialogUi(
 
             AppButtonRow(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .clip(appRoundedShape)
                     .fillMaxWidth()
                     .background(buttonRowBackgroundColor)
@@ -235,7 +235,7 @@ private fun UpdateDialogUi(
 
             AppLazyButtonRow(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .clip(appRoundedShape)
                     .fillMaxWidth()
                     .background(buttonRowBackgroundColor)
@@ -253,7 +253,7 @@ private fun UpdateDialogUi(
 
             AppCustomButton(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .fillMaxWidth(),
                 onClick = {
                     proceedIntent(
@@ -266,7 +266,7 @@ private fun UpdateDialogUi(
 
             AppCustomButton(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .fillMaxWidth(),
                 onClick = {
                     proceedIntent(
@@ -286,7 +286,7 @@ private fun NutritionSection(
 ) {
 
     Text(
-        modifier = Modifier.padding(addDialogItemPadding),
+        modifier = Modifier.padding(appDialogItemPadding),
         text = stringResource(R.string.recommended_intake_text),
         style = bodyStyle.copy(
             color = appMainTextColor,
@@ -297,7 +297,7 @@ private fun NutritionSection(
 
     Row(
         modifier = Modifier
-            .padding(addDialogItemPadding)
+            .padding(appDialogItemPadding)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically
@@ -354,7 +354,7 @@ private fun NutritionSection(
 
     Row(
         modifier = Modifier
-            .padding(addDialogItemPadding)
+            .padding(appDialogItemPadding)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically

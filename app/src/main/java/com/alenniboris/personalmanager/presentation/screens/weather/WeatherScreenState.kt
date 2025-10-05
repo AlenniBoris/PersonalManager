@@ -6,6 +6,7 @@ import com.alenniboris.personalmanager.presentation.model.weather.HourWeatherFor
 import com.alenniboris.personalmanager.presentation.model.user.UserModelUi
 
 data class WeatherScreenState(
+    val isSettingsVisible: Boolean = false,
     val user: UserModelUi? = UserModelUi(),
     val isCurrentForecastLoading: Boolean = false,
     val currentWeatherForecast: CurrentWeatherForecastModelUi = CurrentWeatherForecastModelUi(),

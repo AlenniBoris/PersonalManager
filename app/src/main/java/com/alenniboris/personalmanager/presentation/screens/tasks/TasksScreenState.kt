@@ -21,6 +21,7 @@ import java.util.Date
 import java.util.Locale
 
 data class TasksScreenState(
+    val isSettingsVisible: Boolean = false,
     val initTasks: List<TaskModelUi> = emptyList(),
     val isLoading: Boolean = false,
     val screenOptions: List<TasksScreenOption> = TasksScreenOption.entries.toList(),

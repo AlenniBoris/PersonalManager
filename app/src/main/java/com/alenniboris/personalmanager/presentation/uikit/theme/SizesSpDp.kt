@@ -72,7 +72,7 @@ val taskItemUiTextTopPadding = PaddingValues(top = 10.dp)
 val taskItemUiDetailsItemIconPadding = PaddingValues(end = 5.dp)
 val tasksScreenContentListFirstPadding = PaddingValues(top = 10.dp, bottom = 10.dp)
 val tasksScreenContentListPadding = PaddingValues(top = 5.dp, bottom = 5.dp)
-val addDialogItemPadding = PaddingValues(top = 15.dp)
+val appDialogItemPadding = PaddingValues(top = 15.dp)
 val addDialogProgressHeight = 300.dp
 val tasksScreenTaskItemButtonPadding = PaddingValues(start = 10.dp)
 val tasksScreenPieChartRadius = 100.dp

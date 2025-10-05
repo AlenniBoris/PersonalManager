@@ -28,7 +28,7 @@ import com.alenniboris.personalmanager.presentation.model.food.FoodIntakeModelUi
 import com.alenniboris.personalmanager.presentation.uikit.utils.ScreensCommonUtils
 import com.alenniboris.personalmanager.presentation.screens.health_screen.IHealthScreenIntent
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
-import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogItemPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.appDialogItemPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appRoundedShape
@@ -105,7 +105,7 @@ private fun UpdateFoodDialogUi(
             )
 
             Text(
-                modifier = Modifier.padding(addDialogItemPadding),
+                modifier = Modifier.padding(appDialogItemPadding),
                 text = stringResource(R.string.update_food_goal_text),
                 style = bodyStyle.copy(
                     color = appSubtleTextColor,
@@ -115,7 +115,7 @@ private fun UpdateFoodDialogUi(
 
             Column(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
             ) {
                 Text(
                     text = stringResource(R.string.title_text),
@@ -144,7 +144,7 @@ private fun UpdateFoodDialogUi(
 
             Column(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
             ) {
                 Text(
                     text = stringResource(R.string.calories_section),
@@ -173,7 +173,7 @@ private fun UpdateFoodDialogUi(
             }
 
             Row(
-                modifier = Modifier.padding(addDialogItemPadding),
+                modifier = Modifier.padding(appDialogItemPadding),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -266,7 +266,7 @@ private fun UpdateFoodDialogUi(
 
             AppCustomButton(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .fillMaxWidth(),
                 onClick = {
                     proceedIntent(
@@ -279,7 +279,7 @@ private fun UpdateFoodDialogUi(
 
             AppCustomButton(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .fillMaxWidth(),
                 onClick = {
                     proceedIntent(

@@ -21,7 +21,7 @@ import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.presentation.screens.personal.IPersonalScreenIntent
 import com.alenniboris.personalmanager.presentation.screens.personal.PersonalScreenState
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
-import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogItemPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.appDialogItemPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogProgressHeight
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
@@ -91,7 +91,7 @@ private fun WeightAddDialogUi(
             )
 
             Text(
-                modifier = Modifier.padding(addDialogItemPadding),
+                modifier = Modifier.padding(appDialogItemPadding),
                 text = stringResource(R.string.add_weight_description),
                 style = bodyStyle.copy(
                     color = appSubtleTextColor,
@@ -101,7 +101,7 @@ private fun WeightAddDialogUi(
 
             AppDoubleInputField(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .fillMaxWidth()
                     .clip(appRoundedShape)
                     .background(color = enterTextFieldColor),
@@ -116,7 +116,7 @@ private fun WeightAddDialogUi(
 
             AppCustomButton(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .fillMaxWidth(),
                 onClick = {
                     proceedIntent(
@@ -129,7 +129,7 @@ private fun WeightAddDialogUi(
 
             AppCustomButton(
                 modifier = Modifier
-                    .padding(addDialogItemPadding)
+                    .padding(appDialogItemPadding)
                     .fillMaxWidth(),
                 onClick = {
                     proceedIntent(
