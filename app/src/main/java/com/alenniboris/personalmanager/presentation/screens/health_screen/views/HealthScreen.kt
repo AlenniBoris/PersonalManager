@@ -51,6 +51,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.buttonRowBackgro
 import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenContentItemTopPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenContentPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.topBarInnerPadding
+import com.alenniboris.personalmanager.presentation.uikit.utils.ToastUtil
 import com.alenniboris.personalmanager.presentation.uikit.values.HealthScreenRoute
 import com.alenniboris.personalmanager.presentation.uikit.views.AppBottomSheet
 import com.alenniboris.personalmanager.presentation.uikit.views.AppLazyButtonRow
@@ -78,9 +79,9 @@ fun HealthScreen(
     LaunchedEffect(event) {
         launch {
             event.filterIsInstance<IHealthScreenEvent.ShowToast>().collect { coming ->
-                LogPrinter.printLog(
-                    tag = "!!!",
-                    message = context.getString(coming.messageId)
+                ToastUtil.show(
+                    context = context,
+                    resId = coming.messageId
                 )
             }
         }

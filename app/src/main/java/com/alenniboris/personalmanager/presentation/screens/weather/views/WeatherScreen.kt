@@ -56,6 +56,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlo
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenCardColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenColumnInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenWeatherCardInnerPadding
+import com.alenniboris.personalmanager.presentation.uikit.utils.ToastUtil
 import com.alenniboris.personalmanager.presentation.uikit.values.WeatherScreenRoute
 import com.alenniboris.personalmanager.presentation.uikit.views.AppBottomSheet
 import com.alenniboris.personalmanager.presentation.uikit.views.AppButtonRow
@@ -82,7 +83,10 @@ fun WeatherScreen(
     LaunchedEffect(Unit) {
         launch {
             event.filterIsInstance<IWeatherScreenEvent.ShowToast>().collect { coming ->
-                LogPrinter.printLog("!!!", context.getString(coming.messageId))
+                ToastUtil.show(
+                    context = context,
+                    resId = coming.messageId
+                )
             }
         }
         launch {

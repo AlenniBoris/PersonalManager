@@ -41,6 +41,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.buttonRowBackgro
 import com.alenniboris.personalmanager.presentation.uikit.theme.personalScreenContentItemVerticalPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.personalScreenContentPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.topBarInnerPadding
+import com.alenniboris.personalmanager.presentation.uikit.utils.ToastUtil
 import com.alenniboris.personalmanager.presentation.uikit.values.PersonalScreenRoute
 import com.alenniboris.personalmanager.presentation.uikit.views.AppDatePicker
 import com.alenniboris.personalmanager.presentation.uikit.views.AppLazyButtonRow
@@ -73,7 +74,10 @@ fun PersonalScreen(
 
         launch {
             event.filterIsInstance<IPersonalScreenEvent.ShowToast>().collect { coming ->
-                LogPrinter.printLog("!!!", context.getString(coming.messageId))
+                ToastUtil.show(
+                    context = context,
+                    resId = coming.messageId
+                )
             }
         }
     }

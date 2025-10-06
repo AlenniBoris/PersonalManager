@@ -12,6 +12,7 @@ import com.alenniboris.personalmanager.domain.utils.LogPrinter
 import com.alenniboris.personalmanager.presentation.screens.login_registration.ILogRegScreenEvent
 import com.alenniboris.personalmanager.presentation.screens.login_registration.LogRegScreenViewModel
 import com.alenniboris.personalmanager.presentation.screens.weather.IWeatherScreenEvent
+import com.alenniboris.personalmanager.presentation.uikit.utils.ToastUtil
 import com.alenniboris.personalmanager.presentation.uikit.values.LogRegScreenRoute
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
@@ -33,7 +34,10 @@ fun LogRegScreen(
     LaunchedEffect(event) {
         launch {
             event.filterIsInstance<ILogRegScreenEvent.ShowToast>().collect { coming ->
-                LogPrinter.printLog("!!!", context.getString(coming.messageId))
+                ToastUtil.show(
+                    context = context,
+                    resId = coming.messageId
+                )
             }
         }
     }

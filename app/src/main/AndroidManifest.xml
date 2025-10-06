@@ -26,6 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <service android:name=".data.service.ToastService" android:exported="false"/>
+    </application>
 </manifest>

@@ -47,6 +47,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.buttonRowBackgro
 import com.alenniboris.personalmanager.presentation.uikit.theme.taskScreenComponentOuterPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.tasksScreenContentPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.topBarInnerPadding
+import com.alenniboris.personalmanager.presentation.uikit.utils.ToastUtil
 import com.alenniboris.personalmanager.presentation.uikit.values.TasksScreenRoute
 import com.alenniboris.personalmanager.presentation.uikit.views.AppBottomSheet
 import com.alenniboris.personalmanager.presentation.uikit.views.AppCustomButton
@@ -76,9 +77,9 @@ fun TasksScreen(
     LaunchedEffect(Unit) {
         launch {
             event.filterIsInstance<ITasksScreenEvent.ShowToast>().collect { coming ->
-                LogPrinter.printLog(
-                    tag = "!!!",
-                    message = context.getString(coming.messageId)
+                ToastUtil.show(
+                    context = context,
+                    resId = coming.messageId
                 )
             }
         }
