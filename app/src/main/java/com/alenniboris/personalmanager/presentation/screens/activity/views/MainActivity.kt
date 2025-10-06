@@ -42,6 +42,7 @@ import com.alenniboris.personalmanager.presentation.screens.destinations.LogRegS
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.bottomBarInnerPadding
+import com.alenniboris.personalmanager.presentation.uikit.utils.NetworkMonitorUtil
 import com.alenniboris.personalmanager.presentation.uikit.utils.PermissionType
 import com.alenniboris.personalmanager.presentation.uikit.utils.launchForPermission
 import com.alenniboris.personalmanager.presentation.uikit.utils.toPermission
@@ -65,6 +66,13 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+
+    override fun onStart() {
+        super.onStart()
+        NetworkMonitorUtil.init(this)
+    }
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

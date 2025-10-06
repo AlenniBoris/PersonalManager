@@ -177,4 +177,6 @@
     <string name="russian_language_text">Русский</string>
     <string name="english_language_text">English</string>
     <string name="settings_header">Settings</string>
+    <string name="toast_placeholder">Toast message</string>
+    <string name="internet_recovered_text">Соединение с сетью восстановлено</string>
 </resources>

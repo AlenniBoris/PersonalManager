@@ -106,7 +106,7 @@ class LogRegScreenViewModel @Inject constructor(
                     )
                 ) {
                     is CustomResultModelDomain.Success -> {
-                        Log.e("!!!!", "register succ")
+                        Log.e("!!!!", "register success")
                     }
                     is CustomResultModelDomain.Error -> {
                         _event.emit(
