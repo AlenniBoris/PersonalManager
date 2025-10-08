@@ -12,6 +12,7 @@ import com.alenniboris.personalmanager.domain.usecase.logic.tasks.IUpdateTaskUse
 import com.alenniboris.personalmanager.domain.usecase.logic.user.IGetCurrentUserUseCase
 import com.alenniboris.personalmanager.domain.utils.SingleFlowEvent
 import com.alenniboris.personalmanager.presentation.mapper.toUiString
+import com.alenniboris.personalmanager.presentation.model.task.TaskAddingData
 import com.alenniboris.personalmanager.presentation.model.task.TaskModelUi
 import com.alenniboris.personalmanager.presentation.model.task.toModelUi
 import com.alenniboris.personalmanager.presentation.model.user.toModelUi
@@ -282,7 +283,6 @@ class TasksScreenViewModel @Inject constructor(
             ) {
                 is CustomResultModelDomain.Success -> {
                     loadTasks()
-                    updateAddTaskDialogVisibility()
                 }
 
                 is CustomResultModelDomain.Error -> {
@@ -295,6 +295,7 @@ class TasksScreenViewModel @Inject constructor(
             }
 
             _state.update { it.copy(isTaskUploading = false) }
+            updateAddTaskDialogVisibility()
         }
     }
 
@@ -354,7 +355,7 @@ class TasksScreenViewModel @Inject constructor(
         _state.update {
             it.copy(
                 isAddTaskDialogVisible = !it.isAddTaskDialogVisible,
-                addTaskData = TasksScreenState.TaskAddingData()
+                addTaskData = TaskAddingData()
             )
         }
     }

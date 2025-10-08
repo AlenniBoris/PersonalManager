@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -41,6 +42,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenNutr
 import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenNutritionOptionFoodItemRowPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenNutritionOptionFoodItemTextPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenNutritionOptionListPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenNutritionOptionTextDivisionSize
 import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenNutritionOptionTextStartPadding
 import com.alenniboris.personalmanager.presentation.uikit.views.AppEmptyScreen
 import com.alenniboris.personalmanager.presentation.uikit.views.AppProgressAnimation
@@ -222,7 +224,15 @@ private fun FoodIntakeDetailsTextSection(
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            Row {
+            FlowRow(
+                modifier = Modifier.weight(1f),
+                horizontalArrangement = Arrangement.spacedBy(
+                    healthScreenNutritionOptionTextDivisionSize
+                ),
+                verticalArrangement = Arrangement.spacedBy(
+                    healthScreenNutritionOptionTextDivisionSize
+                )
+            ) {
                 Text(
                     text = stringResource(R.string.proteins_small_text) + food.proteinsText,
                     style = bodyStyle.copy(
@@ -232,7 +242,6 @@ private fun FoodIntakeDetailsTextSection(
                 )
 
                 Text(
-                    modifier = Modifier.padding(healthScreenNutritionOptionTextStartPadding),
                     text = stringResource(R.string.fats_small_text) + food.fatsText,
                     style = bodyStyle.copy(
                         color = appMainTextColor,
@@ -241,7 +250,6 @@ private fun FoodIntakeDetailsTextSection(
                 )
 
                 Text(
-                    modifier = Modifier.padding(healthScreenNutritionOptionTextStartPadding),
                     text = stringResource(R.string.carbs_small_text) + food.carbsText,
                     style = bodyStyle.copy(
                         color = appMainTextColor,
@@ -251,7 +259,8 @@ private fun FoodIntakeDetailsTextSection(
             }
 
             Text(
-                modifier = Modifier.padding(healthScreenNutritionOptionTextStartPadding),
+                modifier = Modifier
+                    .padding(healthScreenNutritionOptionTextStartPadding),
                 text = stringResource(R.string.calories_section),
                 style = bodyStyle.copy(
                     color = appSubtleTextColor,
@@ -293,8 +302,8 @@ private fun LightTheme() {
                                 userId = "1",
                                 title = "kjsdcnkjds",
                                 proteins = 102.3,
-                                fats = 12.3,
-                                carbohydrates = 17.0,
+                                fats = 1244.3,
+                                carbohydrates = 174.0,
                                 markingDate = Calendar.getInstance().time,
                                 markingTime = Calendar.getInstance().time,
                                 calories = 121.3

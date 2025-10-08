@@ -23,7 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alenniboris.personalmanager.R
-import com.alenniboris.personalmanager.domain.utils.LogPrinter
 import com.alenniboris.personalmanager.presentation.mapper.toUiString
 import com.alenniboris.personalmanager.presentation.screens.personal.IPersonalScreenEvent
 import com.alenniboris.personalmanager.presentation.screens.personal.IPersonalScreenIntent
@@ -44,9 +43,11 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.topBarInnerPaddi
 import com.alenniboris.personalmanager.presentation.uikit.utils.ToastUtil
 import com.alenniboris.personalmanager.presentation.uikit.values.PersonalScreenRoute
 import com.alenniboris.personalmanager.presentation.uikit.views.AppDatePicker
+import com.alenniboris.personalmanager.presentation.uikit.views.AppHeartRateAddingDialog
 import com.alenniboris.personalmanager.presentation.uikit.views.AppLazyButtonRow
 import com.alenniboris.personalmanager.presentation.uikit.views.AppSettingsDialog
 import com.alenniboris.personalmanager.presentation.uikit.views.AppTopBar
+import com.alenniboris.personalmanager.presentation.uikit.views.AppWeightAddingDialog
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.flow.filterIsInstance
@@ -96,7 +97,7 @@ private fun PersonalScreenUi(
     proceedIntent: (IPersonalScreenIntent) -> Unit
 ) {
 
-    if (state.isSettingsVisible){
+    if (state.isSettingsVisible) {
         AppSettingsDialog(
             onDismiss = {
                 proceedIntent(
@@ -189,18 +190,46 @@ private fun PersonalScreenUi(
     }
 
     if (state.isWeightAddDialogVisible) {
-        PersonalScreenWeightAddDialog(
+        AppWeightAddingDialog(
             addingWeight = state.addingWeight,
             isUploading = state.isWeightUploading,
-            proceedIntent = proceedIntent
+            onDismiss = {
+                proceedIntent(
+                    IPersonalScreenIntent.UpdateWeightsAddDialogVisibility
+                )
+            },
+            onWeightChange = {
+                proceedIntent(
+                    IPersonalScreenIntent.UpdateWeightAddModelWeight(it)
+                )
+            },
+            onAdd = {
+                proceedIntent(
+                    IPersonalScreenIntent.AddWeight
+                )
+            }
         )
     }
 
     if (state.isHeartRateAddDialogVisible) {
-        PersonalScreenHeartRateAddDialog(
+        AppHeartRateAddingDialog(
             addingHeartRate = state.addingHeartRate,
             isUploading = state.isHeartRateUploading,
-            proceedIntent = proceedIntent
+            onDismiss = {
+                proceedIntent(
+                    IPersonalScreenIntent.UpdateHeartRatesAddDialogVisibility
+                )
+            },
+            onHeartRate = {
+                proceedIntent(
+                    IPersonalScreenIntent.UpdateHeartRateAddModelValue(it)
+                )
+            },
+            onAdd = {
+                proceedIntent(
+                    IPersonalScreenIntent.AddHeartRate
+                )
+            }
         )
     }
 

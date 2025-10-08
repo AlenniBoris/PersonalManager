@@ -5,10 +5,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -31,18 +34,19 @@ import com.alenniboris.personalmanager.presentation.model.task.TaskModelUi
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appDetailsInfoBlockBorderWidth
-import com.alenniboris.personalmanager.presentation.uikit.theme.appDetailsInfoBlockLeftPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.appDetailsInfoBlockRightPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.appDialogItemPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.appFlowRowHorizontalSpacing
+import com.alenniboris.personalmanager.presentation.uikit.theme.appFlowRowVerticalSpacing
+import com.alenniboris.personalmanager.presentation.uikit.theme.appInfoBlockMinHeight
 import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appRoundedShape
 import com.alenniboris.personalmanager.presentation.uikit.theme.appSubtleTextColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSize
 import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeMedium
 import com.alenniboris.personalmanager.presentation.uikit.theme.taskScreenComponentOuterPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.appDialogItemPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.tasksScreenContentPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.tasksScreenTaskDetailsIconSize
-import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenCurrentForecastBlockInnerPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.appInfoBlockInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.views.AppDetailsInfoBlock
 
 @Composable
@@ -82,97 +86,94 @@ fun TasksScreenTaskDetails(
             )
         )
 
-        Row(
+        FlowRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(appDialogItemPadding),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.spacedBy(appFlowRowVerticalSpacing),
+            horizontalArrangement = Arrangement.spacedBy(appFlowRowHorizontalSpacing)
         ) {
 
             AppDetailsInfoBlock(
                 modifier = Modifier
-                    .padding(appDetailsInfoBlockRightPadding)
                     .clip(appRoundedShape)
                     .border(
                         width = appDetailsInfoBlockBorderWidth,
                         color = appSubtleTextColor,
                         shape = appRoundedShape
                     )
+                    .width(IntrinsicSize.Max)
                     .weight(1f)
-                    .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                    .heightIn(appInfoBlockMinHeight)
+                    .padding(appInfoBlockInnerPadding),
                 sectionHeader = stringResource(R.string.status_text),
                 sectionValue = stringResource(task.domainModel.status.toUiString())
             )
 
             AppDetailsInfoBlock(
                 modifier = Modifier
-                    .padding(appDetailsInfoBlockLeftPadding)
                     .clip(appRoundedShape)
                     .border(
                         width = appDetailsInfoBlockBorderWidth,
                         color = appSubtleTextColor,
                         shape = appRoundedShape
                     )
+                    .width(IntrinsicSize.Max)
                     .weight(1f)
-                    .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                    .heightIn(appInfoBlockMinHeight)
+                    .padding(appInfoBlockInnerPadding),
                 sectionHeader = stringResource(R.string.priority_text),
                 sectionValue = stringResource(task.domainModel.priority.toUiString())
             )
-        }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(appDialogItemPadding),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
 
             AppDetailsInfoBlock(
                 modifier = Modifier
-                    .padding(appDetailsInfoBlockRightPadding)
                     .clip(appRoundedShape)
                     .border(
                         width = appDetailsInfoBlockBorderWidth,
                         color = appSubtleTextColor,
                         shape = appRoundedShape
                     )
+                    .width(IntrinsicSize.Min)
                     .weight(1f)
-                    .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                    .heightIn(appInfoBlockMinHeight)
+                    .padding(appInfoBlockInnerPadding),
                 sectionHeader = stringResource(R.string.due_date_text),
                 sectionValue = task.dueDateText
             )
 
             AppDetailsInfoBlock(
                 modifier = Modifier
-                    .padding(appDetailsInfoBlockLeftPadding)
                     .clip(appRoundedShape)
                     .border(
                         width = appDetailsInfoBlockBorderWidth,
                         color = appSubtleTextColor,
                         shape = appRoundedShape
                     )
+                    .width(IntrinsicSize.Min)
                     .weight(1f)
-                    .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                    .heightIn(appInfoBlockMinHeight)
+                    .padding(appInfoBlockInnerPadding),
                 sectionHeader = stringResource(R.string.due_time_text),
                 sectionValue = task.dueTimeText
             )
-        }
 
-        AppDetailsInfoBlock(
-            modifier = Modifier
-                .padding(appDialogItemPadding)
-                .clip(appRoundedShape)
-                .border(
-                    width = appDetailsInfoBlockBorderWidth,
-                    color = appSubtleTextColor,
-                    shape = appRoundedShape
-                )
-                .padding(weatherScreenCurrentForecastBlockInnerPadding),
-            sectionHeader = stringResource(R.string.created_date_text),
-            sectionValue = task.createdTimeText
-        )
+            AppDetailsInfoBlock(
+                modifier = Modifier
+                    .clip(appRoundedShape)
+                    .border(
+                        width = appDetailsInfoBlockBorderWidth,
+                        color = appSubtleTextColor,
+                        shape = appRoundedShape
+                    )
+                    .width(IntrinsicSize.Max)
+                    .weight(1f)
+                    .heightIn(appInfoBlockMinHeight)
+                    .padding(appInfoBlockInnerPadding),
+                sectionHeader = stringResource(R.string.created_date_text),
+                sectionValue = task.createdTimeText
+            )
+        }
     }
 }
 

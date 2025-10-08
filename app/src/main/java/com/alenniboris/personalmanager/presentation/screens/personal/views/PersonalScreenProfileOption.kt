@@ -49,12 +49,12 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.personalScreenCo
 import com.alenniboris.personalmanager.presentation.uikit.theme.personalScreenContentPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.personalScreenHeartRateIconColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.personalScreenInfoBlockInnerPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.personalScreenInfoTextTopPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.personalScreenProfileOptionEditIconInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.personalScreenProfileOptionIconSize
 import com.alenniboris.personalmanager.presentation.uikit.theme.personalScreenProfileOptionTextStartPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.personalScreenInfoTextTopPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.personalScreenWeightIconColor
-import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenCurrentForecastBlockInnerPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.appInfoBlockInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.views.AppDetailsInfoBlock
 import java.util.Calendar
 
@@ -150,11 +150,13 @@ private fun TodayStatsSection(
                     color = appSubtleTextColor,
                     shape = appRoundedShape
                 )
-                .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                .padding(appInfoBlockInnerPadding),
             sectionIcon = painterResource(R.drawable.weight_scale),
             iconTint = personalScreenWeightIconColor,
             sectionHeader = stringResource(R.string.weight_option),
-            sectionValue = todayWeight?.weightText ?: stringResource(R.string.no_text_placeholder),
+            sectionValue = todayWeight?.weightText?.let {
+                it + " " + stringResource(R.string.kg_text)
+            } ?: stringResource(R.string.no_text_placeholder),
             isLoading = isDataLoading
         )
 
@@ -167,12 +169,13 @@ private fun TodayStatsSection(
                     color = appSubtleTextColor,
                     shape = appRoundedShape
                 )
-                .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                .padding(appInfoBlockInnerPadding),
             sectionIcon = painterResource(R.drawable.heart_rate_icon),
             iconTint = personalScreenHeartRateIconColor,
             sectionHeader = stringResource(R.string.heart_rate_section),
-            sectionValue = todayHeartRate?.heartRateText
-                ?: stringResource(R.string.no_text_placeholder),
+            sectionValue = todayHeartRate?.heartRateText?.let {
+                it + " " + stringResource(R.string.bpm_text)
+            } ?: stringResource(R.string.no_text_placeholder),
             isLoading = isDataLoading
         )
 
@@ -185,7 +188,7 @@ private fun TodayStatsSection(
                     color = appSubtleTextColor,
                     shape = appRoundedShape
                 )
-                .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                .padding(appInfoBlockInnerPadding),
             sectionIcon = painterResource(R.drawable.activity_icon),
             iconTint = personalScreenActivitiesIconColor,
             sectionHeader = stringResource(R.string.activity_option),

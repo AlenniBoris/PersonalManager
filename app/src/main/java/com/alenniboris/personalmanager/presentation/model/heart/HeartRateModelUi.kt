@@ -11,7 +11,7 @@ data class HeartRateModelUi(
     val domainModel: HeartRateModelDomain
 ) : IPlotModelUi{
     val heartRateValue: Int = domainModel.heartRate
-    val heartRateText: String = "${domainModel.heartRate} bpm"
+    val heartRateText: String = domainModel.heartRate.toString()
     val measurementDateText: String =
         SimpleDateFormat(
             ScreensCommonUtils.SIMPLE_DATE_PATTERN, Locale.getDefault()

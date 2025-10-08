@@ -8,8 +8,6 @@ import com.alenniboris.personalmanager.domain.repository.IFoodRepository
 import com.alenniboris.personalmanager.domain.repository.IHeartRepository
 import com.alenniboris.personalmanager.domain.usecase.logic.health.IGetTodayHealthStatisticsUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.user.IGetCurrentUserUseCase
-import com.alenniboris.personalmanager.domain.utils.LogPrinter
-import com.alenniboris.personalmanager.presentation.screens.login_registration.views.LoginProcessUi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import java.util.Date
@@ -55,7 +53,6 @@ class GetTodayHealthStatisticsUseCaseImpl @Inject constructor(
                     val averageHeartRate =
                         heartRateList.sumOf { it.heartRate.toDouble() } /
                                 (if (heartRateList.isNotEmpty()) heartRateList.size else 1)
-                    LogPrinter.printLog("!!!", averageHeartRate.toString())
                     val consumedCalories = foodIntakeList.sumOf { it.calories }
                     val consumedProteins = foodIntakeList.sumOf { it.proteins }
                     val consumedFats = foodIntakeList.sumOf { it.fats }

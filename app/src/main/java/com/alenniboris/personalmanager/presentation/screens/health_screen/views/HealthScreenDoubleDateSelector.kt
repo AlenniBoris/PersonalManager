@@ -171,8 +171,8 @@ private fun DateFilterRow(
 
             Text(
                 text = stringResource(R.string.filtered_by_text)
-                        + (selectedDateDayTextId?.let { stringResource(it) + ", " }
-                    ?: "")
+                        + " "
+                        + (selectedDateDayTextId?.let { stringResource(it) + ", " } ?: "")
                         + selectedDateText,
                 style = bodyStyle.copy(
                     color = appSubtleTextColor,

@@ -43,7 +43,8 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenFatC
 import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenFoodDetailsColorRadius
 import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenFoodDetailsStartPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenProteinColor
-import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenCurrentForecastBlockInnerPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.appInfoBlockInnerPadding
+import com.alenniboris.personalmanager.presentation.uikit.views.AppDataProgressSection
 import java.util.Calendar
 import kotlin.math.roundToInt
 
@@ -101,7 +102,7 @@ fun HealthScreenFoodDetailsUi(
                     shape = appRoundedShape
                 )
                 .fillMaxWidth()
-                .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                .padding(appInfoBlockInnerPadding),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -134,7 +135,7 @@ fun HealthScreenFoodDetailsUi(
                     shape = appRoundedShape
                 )
                 .fillMaxWidth()
-                .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                .padding(appInfoBlockInnerPadding),
             proteinsText = food.proteinsText,
             fatsText = food.fatsText,
             carbsText = food.carbsText
@@ -150,7 +151,7 @@ fun HealthScreenFoodDetailsUi(
                     shape = appRoundedShape
                 )
                 .fillMaxWidth()
-                .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                .padding(appInfoBlockInnerPadding),
             proteins = food.proteinsValue / totalUserProteins,
             fats = food.fatsValue / totalUserFats,
             carbs = food.carbsValue / totalUserCarbs
@@ -179,23 +180,23 @@ private fun CaloriesDistributionSection(
             )
         )
 
-        HealthScreenDataProgressSection(
+        AppDataProgressSection(
             modifier = Modifier.padding(healthScreenContentItemDoubleTopPadding),
-            value = proteins,
+            valuePercent = proteins,
             valueText = "${(proteins * 100).roundToInt()}%",
             headerText = stringResource(R.string.proteins_section_text)
         )
 
-        HealthScreenDataProgressSection(
+        AppDataProgressSection(
             modifier = Modifier.padding(healthScreenContentItemTopPadding),
-            value = fats,
+            valuePercent = fats,
             valueText = "${(fats * 100).roundToInt()}%",
             headerText = stringResource(R.string.fats_section_text)
         )
 
-        HealthScreenDataProgressSection(
+        AppDataProgressSection(
             modifier = Modifier.padding(healthScreenContentItemTopPadding),
-            value = carbs,
+            valuePercent = carbs,
             valueText = "${(carbs * 100).roundToInt()}%",
             headerText = stringResource(R.string.carbs_section_text)
         )

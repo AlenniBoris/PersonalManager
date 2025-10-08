@@ -27,10 +27,12 @@ import com.alenniboris.personalmanager.domain.utils.stripTime
 import com.alenniboris.personalmanager.presentation.mapper.toUiString
 import com.alenniboris.personalmanager.presentation.model.activity.ActivityModelUi
 import com.alenniboris.personalmanager.presentation.model.activity.toModelUi
+import com.alenniboris.personalmanager.presentation.model.heart.AddingHeartRate
 import com.alenniboris.personalmanager.presentation.model.heart.HeartRateModelUi
 import com.alenniboris.personalmanager.presentation.model.heart.toModelUi
 import com.alenniboris.personalmanager.presentation.model.user.toDomainModel
 import com.alenniboris.personalmanager.presentation.model.user.toModelUi
+import com.alenniboris.personalmanager.presentation.model.weight.AddingWeight
 import com.alenniboris.personalmanager.presentation.model.weight.WeightModelUi
 import com.alenniboris.personalmanager.presentation.model.weight.toModelUi
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -628,7 +630,7 @@ class PersonalScreenViewModel @Inject constructor(
         _state.update {
             it.copy(
                 isWeightAddDialogVisible = !it.isWeightAddDialogVisible,
-                addingWeight = PersonalScreenState.AddingWeight()
+                addingWeight = AddingWeight()
             )
         }
     }
@@ -637,7 +639,7 @@ class PersonalScreenViewModel @Inject constructor(
         _state.update {
             it.copy(
                 isHeartRateAddDialogVisible = !it.isHeartRateAddDialogVisible,
-                addingHeartRate = PersonalScreenState.AddingHeartRate()
+                addingHeartRate = AddingHeartRate()
             )
         }
     }
@@ -670,7 +672,6 @@ class PersonalScreenViewModel @Inject constructor(
             ) {
                 is CustomResultModelDomain.Success -> {
                     loadActivities()
-                    updateActivitiesAddDialogVisibility()
                 }
 
                 is CustomResultModelDomain.Error -> {
@@ -682,6 +683,7 @@ class PersonalScreenViewModel @Inject constructor(
                 }
             }
             _state.update { it.copy(isActivityUploading = false) }
+            updateActivitiesAddDialogVisibility()
         }
     }
 
@@ -704,7 +706,6 @@ class PersonalScreenViewModel @Inject constructor(
             ) {
                 is CustomResultModelDomain.Success -> {
                     loadHeartRates()
-                    updateHeartRatesAddDialogVisibility()
                 }
 
                 is CustomResultModelDomain.Error -> {
@@ -716,6 +717,7 @@ class PersonalScreenViewModel @Inject constructor(
                 }
             }
             _state.update { it.copy(isHeartRateUploading = false) }
+            updateHeartRatesAddDialogVisibility()
         }
     }
 
@@ -738,7 +740,6 @@ class PersonalScreenViewModel @Inject constructor(
             ) {
                 is CustomResultModelDomain.Success -> {
                     loadWeights()
-                    updateWeightsAddDialogVisibility()
                 }
 
                 is CustomResultModelDomain.Error -> {
@@ -750,6 +751,7 @@ class PersonalScreenViewModel @Inject constructor(
                 }
             }
             _state.update { it.copy(isWeightUploading = false) }
+            updateWeightsAddDialogVisibility()
         }
     }
 

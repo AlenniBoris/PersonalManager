@@ -32,7 +32,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.appRoundedShape
 import com.alenniboris.personalmanager.presentation.uikit.theme.appSubtleTextColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSize
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenCurrentForecastBlockIconPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenCurrentForecastBlockInnerPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.appInfoBlockInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenCurrentForecastBlockTextPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenWindColor
 
@@ -122,7 +122,7 @@ private fun LightTheme() {
                             color = appSubtleTextColor,
                             shape = appRoundedShape
                         )
-                        .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                        .padding(appInfoBlockInnerPadding),
                     sectionIcon = painterResource(R.drawable.wind_speed_icon),
                     iconTint = weatherScreenWindColor,
                     sectionHeader = stringResource(R.string.wind_speed_section_text),
@@ -156,7 +156,7 @@ private fun DarkTheme() {
                             color = appSubtleTextColor,
                             shape = appRoundedShape
                         )
-                        .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                        .padding(appInfoBlockInnerPadding),
                     sectionIcon = painterResource(R.drawable.wind_speed_icon),
                     iconTint = weatherScreenWindColor,
                     sectionHeader = stringResource(R.string.wind_speed_section_text),

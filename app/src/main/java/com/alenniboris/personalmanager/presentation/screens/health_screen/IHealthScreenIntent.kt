@@ -1,10 +1,13 @@
 package com.alenniboris.personalmanager.presentation.screens.health_screen
 
 import com.alenniboris.personalmanager.presentation.model.food.FoodIntakeModelUi
-import com.alenniboris.personalmanager.presentation.screens.weather.IWeatherScreenIntent
 import java.util.Date
 
 sealed interface IHealthScreenIntent {
+    data object RefreshOverviewUiData: IHealthScreenIntent
+    data object RefreshWeightUiData: IHealthScreenIntent
+    data object RefreshActivityUiData: IHealthScreenIntent
+    data object RefreshNutritionUiData: IHealthScreenIntent
     data object OpenPersonalScreen: IHealthScreenIntent
     data class ChangeScreenOption(val option: HealthScreenOption) : IHealthScreenIntent
     data class UpdateWeightChartStartDate(val date: Date) : IHealthScreenIntent

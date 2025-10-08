@@ -214,7 +214,7 @@ private fun HeartRateItem(
 
         Column {
             Text(
-                text = item.heartRateText,
+                text = item.heartRateText + " " + stringResource(R.string.bpm_text),
                 style = bodyStyle.copy(
                     color = appMainTextColor,
                     fontSize = appTextSize

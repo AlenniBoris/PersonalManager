@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,6 +40,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenNutr
 import com.alenniboris.personalmanager.presentation.uikit.views.AppCustomButton
 import com.alenniboris.personalmanager.presentation.uikit.views.AppDatePicker
 import com.alenniboris.personalmanager.presentation.uikit.views.AppProgressAnimation
+import com.alenniboris.personalmanager.presentation.uikit.views.AppRefreshIndicator
 import com.alenniboris.personalmanager.presentation.uikit.views.AppSingleLineDateFilter
 import java.util.Calendar
 
@@ -53,6 +56,7 @@ fun HealthScreenNutritionUi(
     totalFatsText: String,
     totalCarbsText: String,
     isFoodIntakeDatePickerVisible: Boolean,
+    isRefreshing: Boolean,
     proceedIntent: (IHealthScreenIntent) -> Unit
 ) {
 
@@ -73,8 +77,52 @@ fun HealthScreenNutritionUi(
         )
     }
 
+    val refreshState = rememberPullToRefreshState()
+    PullToRefreshBox(
+        modifier = modifier,
+        isRefreshing = isRefreshing,
+        onRefresh = {
+            proceedIntent(
+                IHealthScreenIntent.RefreshNutritionUiData
+            )
+        },
+        state = refreshState,
+        indicator = {
+            AppRefreshIndicator(
+                modifier = Modifier
+                    .align(Alignment.TopCenter),
+                state = refreshState,
+                isRefreshing = isRefreshing
+            )
+        },
+        content = {
+            ScreenContent(
+                isLoading = isLoading,
+                foodIntakeList = foodIntakeList,
+                foodIntakeDateText = foodIntakeDateText,
+                totalCaloriesText = totalCaloriesText,
+                totalProteinsText = totalProteinsText,
+                totalFatsText = totalFatsText,
+                totalCarbsText = totalCarbsText,
+                proceedIntent = proceedIntent
+            )
+        }
+    )
+}
+
+@Composable
+private fun ScreenContent(
+    isLoading: Boolean,
+    foodIntakeList: List<FoodIntakeModelUi>,
+    foodIntakeDateText: String,
+    totalCaloriesText: String,
+    totalProteinsText: String,
+    totalFatsText: String,
+    totalCarbsText: String,
+    proceedIntent: (IHealthScreenIntent) -> Unit
+) {
     Column(
-        modifier = modifier
+        modifier = Modifier.fillMaxSize()
     ) {
 
         AppSingleLineDateFilter(
@@ -282,6 +330,7 @@ private fun LightTheme() {
                             )
                         )
                     ),
+                    isRefreshing = false,
                     proceedIntent = {}
                 )
             }
@@ -338,6 +387,7 @@ private fun DarkTheme() {
                             )
                         )
                     ),
+                    isRefreshing = false,
                     proceedIntent = {}
                 )
             }

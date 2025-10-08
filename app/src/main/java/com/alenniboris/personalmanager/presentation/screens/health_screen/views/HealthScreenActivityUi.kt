@@ -7,10 +7,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
@@ -34,6 +39,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenPlot
 import com.alenniboris.personalmanager.presentation.uikit.views.AppAnimatedPlot
 import com.alenniboris.personalmanager.presentation.uikit.views.AppDatePicker
 import com.alenniboris.personalmanager.presentation.uikit.views.AppEmptyScreen
+import com.alenniboris.personalmanager.presentation.uikit.views.AppRefreshIndicator
 import com.alenniboris.personalmanager.presentation.uikit.views.AppSingleLineDateFilter
 import java.util.Calendar
 
@@ -46,11 +52,66 @@ fun HealthScreenActivityUi(
     heartRates: List<HeartRateModelUi>,
     heartRateChartDateText: String,
     heartRateChartDateDayText: Int,
+    isRefreshing: Boolean,
     proceedIntent: (IHealthScreenIntent) -> Unit
 ) {
 
+    if (isHeartRateDatePickerVisible) {
+        AppDatePicker(
+            onDismiss = {
+                proceedIntent(
+                    IHealthScreenIntent.UpdateHeartRateDatePickerVisibility
+                )
+            },
+            onSelected = { date ->
+                proceedIntent(
+                    IHealthScreenIntent.UpdateHeartRateChartDate(date)
+                )
+            }
+        )
+    }
+
+    val refreshState = rememberPullToRefreshState()
+    PullToRefreshBox(
+        modifier = modifier,
+        isRefreshing = isRefreshing,
+        onRefresh = {
+            proceedIntent(
+                IHealthScreenIntent.RefreshActivityUiData
+            )
+        },
+        state = refreshState,
+        indicator = {
+            AppRefreshIndicator(
+                modifier = Modifier
+                    .align(Alignment.TopCenter),
+                state = refreshState,
+                isRefreshing = isRefreshing
+            )
+        },
+        content = {
+            ScreenContent(
+                isLoading = isLoading,
+                heartRates = heartRates,
+                heartRateChartDateText = heartRateChartDateText,
+                heartRateChartDateDayText = heartRateChartDateDayText,
+                proceedIntent = proceedIntent
+            )
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ScreenContent(
+    isLoading: Boolean,
+    heartRates: List<HeartRateModelUi>,
+    heartRateChartDateText: String,
+    heartRateChartDateDayText: Int,
+    proceedIntent: (IHealthScreenIntent) -> Unit
+) {
     Column(
-        modifier = modifier
+        modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
 
         AppSingleLineDateFilter(
@@ -90,21 +151,6 @@ fun HealthScreenActivityUi(
                 .padding(appDateFilterInnerPadding),
             heartRates = heartRates,
             isLoading = isLoading
-        )
-    }
-
-    if (isHeartRateDatePickerVisible) {
-        AppDatePicker(
-            onDismiss = {
-                proceedIntent(
-                    IHealthScreenIntent.UpdateHeartRateDatePickerVisibility
-                )
-            },
-            onSelected = { date ->
-                proceedIntent(
-                    IHealthScreenIntent.UpdateHeartRateChartDate(date)
-                )
-            }
         )
     }
 }
@@ -214,6 +260,7 @@ private fun LightTheme() {
                     ),
                     heartRateChartDateText = "12/12/12",
                     heartRateChartDateDayText = R.string.time_monday_text,
+                    isRefreshing = false,
                     proceedIntent = {}
                 )
             }
@@ -277,6 +324,7 @@ private fun DarkTheme() {
                     ),
                     heartRateChartDateText = "12/12/12",
                     heartRateChartDateDayText = R.string.time_monday_text,
+                    isRefreshing = false,
                     proceedIntent = {}
                 )
             }

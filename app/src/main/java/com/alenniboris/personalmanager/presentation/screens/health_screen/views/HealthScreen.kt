@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -29,7 +27,6 @@ import com.alenniboris.personalmanager.domain.model.TodayHealthStatisticsModelDo
 import com.alenniboris.personalmanager.domain.model.food.FoodIntakeModelDomain
 import com.alenniboris.personalmanager.domain.model.heart.HeartRateModelDomain
 import com.alenniboris.personalmanager.domain.model.weight.WeightModelDomain
-import com.alenniboris.personalmanager.domain.utils.LogPrinter
 import com.alenniboris.personalmanager.presentation.model.food.FoodIntakeModelUi
 import com.alenniboris.personalmanager.presentation.model.health.TodayHealthStatisticsModelUi
 import com.alenniboris.personalmanager.presentation.model.heart.HeartRateModelUi
@@ -54,6 +51,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.topBarInnerPaddi
 import com.alenniboris.personalmanager.presentation.uikit.utils.ToastUtil
 import com.alenniboris.personalmanager.presentation.uikit.values.HealthScreenRoute
 import com.alenniboris.personalmanager.presentation.uikit.views.AppBottomSheet
+import com.alenniboris.personalmanager.presentation.uikit.views.AppFoodAddingDialog
 import com.alenniboris.personalmanager.presentation.uikit.views.AppLazyButtonRow
 import com.alenniboris.personalmanager.presentation.uikit.views.AppSettingsDialog
 import com.alenniboris.personalmanager.presentation.uikit.views.AppTopBar
@@ -146,10 +144,54 @@ private fun HealthScreenUi(
     }
 
     if (state.isFoodIntakeAddDialogVisible) {
-        HealthScreenAddFoodDialog(
+        AppFoodAddingDialog(
             addModel = state.foodIntakeAddModel,
             isFoodUploading = state.isFoodIntakeUpdateProceeding,
-            proceedIntent = proceedIntent
+            onDismiss = {
+                proceedIntent(
+                    IHealthScreenIntent.UpdateFoodIntakeAddDialogVisibility
+                )
+            },
+            onTitleChange = {
+                proceedIntent(
+                    IHealthScreenIntent.UpdateFoodIntakeAddModelTitle(
+                        newValue = it
+                    )
+                )
+            },
+            onCaloriesChange = {
+                proceedIntent(
+                    IHealthScreenIntent.UpdateFoodIntakeAddModelCalories(
+                        newValue = it
+                    )
+                )
+            },
+            onProteinsChange = {
+                proceedIntent(
+                    IHealthScreenIntent.UpdateFoodIntakeAddModelProteins(
+                        newValue = it
+                    )
+                )
+            },
+            onFatsChange = {
+                proceedIntent(
+                    IHealthScreenIntent.UpdateFoodIntakeAddModelFats(
+                        newValue = it
+                    )
+                )
+            },
+            onCarbsChange = {
+                proceedIntent(
+                    IHealthScreenIntent.UpdateFoodIntakeAddModelCarbs(
+                        newValue = it
+                    )
+                )
+            },
+            onAdd = {
+                proceedIntent(
+                    IHealthScreenIntent.ProceedFoodIntakeAdd
+                )
+            }
         )
     }
 
@@ -215,15 +257,15 @@ private fun HealthScreenUi(
                     HealthScreenOverviewUi(
                         modifier = Modifier.fillMaxSize(),
                         todayStatistics = state.todayHealthStatistics,
-                        isLoading = state.isTodayStatisticsLoading
+                        isLoading = state.isTodayStatisticsLoading,
+                        isRefreshing = state.isOverviewDataRefreshing,
+                        proceedIntent = proceedIntent
                     )
                 }
 
                 HealthScreenOption.Weight -> {
                     HealthScreenWeightUi(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .verticalScroll(rememberScrollState()),
+                        modifier = Modifier.fillMaxSize(),
                         isLoading = state.isWeightDataLoading,
                         weights = state.weightChartList,
                         weightChartStartDateText = state.weightChartStartDateText,
@@ -231,11 +273,12 @@ private fun HealthScreenUi(
                         weightChartEndDateText = state.weightChartEndDateText,
                         weightChartEndDateDayText = state.weightChartEndDateDayText,
                         currentWeightText = state.currentWeightText,
-                        weightChangeText = state.weightChangeText,
+                        weightChangeText = state.weightChangeText + " " + stringResource(R.string.kg_text),
                         weightChangeIcon = state.weightChangeIcon,
                         weightChangeColor = state.weightChangeColor,
                         isWeightChartEndDatePickerVisible = state.isWeightChartEndDatePickerVisible,
                         isWeightChartStartDatePickerVisible = state.isWeightChartStartDatePickerVisible,
+                        isRefreshing = state.isWeightDataRefreshing,
                         proceedIntent = proceedIntent
                     )
                 }
@@ -248,6 +291,7 @@ private fun HealthScreenUi(
                         heartRates = state.heartRateChartList,
                         heartRateChartDateText = state.heartRateChartDateText,
                         heartRateChartDateDayText = state.heartRateChartDateDayText,
+                        isRefreshing = state.isActivityDataRefreshing,
                         proceedIntent = proceedIntent
                     )
                 }
@@ -263,6 +307,7 @@ private fun HealthScreenUi(
                         totalFatsText = state.totalFatsText,
                         totalCarbsText = state.totalCarbsText,
                         isFoodIntakeDatePickerVisible = state.isFoodIntakeDatePickerVisible,
+                        isRefreshing = state.isNutritionDataRefreshing,
                         proceedIntent = proceedIntent
                     )
                 }

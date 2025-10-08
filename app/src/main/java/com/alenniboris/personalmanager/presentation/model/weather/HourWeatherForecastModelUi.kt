@@ -29,7 +29,7 @@ data class HourWeatherForecastModelUi(
     val uvIndexText = domainModel?.uvIndex.toString()
     val humidityText = domainModel?.relativeHumidity?.let { "$it%" }
     val windDirectionTextId = domainModel?.windDirection?.toUiString()
-    val windSpeedText = domainModel?.windSpeed?.let { "$it m/s" }
+    val windSpeedText = domainModel?.windSpeed?.let { "$it" }
 }
 
 fun HourWeatherForecastModelDomain.toModelUi(): HourWeatherForecastModelUi =

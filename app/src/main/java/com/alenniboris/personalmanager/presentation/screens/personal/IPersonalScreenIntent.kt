@@ -12,8 +12,6 @@ sealed interface IPersonalScreenIntent {
     data object NavigateBack : IPersonalScreenIntent
     data object ExitApp : IPersonalScreenIntent
     data class ChangeOption(val option: PersonalScreenOption) : IPersonalScreenIntent
-
-
     data object ChangeUserUpdateDialogVisibility : IPersonalScreenIntent
     data object UpdateUser : IPersonalScreenIntent
     data class ChangeUserUpdateModelName(val newValue: String) : IPersonalScreenIntent

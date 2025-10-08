@@ -121,3 +121,14 @@ val healthScreenCarbsColor = Color(0xFF069806)
 val personalScreenWeightIconColor = Color(0xFF064098)
 val personalScreenHeartRateIconColor = Color(0xFF98060B)
 val personalScreenActivitiesIconColor = Color(0xFF069806)
+val homeScreenTemperatureIconColor = Color(0xFF064098)
+val homeScreenTasksIconColor = Color(0xFF069806)
+val homeScreenHeartRateIconColor = Color(0xFF98060B)
+val homeScreenWeightIconColor = Color(0xFF3D3F9F)
+private val HomeScreenQuickActionsColorLight = Color(0xFFD0D0D0)
+private val HomeScreenQuickActionsColorDark = Color(0xFF212121)
+val homeScreenQuickActionsColor
+    get() = when (currentThemeMode.value.isThemeDark) {
+        false -> HomeScreenQuickActionsColorLight
+        true -> HomeScreenQuickActionsColorDark
+    }

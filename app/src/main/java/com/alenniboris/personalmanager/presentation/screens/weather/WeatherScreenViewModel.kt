@@ -7,7 +7,6 @@ import com.alenniboris.personalmanager.domain.usecase.logic.user.IGetCurrentUser
 import com.alenniboris.personalmanager.domain.usecase.logic.weather_and_location.IGetCurrentForecastUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.weather_and_location.IGetTodayWeatherForecastUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.weather_and_location.IGetWeekWeatherForecastUseCase
-import com.alenniboris.personalmanager.domain.utils.LogPrinter
 import com.alenniboris.personalmanager.domain.utils.SingleFlowEvent
 import com.alenniboris.personalmanager.presentation.mapper.toUiString
 import com.alenniboris.personalmanager.presentation.model.user.toModelUi
@@ -76,7 +75,6 @@ class WeatherScreenViewModel @Inject constructor(
                     }
 
                     is CustomResultModelDomain.Error -> {
-                        LogPrinter.printLog("!!!", res.exception.stackTraceToString())
                         _event.emit(
                             IWeatherScreenEvent.ShowToast(
                                 res.exception.toUiString()
@@ -110,7 +108,6 @@ class WeatherScreenViewModel @Inject constructor(
                     }
 
                     is CustomResultModelDomain.Error -> {
-                        LogPrinter.printLog("!!!", res.exception.stackTraceToString())
                         _event.emit(
                             IWeatherScreenEvent.ShowToast(
                                 res.exception.toUiString()
@@ -144,7 +141,6 @@ class WeatherScreenViewModel @Inject constructor(
                     }
 
                     is CustomResultModelDomain.Error -> {
-                        LogPrinter.printLog("!!!", res.exception.stackTraceToString())
                         _event.emit(
                             IWeatherScreenEvent.ShowToast(
                                 res.exception.toUiString()

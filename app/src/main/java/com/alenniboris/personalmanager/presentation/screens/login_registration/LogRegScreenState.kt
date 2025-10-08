@@ -1,6 +1,7 @@
 package com.alenniboris.personalmanager.presentation.screens.login_registration
 
 import com.alenniboris.personalmanager.presentation.model.user.UserModelUi
+import com.alenniboris.personalmanager.presentation.uikit.utils.PermissionType
 
 sealed class LogRegScreenState(
     val currentProcess: LogRegScreenProcess
@@ -9,7 +10,9 @@ sealed class LogRegScreenState(
     data class Login(
         val email: String = "",
         val password: String = "",
-        val isPasswordVisible: Boolean = false
+        val isPasswordVisible: Boolean = false,
+        val requestedPermission: PermissionType? = null,
+        val isPermissionDialogVisible: Boolean = false
     ) : LogRegScreenState(currentProcess = LogRegScreenProcess.Login)
 
     data class Registration(

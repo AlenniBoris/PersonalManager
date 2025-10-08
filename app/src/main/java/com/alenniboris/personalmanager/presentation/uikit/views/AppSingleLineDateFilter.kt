@@ -97,6 +97,7 @@ fun AppSingleLineDateFilter(
 
             Text(
                 text = stringResource(R.string.filtered_by_text)
+                        + " "
                         + (selectedFilterDateDayTextId?.let { stringResource(it) + ", " } ?: "")
                         + selectedFilterDateText,
                 style = bodyStyle.copy(

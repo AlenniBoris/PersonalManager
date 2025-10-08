@@ -21,7 +21,7 @@ class LocationRepositoryImpl @Inject constructor(
         lon: Double
     ): CustomResultModelDomain<String, CommonExceptionModelDomain> =
         withContext(dispatchers.IO) {
-            runCatching {
+            return@withContext runCatching {
 
                 val response = locationGeoapifyApiService.getCurrentLocationOfPhone(
                     lat = lat.toString(),

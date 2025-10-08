@@ -22,7 +22,7 @@ data class UserModelUi(
     val password: String = ""
 ) {
     val heightText = "${height.toInt()} "
-    val weightText = "${weight.toInt()} "
+    val weightText = "$weight "
     val ageText = "$age "
     val caloriesIntakeText = caloriesIntake.toString()
     val neededProteinsText = "$neededProteins g"

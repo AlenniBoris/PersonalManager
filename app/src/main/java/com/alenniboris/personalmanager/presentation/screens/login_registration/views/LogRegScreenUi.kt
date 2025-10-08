@@ -1,5 +1,9 @@
 package com.alenniboris.personalmanager.presentation.screens.login_registration.views
 
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,9 +16,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -43,16 +49,85 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenHead
 import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenIconInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenInnerSectionPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenMainShape
+import com.alenniboris.personalmanager.presentation.uikit.utils.PermissionType
+import com.alenniboris.personalmanager.presentation.uikit.utils.launchForPermission
+import com.alenniboris.personalmanager.presentation.uikit.utils.toPermission
 import com.alenniboris.personalmanager.presentation.uikit.views.AppButtonRow
 import com.alenniboris.personalmanager.presentation.uikit.views.AppCustomButton
 import com.alenniboris.personalmanager.presentation.uikit.views.AppIconPlaceholder
+import com.alenniboris.personalmanager.presentation.uikit.views.AppPermissionRationaleDialog
+import com.google.android.gms.location.LocationServices
 
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun LogRegScreenUi(
     state: LogRegScreenState,
     proceedIntent: (ILogRegScreenIntent) -> Unit
 ) {
+
+    val context = LocalContext.current
+
+    val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(
+        context
+    )
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            proceedIntent(
+                ILogRegScreenIntent.GetUserLocation(
+                    fusedLocationProviderClient = fusedLocationProviderClient
+                )
+            )
+        } else {
+            proceedIntent(
+                ILogRegScreenIntent.UpdateRequestedPermission(
+                    PermissionType.PERMISSION_FINE_LOCATION
+                )
+            )
+        }
+    }
+    (state as? LogRegScreenState.Login)?.let {
+        LaunchedEffect(state.requestedPermission) {
+            launchForPermission(
+                permission = PermissionType.PERMISSION_FINE_LOCATION,
+                context = context,
+                onPermissionGrantedAction = {
+                    proceedIntent(
+                        ILogRegScreenIntent.GetUserLocation(
+                            fusedLocationProviderClient = fusedLocationProviderClient
+                        )
+                    )
+                },
+                onPermissionNotGrantedAction = {},
+                onShowRationale = { permission ->
+                    proceedIntent(
+                        ILogRegScreenIntent.UpdateRequestedPermissionAndShowDialog(
+                            newRequestedPermission = permission
+                        )
+                    )
+                },
+                onLaunchAgain = { permission ->
+                    permissionLauncher.launch(permission.toPermission())
+                }
+            )
+        }
+    }
+    (state as? LogRegScreenState.Login)?.let {
+        if (state.isPermissionDialogVisible) {
+            state.requestedPermission?.let {
+                AppPermissionRationaleDialog(
+                    permissionType = it,
+                    onOpenSettings = {
+                        proceedIntent(
+                            ILogRegScreenIntent.OpenSettingsAndHidePermissionDialog
+                        )
+                    }
+                )
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -182,6 +257,7 @@ private fun HeaderTextSection(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 @Preview
 private fun LightTheme() {
@@ -199,6 +275,7 @@ private fun LightTheme() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 @Preview
 private fun DarkTheme() {

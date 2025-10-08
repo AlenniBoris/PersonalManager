@@ -3,15 +3,16 @@ package com.alenniboris.personalmanager.presentation.screens.personal
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.alenniboris.personalmanager.domain.model.activity.ActivityModelDomain
-import com.alenniboris.personalmanager.domain.model.heart.HeartRateModelDomain
 import com.alenniboris.personalmanager.domain.model.user.FitnessGoal
 import com.alenniboris.personalmanager.domain.model.user.UserGender
 import com.alenniboris.personalmanager.domain.model.weight.WeightModelDomain
 import com.alenniboris.personalmanager.domain.utils.stripTime
 import com.alenniboris.personalmanager.presentation.mapper.toDayType
 import com.alenniboris.personalmanager.presentation.model.activity.ActivityModelUi
+import com.alenniboris.personalmanager.presentation.model.heart.AddingHeartRate
 import com.alenniboris.personalmanager.presentation.model.heart.HeartRateModelUi
 import com.alenniboris.personalmanager.presentation.model.user.UserModelUi
+import com.alenniboris.personalmanager.presentation.model.weight.AddingWeight
 import com.alenniboris.personalmanager.presentation.model.weight.WeightModelUi
 import com.alenniboris.personalmanager.presentation.uikit.utils.ScreensCommonUtils
 import com.alenniboris.personalmanager.presentation.uikit.values.toUiString
@@ -88,42 +89,6 @@ data class PersonalScreenState(
 
     val isUserTodayDataLoading: Boolean =
         isTodayWeightLoading || isTodayHeartRateLoading || isTodayActivitiesNumberLoading
-
-    data class AddingWeight(
-        val id: String = "",
-        val userId: String = "",
-        val weight: String = "",
-        val markingDate: Date = Calendar.getInstance().time.stripTime(),
-        val markingTime: Date = Calendar.getInstance().time
-    ) {
-
-        fun toModelDomain(): WeightModelDomain =
-            WeightModelDomain(
-                id = this.id,
-                userId = this.userId,
-                weight = this.weight.toDouble(),
-                markingDate = this.markingDate,
-                markingTime = this.markingTime
-            )
-    }
-
-    data class AddingHeartRate(
-        val id: String = "",
-        val userId: String = "",
-        val heartRate: String = "",
-        val markingDate: Date = Calendar.getInstance().time.stripTime(),
-        val markingTime: Date = Calendar.getInstance().time
-    ) {
-
-        fun toModelDomain(): HeartRateModelDomain =
-            HeartRateModelDomain(
-                id = this.id,
-                userId = this.userId,
-                heartRate = this.heartRate.toDouble().roundToInt(),
-                markingDate = this.markingDate,
-                markingTime = this.markingTime
-            )
-    }
 
     data class AddingActivity(
         val id: String = "",

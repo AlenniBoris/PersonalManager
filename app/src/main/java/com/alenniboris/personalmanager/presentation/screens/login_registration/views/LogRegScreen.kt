@@ -1,5 +1,8 @@
 package com.alenniboris.personalmanager.presentation.screens.login_registration.views
 
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -40,6 +43,17 @@ fun LogRegScreen(
                 )
             }
         }
+
+        launch {
+            event.filterIsInstance<ILogRegScreenEvent.OpenSettings>().collect {
+                val openingIntent =
+                    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                        data = Uri.fromParts("package", context.packageName, null)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+                context.startActivity(openingIntent)
+            }
+        }
     }
 
     LogRegScreenUi(
@@ -47,6 +61,3 @@ fun LogRegScreen(
         proceedIntent = proceedIntent
     )
 }
-
-
-

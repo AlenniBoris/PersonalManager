@@ -1,4 +1,4 @@
-package com.alenniboris.personalmanager.presentation.screens.health_screen.views
+package com.alenniboris.personalmanager.presentation.uikit.views
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.alenniboris.fastbanking.presentation.uikit.theme.bodyStyle
 import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
+import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appRoundedShape
 import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSize
@@ -36,16 +37,16 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenOver
 import kotlinx.coroutines.launch
 
 @Composable
-fun HealthScreenDataProgressSection(
+fun AppDataProgressSection(
     modifier: Modifier = Modifier,
     headerText: String,
     valueText: String = "",
-    value: Double,
+    valuePercent: Double,
     animationDuration: Int = 1000,
 ) {
 
     val animationProgress = remember { Animatable(0f) }
-    LaunchedEffect(value) {
+    LaunchedEffect(valuePercent) {
         launch {
             animationProgress.animateTo(
                 targetValue = 1f,
@@ -92,7 +93,7 @@ fun HealthScreenDataProgressSection(
                 modifier = Modifier
                     .background(appMainTextColor)
                     .fillMaxHeight()
-                    .fillMaxWidth(value.toFloat() * animationProgress.value)
+                    .fillMaxWidth(valuePercent.toFloat() * animationProgress.value)
             )
         }
     }
@@ -106,13 +107,15 @@ private fun LightTheme() {
     ) {
         Surface {
             Column(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(appColor)
             ) {
-                HealthScreenDataProgressSection(
+                AppDataProgressSection(
                     modifier = Modifier.padding(healthScreenContentItemTopPadding),
                     headerText = stringResource(R.string.proteins_section_text),
                     valueText = "120/10",
-                    value = 0.86
+                    valuePercent = 0.86
                 )
             }
         }
@@ -127,13 +130,15 @@ private fun DarkTheme() {
     ) {
         Surface {
             Column(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(appColor)
             ) {
-                HealthScreenDataProgressSection(
+                AppDataProgressSection(
                     modifier = Modifier.padding(healthScreenContentItemTopPadding),
                     headerText = stringResource(R.string.proteins_section_text),
                     valueText = "120/10",
-                    value = 0.86
+                    valuePercent = 0.86
                 )
             }
         }

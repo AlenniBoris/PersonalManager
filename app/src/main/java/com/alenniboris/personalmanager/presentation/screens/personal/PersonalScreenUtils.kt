@@ -3,6 +3,7 @@ package com.alenniboris.personalmanager.presentation.screens.personal
 import com.alenniboris.personalmanager.domain.model.user.FitnessGoal
 import com.alenniboris.personalmanager.domain.model.user.UserGender
 import com.alenniboris.personalmanager.presentation.model.food.NutritionResult
+import kotlin.math.roundToInt
 
 object PersonalScreenUtils {
 
@@ -63,7 +64,7 @@ object PersonalScreenUtils {
         val carbsGrams = (carbsCalories / PROTEIN_CARBS_CALORIES_VALUE).toInt()
 
         return NutritionResult(
-            calories = calories,
+            calories = calories.roundToInt().toDouble(),
             protein = proteinGrams.toDouble(),
             fat = fatGrams.toDouble(),
             carbs = carbsGrams.toDouble()

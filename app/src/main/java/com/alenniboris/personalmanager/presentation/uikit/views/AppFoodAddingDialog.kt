@@ -1,4 +1,4 @@
-package com.alenniboris.personalmanager.presentation.screens.health_screen.views
+package com.alenniboris.personalmanager.presentation.uikit.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,11 +23,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.alenniboris.fastbanking.presentation.uikit.theme.bodyStyle
 import com.alenniboris.personalmanager.R
-import com.alenniboris.personalmanager.presentation.screens.health_screen.HealthScreenState
-import com.alenniboris.personalmanager.presentation.screens.health_screen.IHealthScreenIntent
+import com.alenniboris.personalmanager.presentation.model.food.FoodIntakeAddModel
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
-import com.alenniboris.personalmanager.presentation.uikit.theme.appDialogItemPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogProgressHeight
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.appDialogItemPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appRoundedShape
 import com.alenniboris.personalmanager.presentation.uikit.theme.appSubtleTextColor
@@ -36,25 +36,25 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeMediu
 import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeSmall
 import com.alenniboris.personalmanager.presentation.uikit.theme.enterTextFieldColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenFoodAddDialogItemStartPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogProgressHeight
-import com.alenniboris.personalmanager.presentation.uikit.views.AppCustomButton
-import com.alenniboris.personalmanager.presentation.uikit.views.AppDoubleInputField
-import com.alenniboris.personalmanager.presentation.uikit.views.AppProgressAnimation
 
 @Composable
-fun HealthScreenAddFoodDialog(
-    addModel: HealthScreenState.FoodIntakeAddModel,
+fun AppFoodAddingDialog(
+    addModel: FoodIntakeAddModel,
     isFoodUploading: Boolean,
-    proceedIntent: (IHealthScreenIntent) -> Unit
+    onDismiss: () -> Unit,
+    onTitleChange: (String) -> Unit,
+    onCaloriesChange: (String) -> Unit,
+    onProteinsChange: (String) -> Unit,
+    onFatsChange: (String) -> Unit,
+    onCarbsChange: (String) -> Unit,
+    onAdd: () -> Unit
 ) {
     AlertDialog(
         dismissButton = {},
         confirmButton = {},
         onDismissRequest = {
             if (!isFoodUploading) {
-                proceedIntent(
-                    IHealthScreenIntent.UpdateFoodIntakeAddDialogVisibility
-                )
+                onDismiss()
             }
         },
         containerColor = appColor,
@@ -63,7 +63,13 @@ fun HealthScreenAddFoodDialog(
             AddFoodDialogUi(
                 data = addModel,
                 isUploading = isFoodUploading,
-                proceedIntent = proceedIntent
+                onDismiss = onDismiss,
+                onTitleChange = onTitleChange,
+                onCaloriesChange = onCaloriesChange,
+                onProteinsChange = onProteinsChange,
+                onFatsChange = onFatsChange,
+                onCarbsChange = onCarbsChange,
+                onAdd = onAdd
             )
         }
     )
@@ -71,9 +77,15 @@ fun HealthScreenAddFoodDialog(
 
 @Composable
 private fun AddFoodDialogUi(
-    data: HealthScreenState.FoodIntakeAddModel,
+    data: FoodIntakeAddModel,
     isUploading: Boolean,
-    proceedIntent: (IHealthScreenIntent) -> Unit
+    onDismiss: () -> Unit,
+    onTitleChange: (String) -> Unit,
+    onCaloriesChange: (String) -> Unit,
+    onProteinsChange: (String) -> Unit,
+    onFatsChange: (String) -> Unit,
+    onCarbsChange: (String) -> Unit,
+    onAdd: () -> Unit
 ) {
 
     if (isUploading) {
@@ -118,18 +130,14 @@ private fun AddFoodDialogUi(
                         fontSize = appTextSizeSmall
                     )
                 )
-                AppDoubleInputField(
+                AppTextField(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(appRoundedShape)
                         .background(color = enterTextFieldColor),
-                    initialValue = data.title,
+                    value = data.title,
                     onValueChanged = {
-                        proceedIntent(
-                            IHealthScreenIntent.UpdateFoodIntakeAddModelTitle(
-                                newValue = it
-                            )
-                        )
+                        onTitleChange(it)
                     },
                     placeholder = stringResource(R.string.food_name_example_placeholder)
                 )
@@ -153,11 +161,7 @@ private fun AddFoodDialogUi(
                         .background(color = enterTextFieldColor),
                     initialValue = data.calories,
                     onValueChanged = {
-                        proceedIntent(
-                            IHealthScreenIntent.UpdateFoodIntakeAddModelCalories(
-                                newValue = it
-                            )
-                        )
+                        onCaloriesChange(it)
                     },
                     placeholder = stringResource(R.string.calories_add_placeholder)
                 )
@@ -186,11 +190,7 @@ private fun AddFoodDialogUi(
                             .background(color = enterTextFieldColor),
                         initialValue = data.proteins,
                         onValueChanged = {
-                            proceedIntent(
-                                IHealthScreenIntent.UpdateFoodIntakeAddModelProteins(
-                                    newValue = it
-                                )
-                            )
+                            onProteinsChange(it)
                         },
                         placeholder = stringResource(R.string.proteins_add_placeholder)
                     )
@@ -215,11 +215,7 @@ private fun AddFoodDialogUi(
                             .background(color = enterTextFieldColor),
                         initialValue = data.fats,
                         onValueChanged = {
-                            proceedIntent(
-                                IHealthScreenIntent.UpdateFoodIntakeAddModelFats(
-                                    newValue = it
-                                )
-                            )
+                            onFatsChange(it)
                         },
                         placeholder = stringResource(R.string.fats_add_placeholder)
                     )
@@ -244,11 +240,7 @@ private fun AddFoodDialogUi(
                             .background(color = enterTextFieldColor),
                         initialValue = data.carbohydrates,
                         onValueChanged = {
-                            proceedIntent(
-                                IHealthScreenIntent.UpdateFoodIntakeAddModelCarbs(
-                                    newValue = it
-                                )
-                            )
+                            onCarbsChange(it)
                         },
                         placeholder = stringResource(R.string.carbs_add_placeholder)
                     )
@@ -260,9 +252,7 @@ private fun AddFoodDialogUi(
                     .padding(appDialogItemPadding)
                     .fillMaxWidth(),
                 onClick = {
-                    proceedIntent(
-                        IHealthScreenIntent.ProceedFoodIntakeAdd
-                    )
+                    onAdd()
                 },
                 text = stringResource(R.string.add_food_text),
                 icon = painterResource(R.drawable.add_icon)
@@ -273,9 +263,7 @@ private fun AddFoodDialogUi(
                     .padding(appDialogItemPadding)
                     .fillMaxWidth(),
                 onClick = {
-                    proceedIntent(
-                        IHealthScreenIntent.UpdateFoodIntakeAddDialogVisibility
-                    )
+                    onDismiss()
                 },
                 text = stringResource(R.string.cancel_text),
                 icon = painterResource(R.drawable.cancel_icon)
@@ -297,14 +285,20 @@ private fun LightTheme() {
                     .background(appColor)
             ) {
                 AddFoodDialogUi(
-                    data = HealthScreenState.FoodIntakeAddModel(
+                    data = FoodIntakeAddModel(
                         title = "firsdsd",
                         proteins = "123.0",
                         fats = "21.2",
                         carbohydrates = "44.2"
                     ),
                     isUploading = false,
-                    proceedIntent = {}
+                    onDismiss = {},
+                    onTitleChange = {},
+                    onCaloriesChange = {},
+                    onProteinsChange = {},
+                    onFatsChange = {},
+                    onCarbsChange = {},
+                    onAdd = {}
                 )
             }
         }
@@ -324,14 +318,20 @@ private fun DarkTheme() {
                     .background(appColor)
             ) {
                 AddFoodDialogUi(
-                    data = HealthScreenState.FoodIntakeAddModel(
+                    data = FoodIntakeAddModel(
                         title = "firsdsd",
                         proteins = "123.0",
                         fats = "21.2",
                         carbohydrates = "44.2"
                     ),
                     isUploading = false,
-                    proceedIntent = {}
+                    onDismiss = {},
+                    onTitleChange = {},
+                    onCaloriesChange = {},
+                    onProteinsChange = {},
+                    onFatsChange = {},
+                    onCarbsChange = {},
+                    onAdd = {}
                 )
             }
         }

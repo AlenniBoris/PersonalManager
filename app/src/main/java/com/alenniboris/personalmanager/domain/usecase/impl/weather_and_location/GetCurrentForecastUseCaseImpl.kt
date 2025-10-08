@@ -17,6 +17,27 @@ class GetCurrentForecastUseCaseImpl @Inject constructor(
     private val dispatchers: IAppDispatchers
 ) : IGetCurrentForecastUseCase {
 
+
+    override suspend fun location(
+        lat: Double,
+        lon: Double
+    ): CustomResultModelDomain<String, CommonExceptionModelDomain> = withContext(dispatchers.IO) {
+        return@withContext locationRepository.getCurrentLocation(
+            lat = lat,
+            lon = lon
+        )
+    }
+
+    override suspend fun weather(
+        lat: Double,
+        lon: Double
+    ): CustomResultModelDomain<CurrentWeatherForecastModelDomain, CommonExceptionModelDomain> = withContext(dispatchers.IO){
+        return@withContext weatherRepository.getCurrentWeatherForecast(
+            lat = lat,
+            lon = lon
+        )
+    }
+
     override suspend fun invoke(
         lat: Double,
         lon: Double

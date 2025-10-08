@@ -3,11 +3,10 @@ package com.alenniboris.personalmanager.presentation.screens.tasks
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.alenniboris.personalmanager.R
-import com.alenniboris.personalmanager.domain.model.task.TaskModelDomain
-import com.alenniboris.personalmanager.domain.model.task.TaskPriority
 import com.alenniboris.personalmanager.domain.model.task.TaskStatus
 import com.alenniboris.personalmanager.domain.utils.stripTime
 import com.alenniboris.personalmanager.presentation.mapper.toDayType
+import com.alenniboris.personalmanager.presentation.model.task.TaskAddingData
 import com.alenniboris.personalmanager.presentation.model.task.TaskModelUi
 import com.alenniboris.personalmanager.presentation.model.user.UserModelUi
 import com.alenniboris.personalmanager.presentation.uikit.model.PieSegment
@@ -48,39 +47,6 @@ data class TasksScreenState(
     @RequiresApi(Build.VERSION_CODES.O)
     val selectedFilterDateDayText: Int? = selectedFilterDate?.let {
         selectedFilterDate.toDayType().toUiString()
-    }
-
-
-    data class TaskAddingData(
-        val id: String = "",
-        val userId: String = "",
-        val title: String = "",
-        val description: String = "",
-        val dueDate: Date = Calendar.getInstance().time.stripTime(),
-        val dueTime: Date = Calendar.getInstance().time.stripTime(),
-        val createdDate: Date = Calendar.getInstance().time,
-        val priority: TaskPriority = TaskPriority.Low,
-        val status: TaskStatus = TaskStatus.Pending
-    ) {
-        val selectedDateText: String = SimpleDateFormat(
-            "dd.MM.yyyy", Locale.getDefault()
-        ).format(this.dueDate)
-        val selectedTimeText: String = SimpleDateFormat(
-            "HH:mm", Locale.getDefault()
-        ).format(this.dueTime)
-
-        fun toTaskDomainModel(): TaskModelDomain =
-            TaskModelDomain(
-                id = this.id,
-                userId = this.userId,
-                title = this.title,
-                description = this.description,
-                dueDate = this.dueDate,
-                dueTime = this.dueTime,
-                createdDate = this.createdDate,
-                priority = this.priority,
-                status = this.status
-            )
     }
 
     val tasks: List<TaskModelUi> = initTasks.filter { task ->

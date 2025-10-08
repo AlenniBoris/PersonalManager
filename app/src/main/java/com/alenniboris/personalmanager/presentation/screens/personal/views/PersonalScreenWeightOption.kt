@@ -214,7 +214,7 @@ private fun WeightItem(
 
         Column {
             Text(
-                text = item.weightText,
+                text = item.weightText + " " + stringResource(R.string.kg_text),
                 style = bodyStyle.copy(
                     color = appMainTextColor,
                     fontSize = appTextSize

@@ -1,4 +1,4 @@
-package com.alenniboris.personalmanager.presentation.screens.personal.views
+package com.alenniboris.personalmanager.presentation.uikit.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -18,26 +18,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.alenniboris.fastbanking.presentation.uikit.theme.bodyStyle
 import com.alenniboris.personalmanager.R
-import com.alenniboris.personalmanager.presentation.screens.personal.IPersonalScreenIntent
-import com.alenniboris.personalmanager.presentation.screens.personal.PersonalScreenState
+import com.alenniboris.personalmanager.presentation.model.heart.AddingHeartRate
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
-import com.alenniboris.personalmanager.presentation.uikit.theme.appDialogItemPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogProgressHeight
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.appDialogItemPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appRoundedShape
 import com.alenniboris.personalmanager.presentation.uikit.theme.appSubtleTextColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSize
 import com.alenniboris.personalmanager.presentation.uikit.theme.enterTextFieldColor
-import com.alenniboris.personalmanager.presentation.uikit.views.AppCustomButton
-import com.alenniboris.personalmanager.presentation.uikit.views.AppDoubleInputField
-import com.alenniboris.personalmanager.presentation.uikit.views.AppProgressAnimation
 
 @Composable
-fun PersonalScreenWeightAddDialog(
-    addingWeight: PersonalScreenState.AddingWeight,
+fun AppHeartRateAddingDialog(
+    addingHeartRate: AddingHeartRate,
     isUploading: Boolean,
-    proceedIntent: (IPersonalScreenIntent) -> Unit
+    onDismiss: () -> Unit,
+    onHeartRate: (String) -> Unit,
+    onAdd: () -> Unit
 ) {
 
     AlertDialog(
@@ -45,28 +43,30 @@ fun PersonalScreenWeightAddDialog(
         confirmButton = {},
         onDismissRequest = {
             if (!isUploading) {
-                proceedIntent(
-                    IPersonalScreenIntent.UpdateWeightsAddDialogVisibility
-                )
+                onDismiss()
             }
         },
         containerColor = appColor,
         shape = appRoundedShape,
         text = {
-            WeightAddDialogUi(
-                addingWeight = addingWeight,
+            HeartRateAddDialogUi(
+                addingHeartRate = addingHeartRate,
                 isUploading = isUploading,
-                proceedIntent = proceedIntent
+                onDismiss = onDismiss,
+                onHeartRateChange = onHeartRate,
+                onAdd = onAdd
             )
         }
     )
 }
 
 @Composable
-private fun WeightAddDialogUi(
-    addingWeight: PersonalScreenState.AddingWeight,
+private fun HeartRateAddDialogUi(
+    addingHeartRate: AddingHeartRate,
     isUploading: Boolean,
-    proceedIntent: (IPersonalScreenIntent) -> Unit
+    onDismiss: () -> Unit,
+    onHeartRateChange: (String) -> Unit,
+    onAdd: () -> Unit
 ) {
 
     if (isUploading) {
@@ -82,7 +82,7 @@ private fun WeightAddDialogUi(
         ) {
 
             Text(
-                text = stringResource(R.string.add_weight_text),
+                text = stringResource(R.string.add_heart_rate_text),
                 style = bodyStyle.copy(
                     color = appMainTextColor,
                     fontSize = appTextSize,
@@ -92,7 +92,7 @@ private fun WeightAddDialogUi(
 
             Text(
                 modifier = Modifier.padding(appDialogItemPadding),
-                text = stringResource(R.string.add_weight_description),
+                text = stringResource(R.string.add_heart_rate_description),
                 style = bodyStyle.copy(
                     color = appSubtleTextColor,
                     fontSize = appTextSize
@@ -105,13 +105,11 @@ private fun WeightAddDialogUi(
                     .fillMaxWidth()
                     .clip(appRoundedShape)
                     .background(color = enterTextFieldColor),
-                initialValue = addingWeight.weight,
+                initialValue = addingHeartRate.heartRate,
                 onValueChanged = { value ->
-                    proceedIntent(
-                        IPersonalScreenIntent.UpdateWeightAddModelWeight(value)
-                    )
+                    onHeartRateChange(value)
                 },
-                placeholder = stringResource(R.string.add_weight_placeholder)
+                placeholder = stringResource(R.string.add_heart_rate_placeholder)
             )
 
             AppCustomButton(
@@ -119,11 +117,9 @@ private fun WeightAddDialogUi(
                     .padding(appDialogItemPadding)
                     .fillMaxWidth(),
                 onClick = {
-                    proceedIntent(
-                        IPersonalScreenIntent.AddWeight
-                    )
+                    onAdd()
                 },
-                text = stringResource(R.string.add_weight_text),
+                text = stringResource(R.string.add_heart_rate_text),
                 icon = painterResource(R.drawable.add_icon)
             )
 
@@ -132,9 +128,7 @@ private fun WeightAddDialogUi(
                     .padding(appDialogItemPadding)
                     .fillMaxWidth(),
                 onClick = {
-                    proceedIntent(
-                        IPersonalScreenIntent.UpdateWeightsAddDialogVisibility
-                    )
+                    onDismiss()
                 },
                 text = stringResource(R.string.cancel_text),
                 icon = painterResource(R.drawable.cancel_icon)
@@ -153,10 +147,12 @@ private fun LightTheme() {
             Column(
                 modifier = Modifier.background(appColor)
             ) {
-                WeightAddDialogUi(
-                    addingWeight = PersonalScreenState.AddingWeight(),
+                HeartRateAddDialogUi(
+                    addingHeartRate = AddingHeartRate(),
                     isUploading = false,
-                    proceedIntent = {}
+                    onDismiss = {},
+                    onHeartRateChange = {},
+                    onAdd = {}
                 )
             }
         }
@@ -173,10 +169,12 @@ private fun DarkTheme() {
             Column(
                 modifier = Modifier.background(appColor)
             ) {
-                WeightAddDialogUi(
-                    addingWeight = PersonalScreenState.AddingWeight(),
+                HeartRateAddDialogUi(
+                    addingHeartRate = AddingHeartRate(),
                     isUploading = false,
-                    proceedIntent = {}
+                    onDismiss = {},
+                    onHeartRateChange = {},
+                    onAdd = {}
                 )
             }
         }

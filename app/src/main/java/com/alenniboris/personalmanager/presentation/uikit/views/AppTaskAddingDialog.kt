@@ -1,4 +1,4 @@
-package com.alenniboris.personalmanager.presentation.screens.tasks.views
+package com.alenniboris.personalmanager.presentation.uikit.views
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,14 +21,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.alenniboris.fastbanking.presentation.uikit.theme.bodyStyle
 import com.alenniboris.personalmanager.R
+import com.alenniboris.personalmanager.domain.model.task.TaskPriority
 import com.alenniboris.personalmanager.presentation.mapper.toUiString
+import com.alenniboris.personalmanager.presentation.model.task.TaskAddingData
 import com.alenniboris.personalmanager.presentation.screens.tasks.ITasksScreenIntent
-import com.alenniboris.personalmanager.presentation.screens.tasks.TasksScreenState
 import com.alenniboris.personalmanager.presentation.screens.tasks.TasksScreenValues
 import com.alenniboris.personalmanager.presentation.uikit.model.ClickableElement
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
+import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogProgressHeight
 import com.alenniboris.personalmanager.presentation.uikit.theme.appButtonRowInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.appDialogItemPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appRoundedShape
 import com.alenniboris.personalmanager.presentation.uikit.theme.appSubtleTextColor
@@ -37,27 +40,26 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeMediu
 import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeSmall
 import com.alenniboris.personalmanager.presentation.uikit.theme.buttonRowBackgroundColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.enterTextFieldColor
-import com.alenniboris.personalmanager.presentation.uikit.theme.appDialogItemPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.addDialogProgressHeight
-import com.alenniboris.personalmanager.presentation.uikit.views.AppCustomButton
-import com.alenniboris.personalmanager.presentation.uikit.views.AppLazyButtonRow
-import com.alenniboris.personalmanager.presentation.uikit.views.AppProgressAnimation
-import com.alenniboris.personalmanager.presentation.uikit.views.AppTextField
 
 @Composable
-fun TasksScreenAddTaskDialog(
-    addTaskData: TasksScreenState.TaskAddingData,
+fun AppTaskAddingDialog(
+    addTaskData: TaskAddingData,
     isTaskUploading: Boolean,
-    proceedIntent: (ITasksScreenIntent) -> Unit
+    onDismiss: () -> Unit,
+    onTitleChange: (String) -> Unit,
+    onDescriptionChange: (String) -> Unit,
+    onPriorityChange: (TaskPriority) -> Unit,
+    onDueDatePickerVisibility: () -> Unit,
+    onDueTimePickerVisibility: () -> Unit,
+    onAdd: () -> Unit
 ) {
     AlertDialog(
         dismissButton = {},
         confirmButton = {},
         onDismissRequest = {
             if (!isTaskUploading) {
-                proceedIntent(
-                    ITasksScreenIntent.UpdateAddTaskDialogVisibility
-                )
+                onDismiss()
+
             }
         },
         containerColor = appColor,
@@ -66,7 +68,13 @@ fun TasksScreenAddTaskDialog(
             AddTaskDialogUi(
                 data = addTaskData,
                 isTaskUploading = isTaskUploading,
-                proceedIntent = proceedIntent
+                onTitleChange = onTitleChange,
+                onDescriptionChange = onDescriptionChange,
+                onPriorityChange = onPriorityChange,
+                onDueDatePickerVisibility = onDueDatePickerVisibility,
+                onDueTimePickerVisibility = onDueTimePickerVisibility,
+                onDismiss = onDismiss,
+                onAdd = onAdd
             )
         }
     )
@@ -74,9 +82,15 @@ fun TasksScreenAddTaskDialog(
 
 @Composable
 private fun AddTaskDialogUi(
-    data: TasksScreenState.TaskAddingData,
+    data: TaskAddingData,
     isTaskUploading: Boolean,
-    proceedIntent: (ITasksScreenIntent) -> Unit
+    onTitleChange: (String) -> Unit,
+    onDescriptionChange: (String) -> Unit,
+    onPriorityChange: (TaskPriority) -> Unit,
+    onDueDatePickerVisibility: () -> Unit,
+    onDueTimePickerVisibility: () -> Unit,
+    onDismiss: () -> Unit,
+    onAdd: () -> Unit
 ) {
 
     if (isTaskUploading) {
@@ -128,11 +142,7 @@ private fun AddTaskDialogUi(
                         .background(color = enterTextFieldColor),
                     value = data.title,
                     onValueChanged = {
-                        proceedIntent(
-                            ITasksScreenIntent.UpdateAddTaskTitle(
-                                newValue = it
-                            )
-                        )
+                        onTitleChange(it)
                     },
                     maxLines = Int.MAX_VALUE,
                     placeholder = stringResource(R.string.add_title_text)
@@ -157,11 +167,7 @@ private fun AddTaskDialogUi(
                         .background(color = enterTextFieldColor),
                     value = data.description,
                     onValueChanged = {
-                        proceedIntent(
-                            ITasksScreenIntent.UpdateAddTaskDescription(
-                                newValue = it
-                            )
-                        )
+                        onDescriptionChange(it)
                     },
                     maxLines = Int.MAX_VALUE,
                     placeholder = stringResource(R.string.add_description_text)
@@ -189,9 +195,7 @@ private fun AddTaskDialogUi(
                         ClickableElement(
                             text = stringResource(priority.toUiString()),
                             onClick = {
-                                proceedIntent(
-                                    ITasksScreenIntent.UpdateAddTaskPriority(priority)
-                                )
+                                onPriorityChange(priority)
                             }
                         )
                     },
@@ -218,9 +222,7 @@ private fun AddTaskDialogUi(
                         .clip(appRoundedShape)
                         .background(color = enterTextFieldColor)
                         .clickable {
-                            proceedIntent(
-                                ITasksScreenIntent.UpdateDatePickerVisibility()
-                            )
+                            onDueDatePickerVisibility()
                         },
                     value = data.selectedDateText,
                     onValueChanged = {},
@@ -245,9 +247,7 @@ private fun AddTaskDialogUi(
                         .clip(appRoundedShape)
                         .background(color = enterTextFieldColor)
                         .clickable {
-                            proceedIntent(
-                                ITasksScreenIntent.UpdateTimePickerVisibility()
-                            )
+                            onDueTimePickerVisibility()
                         },
                     value = data.selectedTimeText,
                     onValueChanged = {},
@@ -261,9 +261,7 @@ private fun AddTaskDialogUi(
                     .padding(appDialogItemPadding)
                     .fillMaxWidth(),
                 onClick = {
-                    proceedIntent(
-                        ITasksScreenIntent.ProceedAddTaskAction
-                    )
+                    onAdd()
                 },
                 text = stringResource(R.string.add_new_task_text),
                 icon = painterResource(R.drawable.add_icon)
@@ -274,9 +272,7 @@ private fun AddTaskDialogUi(
                     .padding(appDialogItemPadding)
                     .fillMaxWidth(),
                 onClick = {
-                    proceedIntent(
-                        ITasksScreenIntent.UpdateAddTaskDialogVisibility
-                    )
+                    onDismiss()
                 },
                 text = stringResource(R.string.cancel_text),
                 icon = painterResource(R.drawable.cancel_icon)
@@ -293,9 +289,15 @@ private fun LightTheme() {
     ) {
         Surface {
             AddTaskDialogUi(
-                data = TasksScreenState.TaskAddingData(),
+                data = TaskAddingData(),
                 isTaskUploading = false,
-                proceedIntent = {}
+                onDismiss = {},
+                onTitleChange = {},
+                onDescriptionChange = {},
+                onPriorityChange = {},
+                onDueDatePickerVisibility = {},
+                onDueTimePickerVisibility = {},
+                onAdd = {}
             )
         }
     }
@@ -309,9 +311,15 @@ private fun DarkTheme() {
     ) {
         Surface {
             AddTaskDialogUi(
-                data = TasksScreenState.TaskAddingData(),
+                data = TaskAddingData(),
                 isTaskUploading = false,
-                proceedIntent = {}
+                onDismiss = {},
+                onTitleChange = {},
+                onDescriptionChange = {},
+                onPriorityChange = {},
+                onDueDatePickerVisibility = {},
+                onDueTimePickerVisibility = {},
+                onAdd = {}
             )
         }
     }

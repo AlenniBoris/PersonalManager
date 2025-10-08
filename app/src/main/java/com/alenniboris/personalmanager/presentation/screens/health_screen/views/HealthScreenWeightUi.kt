@@ -8,10 +8,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,13 +42,14 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSize
 import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeMedium
 import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeSmall
 import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenContentItemTopPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenWeightChangeTextStartPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenPlotHeight
+import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenWeightChangeTextStartPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.weightChangeLossColor
 import com.alenniboris.personalmanager.presentation.uikit.views.AppAnimatedPlot
 import com.alenniboris.personalmanager.presentation.uikit.views.AppDatePicker
 import com.alenniboris.personalmanager.presentation.uikit.views.AppEmptyScreen
 import com.alenniboris.personalmanager.presentation.uikit.views.AppProgressAnimation
+import com.alenniboris.personalmanager.presentation.uikit.views.AppRefreshIndicator
 import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -63,11 +68,92 @@ fun HealthScreenWeightUi(
     weightChangeColor: Color,
     isWeightChartStartDatePickerVisible: Boolean,
     isWeightChartEndDatePickerVisible: Boolean,
+    isRefreshing: Boolean,
     proceedIntent: (IHealthScreenIntent) -> Unit
 ) {
 
+    if (isWeightChartStartDatePickerVisible) {
+        AppDatePicker(
+            onDismiss = {
+                proceedIntent(
+                    IHealthScreenIntent.UpdateWeightChartStartDatePickerVisibility
+                )
+            },
+            onSelected = { date ->
+                proceedIntent(
+                    IHealthScreenIntent.UpdateWeightChartStartDate(date)
+                )
+            }
+        )
+    }
+    if (isWeightChartEndDatePickerVisible) {
+        AppDatePicker(
+            onDismiss = {
+                proceedIntent(
+                    IHealthScreenIntent.UpdateWeightChartStartDatePickerVisibility
+                )
+            },
+            onSelected = { date ->
+                proceedIntent(
+                    IHealthScreenIntent.UpdateWeightChartEndDate(date)
+                )
+            }
+        )
+    }
+
+    val refreshState = rememberPullToRefreshState()
+    PullToRefreshBox(
+        modifier = modifier,
+        isRefreshing = isRefreshing,
+        onRefresh = {
+            proceedIntent(
+                IHealthScreenIntent.RefreshWeightUiData
+            )
+        },
+        state = refreshState,
+        indicator = {
+            AppRefreshIndicator(
+                modifier = Modifier
+                    .align(Alignment.TopCenter),
+                state = refreshState,
+                isRefreshing = isRefreshing
+            )
+        },
+        content = {
+            ScreenContent(
+                isLoading = isLoading,
+                weights = weights,
+                weightChartStartDateText = weightChartStartDateText,
+                weightChartStartDateDayText = weightChartStartDateDayText,
+                weightChartEndDateText = weightChartEndDateText,
+                weightChartEndDateDayText = weightChartEndDateDayText,
+                currentWeightText = currentWeightText,
+                weightChangeText = weightChangeText,
+                weightChangeIcon = weightChangeIcon,
+                weightChangeColor = weightChangeColor,
+                proceedIntent = proceedIntent
+            )
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ScreenContent(
+    isLoading: Boolean,
+    weights: List<WeightModelUi>,
+    weightChartStartDateText: String,
+    weightChartStartDateDayText: Int,
+    weightChartEndDateText: String,
+    weightChartEndDateDayText: Int,
+    currentWeightText: String,
+    weightChangeText: String,
+    weightChangeIcon: Int,
+    weightChangeColor: Color,
+    proceedIntent: (IHealthScreenIntent) -> Unit
+) {
     Column(
-        modifier = modifier
+        modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
 
         HealthScreenDoubleDateSelector(
@@ -138,35 +224,6 @@ fun HealthScreenWeightUi(
             weightChangeIcon = weightChangeIcon,
             weightChangeColor = weightChangeColor,
             isLoading = isLoading
-        )
-    }
-
-    if (isWeightChartStartDatePickerVisible) {
-        AppDatePicker(
-            onDismiss = {
-                proceedIntent(
-                    IHealthScreenIntent.UpdateWeightChartStartDatePickerVisibility
-                )
-            },
-            onSelected = { date ->
-                proceedIntent(
-                    IHealthScreenIntent.UpdateWeightChartStartDate(date)
-                )
-            }
-        )
-    }
-    if (isWeightChartEndDatePickerVisible) {
-        AppDatePicker(
-            onDismiss = {
-                proceedIntent(
-                    IHealthScreenIntent.UpdateWeightChartStartDatePickerVisibility
-                )
-            },
-            onSelected = { date ->
-                proceedIntent(
-                    IHealthScreenIntent.UpdateWeightChartEndDate(date)
-                )
-            }
         )
     }
 }
@@ -344,6 +401,7 @@ private fun LightTheme() {
                     currentWeightText = "70kg",
                     isWeightChartStartDatePickerVisible = false,
                     isWeightChartEndDatePickerVisible = false,
+                    isRefreshing = false,
                     proceedIntent = {}
                 )
             }
@@ -414,6 +472,7 @@ private fun DarkTheme() {
                     currentWeightText = "70 kg",
                     isWeightChartStartDatePickerVisible = false,
                     isWeightChartEndDatePickerVisible = false,
+                    isRefreshing = false,
                     proceedIntent = {}
                 )
             }

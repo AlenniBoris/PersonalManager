@@ -12,7 +12,7 @@ data class WeightModelUi(
 ) : IPlotModelUi {
 
     val weightValue: Double = domainModel.weight
-    val weightText: String = "${domainModel.weight} kg"
+    val weightText: String = domainModel.weight.toString()
     val measurementDateText: String =
         SimpleDateFormat(
             ScreensCommonUtils.SIMPLE_DATE_PATTERN, Locale.getDefault()

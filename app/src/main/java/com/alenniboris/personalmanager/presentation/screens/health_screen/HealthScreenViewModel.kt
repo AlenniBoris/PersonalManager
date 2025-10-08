@@ -15,6 +15,7 @@ import com.alenniboris.personalmanager.domain.usecase.logic.weight.IGetWeightsLi
 import com.alenniboris.personalmanager.domain.utils.SingleFlowEvent
 import com.alenniboris.personalmanager.domain.utils.stripTime
 import com.alenniboris.personalmanager.presentation.mapper.toUiString
+import com.alenniboris.personalmanager.presentation.model.food.FoodIntakeAddModel
 import com.alenniboris.personalmanager.presentation.model.food.FoodIntakeModelUi
 import com.alenniboris.personalmanager.presentation.model.food.toModelUi
 import com.alenniboris.personalmanager.presentation.model.health.toModelUi
@@ -164,8 +165,12 @@ class HealthScreenViewModel @Inject constructor(
 
             is IHealthScreenIntent.UpdateFoodIntakeUpdateModelTitle ->
                 updateFoodIntakeUpdateModelTitle(intent.newValue)
-            is IHealthScreenIntent.ChangeSettingsDialogVisibility ->
-                changeSettingsDialogVisibility()
+
+            is IHealthScreenIntent.ChangeSettingsDialogVisibility -> changeSettingsDialogVisibility()
+            is IHealthScreenIntent.RefreshOverviewUiData -> refreshOverviewUiData()
+            is IHealthScreenIntent.RefreshWeightUiData -> refreshWeightUiData()
+            is IHealthScreenIntent.RefreshActivityUiData -> refreshActivityUiData()
+            is IHealthScreenIntent.RefreshNutritionUiData -> refreshNutritionUiData()
         }
     }
 
@@ -424,7 +429,7 @@ class HealthScreenViewModel @Inject constructor(
         _state.update {
             it.copy(
                 isFoodIntakeAddDialogVisible = !it.isFoodIntakeAddDialogVisible,
-                foodIntakeAddModel = HealthScreenState.FoodIntakeAddModel()
+                foodIntakeAddModel = FoodIntakeAddModel()
             )
         }
     }
@@ -488,11 +493,6 @@ class HealthScreenViewModel @Inject constructor(
                 )
             ) {
                 is CustomResultModelDomain.Success -> {
-                    _state.update {
-                        it.copy(
-                            isFoodIntakeAddDialogVisible = false
-                        )
-                    }
                     loadFoodData()
                 }
 
@@ -505,7 +505,12 @@ class HealthScreenViewModel @Inject constructor(
                 }
             }
 
-            _state.update { it.copy(isFoodIntakeAddProceeding = false) }
+            _state.update {
+                it.copy(
+                    isFoodIntakeAddProceeding = false
+                )
+            }
+            updateFoodIntakeAddDialogVisibility()
         }
     }
 
@@ -513,30 +518,40 @@ class HealthScreenViewModel @Inject constructor(
         _todayHealthStatisticsLoadingJob?.cancel()
         _todayHealthStatisticsLoadingJob = viewModelScope.launch {
             _state.update { it.copy(isTodayStatisticsLoading = true) }
+            loadTodayHealthStatisticsInternal()
+            _state.update { it.copy(isTodayStatisticsLoading = false) }
+        }
+    }
 
-            when (
-                val res = getTodayHealthStatistics.invoke(
-                    date = Calendar.getInstance().time.stripTime()
-                )
-            ) {
-                is CustomResultModelDomain.Success -> {
-                    _state.update { state ->
-                        state.copy(
-                            todayHealthStatistics = res.result.toModelUi()
-                        )
-                    }
-                }
-
-                is CustomResultModelDomain.Error -> {
-                    _event.emit(
-                        IHealthScreenEvent.ShowToast(
-                            res.exception.toUiString()
-                        )
+    private suspend fun loadTodayHealthStatisticsInternal() {
+        when (
+            val res = getTodayHealthStatistics.invoke(
+                date = Calendar.getInstance().time.stripTime()
+            )
+        ) {
+            is CustomResultModelDomain.Success -> {
+                _state.update { state ->
+                    state.copy(
+                        todayHealthStatistics = res.result.toModelUi()
                     )
                 }
             }
 
-            _state.update { it.copy(isTodayStatisticsLoading = false) }
+            is CustomResultModelDomain.Error -> {
+                _event.emit(
+                    IHealthScreenEvent.ShowToast(
+                        res.exception.toUiString()
+                    )
+                )
+            }
+        }
+    }
+
+    private fun refreshOverviewUiData() {
+        viewModelScope.launch {
+            _state.update { it.copy(isOverviewDataRefreshing = true) }
+            loadTodayHealthStatisticsInternal()
+            _state.update { it.copy(isOverviewDataRefreshing = false) }
         }
     }
 
@@ -544,31 +559,41 @@ class HealthScreenViewModel @Inject constructor(
         _weightDataLoadingJob?.cancel()
         _weightDataLoadingJob = viewModelScope.launch {
             _state.update { it.copy(isWeightDataLoading = true) }
+            loadWeightDataInternal()
+            _state.update { it.copy(isWeightDataLoading = false) }
+        }
+    }
 
-            when (
-                val res = getWeightsListByDateRangeUseCase.invoke(
-                    startDate = _state.value.weightChartStartDate,
-                    endDate = _state.value.weightChartEndDate
-                )
-            ) {
-                is CustomResultModelDomain.Success -> {
-                    _state.update { state ->
-                        state.copy(
-                            weightChartList = res.result.map { it.toModelUi() }
-                        )
-                    }
-                }
-
-                is CustomResultModelDomain.Error -> {
-                    _event.emit(
-                        IHealthScreenEvent.ShowToast(
-                            res.exception.toUiString()
-                        )
+    private suspend fun loadWeightDataInternal() {
+        when (
+            val res = getWeightsListByDateRangeUseCase.invoke(
+                startDate = _state.value.weightChartStartDate,
+                endDate = _state.value.weightChartEndDate
+            )
+        ) {
+            is CustomResultModelDomain.Success -> {
+                _state.update { state ->
+                    state.copy(
+                        weightChartList = res.result.map { it.toModelUi() }
                     )
                 }
             }
 
-            _state.update { it.copy(isWeightDataLoading = false) }
+            is CustomResultModelDomain.Error -> {
+                _event.emit(
+                    IHealthScreenEvent.ShowToast(
+                        res.exception.toUiString()
+                    )
+                )
+            }
+        }
+    }
+
+    private fun refreshWeightUiData() {
+        viewModelScope.launch {
+            _state.update { it.copy(isWeightDataRefreshing = true) }
+            loadWeightDataInternal()
+            _state.update { it.copy(isWeightDataRefreshing = false) }
         }
     }
 
@@ -576,30 +601,40 @@ class HealthScreenViewModel @Inject constructor(
         _heartDataLoadingJob?.cancel()
         _heartDataLoadingJob = viewModelScope.launch {
             _state.update { it.copy(isHeartRateDataLoading = true) }
+            loadHeartRateDataInternal()
+            _state.update { it.copy(isHeartRateDataLoading = false) }
+        }
+    }
 
-            when (
-                val res = getHeartRatesByDateUseCase.invoke(
-                    date = _state.value.heartRateChartDate
-                )
-            ) {
-                is CustomResultModelDomain.Success -> {
-                    _state.update { state ->
-                        state.copy(
-                            heartRateChartList = res.result.map { it.toModelUi() }
-                        )
-                    }
-                }
-
-                is CustomResultModelDomain.Error -> {
-                    _event.emit(
-                        IHealthScreenEvent.ShowToast(
-                            res.exception.toUiString()
-                        )
+    private suspend fun loadHeartRateDataInternal() {
+        when (
+            val res = getHeartRatesByDateUseCase.invoke(
+                date = _state.value.heartRateChartDate
+            )
+        ) {
+            is CustomResultModelDomain.Success -> {
+                _state.update { state ->
+                    state.copy(
+                        heartRateChartList = res.result.map { it.toModelUi() }
                     )
                 }
             }
 
-            _state.update { it.copy(isHeartRateDataLoading = false) }
+            is CustomResultModelDomain.Error -> {
+                _event.emit(
+                    IHealthScreenEvent.ShowToast(
+                        res.exception.toUiString()
+                    )
+                )
+            }
+        }
+    }
+
+    private fun refreshActivityUiData() {
+        viewModelScope.launch {
+            _state.update { it.copy(isActivityDataRefreshing = true) }
+            loadHeartRateDataInternal()
+            _state.update { it.copy(isActivityDataRefreshing = false) }
         }
     }
 
@@ -607,32 +642,43 @@ class HealthScreenViewModel @Inject constructor(
         _foodDataLoadingJob?.cancel()
         _foodDataLoadingJob = viewModelScope.launch {
             _state.update { it.copy(isFoodDataLoading = true) }
+            loadFoodDataInternal()
+            _state.update { it.copy(isFoodDataLoading = false) }
+        }
+    }
 
-            when (
-                val res = getFoodIntakeByDateUseCase.invoke(
-                    date = _state.value.foodIntakeDate
-                )
-            ) {
-                is CustomResultModelDomain.Success -> {
-                    _state.update { state ->
-                        state.copy(
-                            foodIntakeList = res.result.map { it.toModelUi() }
-                        )
-                    }
-                }
-
-                is CustomResultModelDomain.Error -> {
-                    _event.emit(
-                        IHealthScreenEvent.ShowToast(
-                            res.exception.toUiString()
-                        )
+    private suspend fun loadFoodDataInternal() {
+        when (
+            val res = getFoodIntakeByDateUseCase.invoke(
+                date = _state.value.foodIntakeDate
+            )
+        ) {
+            is CustomResultModelDomain.Success -> {
+                _state.update { state ->
+                    state.copy(
+                        foodIntakeList = res.result.map { it.toModelUi() }
                     )
                 }
             }
 
-            _state.update { it.copy(isFoodDataLoading = false) }
+            is CustomResultModelDomain.Error -> {
+                _event.emit(
+                    IHealthScreenEvent.ShowToast(
+                        res.exception.toUiString()
+                    )
+                )
+            }
         }
     }
+
+    private fun refreshNutritionUiData() {
+        viewModelScope.launch {
+            _state.update { it.copy(isNutritionDataRefreshing = true) }
+            loadFoodDataInternal()
+            _state.update { it.copy(isNutritionDataRefreshing = false) }
+        }
+    }
+
 
     private fun changeScreenOption(option: HealthScreenOption) {
         _state.update {

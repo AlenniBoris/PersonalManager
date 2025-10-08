@@ -2,6 +2,7 @@ package com.alenniboris.personalmanager.presentation.model.activity
 
 import com.alenniboris.personalmanager.domain.model.activity.ActivityModelDomain
 import com.alenniboris.personalmanager.presentation.uikit.utils.ScreensCommonUtils
+import com.alenniboris.personalmanager.presentation.uikit.utils.TimeMeasurementUnit
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -26,6 +27,24 @@ data class ActivityModelUi(
 
     val time = domainModel.duration.toString()
     val calories = domainModel.calories.toString()
+
+    val timeStats = ScreensCommonUtils.getTimeStats(creationDate = domainModel.markingTime)
+    val timeText: String = when {
+        timeStats.years > 0 -> timeStats.years.toString()
+        timeStats.months > 0 -> timeStats.months.toString()
+        timeStats.days > 0 -> timeStats.days.toString()
+        timeStats.hours > 0 -> timeStats.hours.toString()
+        timeStats.minutes > 0 -> timeStats.minutes.toString()
+        else -> ""
+    }
+    val timeUnit: TimeMeasurementUnit = when {
+        timeStats.years > 0 -> TimeMeasurementUnit.Year
+        timeStats.months > 0 -> TimeMeasurementUnit.Month
+        timeStats.days > 0 -> TimeMeasurementUnit.Day
+        timeStats.hours > 0 -> TimeMeasurementUnit.Hour
+        timeStats.minutes > 0 -> TimeMeasurementUnit.Minute
+        else -> TimeMeasurementUnit.Recent
+    }
 }
 
 fun ActivityModelDomain.toModelUi() =

@@ -10,8 +10,9 @@ data class CurrentWeatherForecastModelUi(
     val locationText = domainModel?.place
     val temperatureText = domainModel?.temperature?.toInt()?.let { "$it°" }
     val humidityText = domainModel?.relativeHumidity?.let { "$it%" }
-    val windSpeedText = domainModel?.windSpeed?.let { "${it.toString().subSequence(0,3)} m/s" }
-    val visibilityText = domainModel?.visibilityDistance?.let { "${it.toString().subSequence(0,3)} m" }
+    val windSpeedText = domainModel?.windSpeed?.let { "${it.toString().subSequence(0, 3)}" }
+    val visibilityText: String? =
+        domainModel?.visibilityDistance?.let { "${it.toString().subSequence(0, 3)}" }
     val uvIndexText = domainModel?.uvIndex.toString()
     val sunriseText = domainModel?.sunriseTime
     val sunsetText = domainModel?.sunsetTime

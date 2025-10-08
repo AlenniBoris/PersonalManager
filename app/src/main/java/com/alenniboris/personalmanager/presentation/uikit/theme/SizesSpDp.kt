@@ -44,7 +44,7 @@ val weatherScreenHourForecastPrecipitationProbPadding = PaddingValues(start = 5.
 val zeroPadding = PaddingValues(0.dp)
 val weatherScreenWeekForecastItemTextPadding = PaddingValues(start = 10.dp)
 val weatherScreenWeekForecastItemOuterPadding = PaddingValues(top = 25.dp)
-val weatherScreenCurrentForecastBlockInnerPadding =
+val appInfoBlockInnerPadding =
     PaddingValues(horizontal = 15.dp, vertical = 20.dp)
 val weatherScreenCurrentForecastBlockTextPadding = PaddingValues(top = 8.dp)
 val weatherScreenCurrentForecastBlockIconPadding = PaddingValues(end = 10.dp)
@@ -102,6 +102,7 @@ val healthScreenWeightPlotPointRadius = 13f
 val healthScreenWeightPlotSelectedPointRadius = 13f
 val healthScreenWeightChangeTextStartPadding = PaddingValues(start = 10.dp)
 val healthScreenNutritionOptionTextStartPadding = PaddingValues(start = 15.dp)
+val healthScreenNutritionOptionTextDivisionSize = 15.dp
 val healthScreenNutritionOptionListPadding = PaddingValues(all = 15.dp)
 val healthScreenNutritionOptionFoodItemPadding = PaddingValues(top = 10.dp)
 val healthScreenNutritionOptionFoodItemInnerPadding =
@@ -120,3 +121,20 @@ val personalScreenProfileOptionEditIconInnerPadding = PaddingValues(all = 5.dp)
 val personalScreenInfoBlockInnerPadding =
     PaddingValues(horizontal = 15.dp, vertical = 15.dp)
 val personalScreenListItemPadding = PaddingValues(top = 10.dp)
+
+val homeScreenContentPadding = PaddingValues(horizontal = 15.dp)
+val homeScreenContentItemVerticalPadding = PaddingValues(vertical = 10.dp)
+val homeScreenContentItemTopPadding = PaddingValues(top = 10.dp)
+val homeScreenIndicatorSize = 30.dp
+val homeScreenIndicatorInnerPadding = PaddingValues(all = 10.dp)
+val homeScreenInfoTextStartPadding = PaddingValues(start = 10.dp)
+val homeScreenStatisticsSectionInnerPadding = PaddingValues(all = 15.dp)
+val homeScreenInfoBlockInnerPadding =
+    PaddingValues(horizontal = 15.dp, vertical = 20.dp)
+val homeScreenQuickActionButtonsHorizontalArrangement = 10.dp
+val homeScreenQuickActionButtonsVerticalArrangement = 10.dp
+val homeScreenTimeTextInnerPadding =
+    PaddingValues(horizontal = 10.dp, vertical = 5.dp)
+val appInfoBlockMinHeight = 90.dp
+val appFlowRowVerticalSpacing = 10.dp
+val appFlowRowHorizontalSpacing = 10.dp

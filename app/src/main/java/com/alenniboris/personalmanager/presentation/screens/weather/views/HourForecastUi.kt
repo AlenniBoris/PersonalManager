@@ -7,11 +7,15 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Icon
@@ -35,8 +39,10 @@ import com.alenniboris.personalmanager.presentation.screens.weather.IWeatherScre
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appDetailsInfoBlockBorderWidth
-import com.alenniboris.personalmanager.presentation.uikit.theme.appDetailsInfoBlockLeftPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.appDetailsInfoBlockRightPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.appFlowRowHorizontalSpacing
+import com.alenniboris.personalmanager.presentation.uikit.theme.appFlowRowVerticalSpacing
+import com.alenniboris.personalmanager.presentation.uikit.theme.appInfoBlockInnerPadding
+import com.alenniboris.personalmanager.presentation.uikit.theme.appInfoBlockMinHeight
 import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appRoundedShape
 import com.alenniboris.personalmanager.presentation.uikit.theme.appSubtleTextColor
@@ -44,7 +50,6 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSize
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenBlockOuterPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenColumnInnerPadding
-import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenCurrentForecastBlockInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenHourForecastItemPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenHourForecastPrecipitationProbPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenHourForecastTextPadding
@@ -57,6 +62,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenWat
 import com.alenniboris.personalmanager.presentation.uikit.theme.weatherScreenWindColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.zeroPadding
 import com.alenniboris.personalmanager.presentation.uikit.views.AppDetailsInfoBlock
+import com.alenniboris.personalmanager.presentation.uikit.views.AppEmptyScreen
 import com.alenniboris.personalmanager.presentation.uikit.views.AppProgressAnimation
 
 @Composable
@@ -84,23 +90,26 @@ fun HourForecastUi(
         proceedIntent = proceedIntent
     )
 
-    Row(
+    FlowRow(
         modifier = Modifier
             .padding(weatherScreenBlockOuterPadding)
-            .fillMaxWidth()
+            .fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(appFlowRowVerticalSpacing),
+        horizontalArrangement = Arrangement.spacedBy(appFlowRowHorizontalSpacing)
     ) {
 
         AppDetailsInfoBlock(
             modifier = Modifier
-                .padding(appDetailsInfoBlockRightPadding)
                 .clip(appRoundedShape)
                 .border(
                     width = appDetailsInfoBlockBorderWidth,
                     color = appSubtleTextColor,
                     shape = appRoundedShape
                 )
+                .width(IntrinsicSize.Max)
                 .weight(1f)
-                .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                .heightIn(min = appInfoBlockMinHeight)
+                .padding(appInfoBlockInnerPadding),
             sectionIcon = painterResource(R.drawable.water_drop_icon),
             iconTint = weatherScreenWaterColor,
             sectionHeader = stringResource(R.string.humidity_section_text),
@@ -111,87 +120,77 @@ fun HourForecastUi(
 
         AppDetailsInfoBlock(
             modifier = Modifier
-                .padding(appDetailsInfoBlockLeftPadding)
                 .clip(appRoundedShape)
                 .border(
                     width = appDetailsInfoBlockBorderWidth,
                     color = appSubtleTextColor,
                     shape = appRoundedShape
                 )
+                .width(IntrinsicSize.Max)
                 .weight(1f)
-                .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                .heightIn(min = appInfoBlockMinHeight)
+                .padding(appInfoBlockInnerPadding),
             sectionIcon = painterResource(R.drawable.wind_speed_icon),
             iconTint = weatherScreenWindColor,
             sectionHeader = stringResource(R.string.wind_speed_section_text),
-            sectionValue = currentForecast.windSpeedText
-                ?: stringResource(R.string.no_text_placeholder),
+            sectionValue = currentForecast.windSpeedText?.let {
+                it + " " + stringResource(R.string.meters_in_second_text)
+            } ?: stringResource(R.string.no_text_placeholder),
             isLoading = isCurrentForecastLoading
         )
-    }
-
-    Row(
-        modifier = Modifier
-            .padding(weatherScreenBlockOuterPadding)
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
 
         AppDetailsInfoBlock(
             modifier = Modifier
-                .padding(appDetailsInfoBlockRightPadding)
                 .clip(appRoundedShape)
                 .border(
                     width = appDetailsInfoBlockBorderWidth,
                     color = appSubtleTextColor,
                     shape = appRoundedShape
                 )
+                .width(IntrinsicSize.Max)
                 .weight(1f)
-                .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                .heightIn(min = appInfoBlockMinHeight)
+                .padding(appInfoBlockInnerPadding),
             sectionIcon = painterResource(R.drawable.visivility_icon),
             iconTint = weatherScreenVisibilityColor,
             sectionHeader = stringResource(R.string.visibility_section_text),
-            sectionValue = currentForecast.visibilityText
-                ?: stringResource(R.string.no_text_placeholder),
+            sectionValue = currentForecast.visibilityText?.let {
+                it + " " + stringResource(R.string.meters_text)
+            } ?: stringResource(R.string.no_text_placeholder),
             isLoading = isCurrentForecastLoading
         )
 
         AppDetailsInfoBlock(
             modifier = Modifier
-                .padding(appDetailsInfoBlockLeftPadding)
                 .clip(appRoundedShape)
                 .border(
                     width = appDetailsInfoBlockBorderWidth,
                     color = appSubtleTextColor,
                     shape = appRoundedShape
                 )
+                .width(IntrinsicSize.Max)
                 .weight(1f)
-                .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                .heightIn(min = appInfoBlockMinHeight)
+                .padding(appInfoBlockInnerPadding),
             sectionIcon = painterResource(R.drawable.sunny_weather_icon),
             iconTint = weatherScreenUvIndexColor,
             sectionHeader = stringResource(R.string.uv_index_section_text),
             sectionValue = currentForecast.uvIndexText,
             isLoading = isCurrentForecastLoading
         )
-    }
-
-    Row(
-        modifier = Modifier
-            .padding(weatherScreenBlockOuterPadding)
-            .fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
 
         AppDetailsInfoBlock(
             modifier = Modifier
-                .padding(appDetailsInfoBlockRightPadding)
                 .clip(appRoundedShape)
                 .border(
                     width = appDetailsInfoBlockBorderWidth,
                     color = appSubtleTextColor,
                     shape = appRoundedShape
                 )
+                .width(IntrinsicSize.Max)
                 .weight(1f)
-                .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                .heightIn(min = appInfoBlockMinHeight)
+                .padding(appInfoBlockInnerPadding),
             sectionIcon = painterResource(R.drawable.sunrise_icon),
             iconTint = weatherScreenSunriseColor,
             sectionHeader = stringResource(R.string.sunrise_section_text),
@@ -202,15 +201,16 @@ fun HourForecastUi(
 
         AppDetailsInfoBlock(
             modifier = Modifier
-                .padding(appDetailsInfoBlockLeftPadding)
                 .clip(appRoundedShape)
                 .border(
                     width = appDetailsInfoBlockBorderWidth,
                     color = appSubtleTextColor,
                     shape = appRoundedShape
                 )
+                .width(IntrinsicSize.Max)
                 .weight(1f)
-                .padding(weatherScreenCurrentForecastBlockInnerPadding),
+                .heightIn(min = appInfoBlockMinHeight)
+                .padding(appInfoBlockInnerPadding),
             sectionIcon = painterResource(R.drawable.sunset_icon),
             iconTint = weatherScreenSunsetColor,
             sectionHeader = stringResource(R.string.sunset_section_text),
@@ -239,26 +239,38 @@ private fun HourForecastListUi(
             )
         }
     } else {
-        LazyRow(
-            modifier = modifier
-        ) {
-            itemsIndexed(hourForecastList) { index, forecast ->
-                HourForecastItem(
+        if (hourForecastList.isEmpty()) {
+            Box(
+                modifier = modifier
+            ){
+                AppEmptyScreen(
                     modifier = Modifier
-                        .padding(
-                            if (index != 0) {
-                                weatherScreenHourForecastItemPadding
-                            } else {
-                                zeroPadding
-                            }
-                        )
-                        .clickable {
-                            proceedIntent(
-                                IWeatherScreenIntent.UpdateSelectedHour(forecast)
-                            )
-                        },
-                    forecast = forecast
+                        .heightIn(min = appInfoBlockMinHeight)
+                        .align(Alignment.Center)
                 )
+            }
+        } else {
+            LazyRow(
+                modifier = modifier
+            ) {
+                itemsIndexed(hourForecastList) { index, forecast ->
+                    HourForecastItem(
+                        modifier = Modifier
+                            .padding(
+                                if (index != 0) {
+                                    weatherScreenHourForecastItemPadding
+                                } else {
+                                    zeroPadding
+                                }
+                            )
+                            .clickable {
+                                proceedIntent(
+                                    IWeatherScreenIntent.UpdateSelectedHour(forecast)
+                                )
+                            },
+                        forecast = forecast
+                    )
+                }
             }
         }
     }

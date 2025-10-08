@@ -15,7 +15,6 @@ import com.alenniboris.personalmanager.domain.model.weather.DayWeatherForecastMo
 import com.alenniboris.personalmanager.domain.model.weather.HourWeatherForecastModelDomain
 import com.alenniboris.personalmanager.domain.repository.IWeatherRepository
 import com.alenniboris.personalmanager.domain.utils.LogPrinter
-import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -31,36 +30,26 @@ class WeatherRepositoryImpl @Inject constructor(
         withContext(dispatchers.IO) {
             runCatching {
 
-                val _currentResponse = async {
-                    weatherMeteoblueApiService.getCurrentWeatherForecast(
-                        lat = lat.toString(),
-                        lon = lon.toString()
-                    )
-                }
-                val _cloudsResponse = async {
-                    weatherMeteoblueApiService.getCloudsForecast(
-                        lat = lat.toString(),
-                        lon = lon.toString()
-                    )
-                }
-                val _sunMoonResponse = async {
-                    weatherMeteoblueApiService.getSunMoonForecast(
-                        lat = lat.toString(),
-                        lon = lon.toString()
-                    )
-                }
-                val _basicDayResponse = async {
-                    weatherMeteoblueApiService.getMultipleDaysWeatherForecast(
-                        lat = lat.toString(),
-                        lon = lon.toString(),
-                        forecastDays = "1"
-                    )
-                }
+                val currentResponse = weatherMeteoblueApiService.getCurrentWeatherForecast(
+                    lat = lat.toString(),
+                    lon = lon.toString()
+                )
 
-                val currentResponse = _currentResponse.await()
-                val cloudsResponse = _cloudsResponse.await()
-                val sunMoonResponse = _sunMoonResponse.await()
-                val basicDayResponse = _basicDayResponse.await()
+                val cloudsResponse = weatherMeteoblueApiService.getCloudsForecast(
+                    lat = lat.toString(),
+                    lon = lon.toString()
+                )
+
+                val sunMoonResponse = weatherMeteoblueApiService.getSunMoonForecast(
+                    lat = lat.toString(),
+                    lon = lon.toString()
+                )
+
+                val basicDayResponse = weatherMeteoblueApiService.getMultipleDaysWeatherForecast(
+                    lat = lat.toString(),
+                    lon = lon.toString(),
+                    forecastDays = "1"
+                )
 
                 val dataModel = makeCurrentWeatherForecastModelData(
                     currentWeatherForecastResponseModel = currentResponse,

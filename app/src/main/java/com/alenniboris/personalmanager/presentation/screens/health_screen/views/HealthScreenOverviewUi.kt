@@ -7,9 +7,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,6 +30,7 @@ import com.alenniboris.fastbanking.presentation.uikit.theme.bodyStyle
 import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.domain.model.TodayHealthStatisticsModelDomain
 import com.alenniboris.personalmanager.presentation.model.health.TodayHealthStatisticsModelUi
+import com.alenniboris.personalmanager.presentation.screens.health_screen.IHealthScreenIntent
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appDetailsInfoBlockBorderWidth
@@ -48,18 +54,55 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenOver
 import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenOverviewStatisticsSectionInnerPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenOverviewWeightBackgroundColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.healthScreenOverviewWeightIconColor
+import com.alenniboris.personalmanager.presentation.uikit.views.AppDataProgressSection
 import com.alenniboris.personalmanager.presentation.uikit.views.AppIconPlaceholder
 import com.alenniboris.personalmanager.presentation.uikit.views.AppProgressAnimation
+import com.alenniboris.personalmanager.presentation.uikit.views.AppRefreshIndicator
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HealthScreenOverviewUi(
     modifier: Modifier = Modifier,
     todayStatistics: TodayHealthStatisticsModelUi,
-    isLoading: Boolean
+    isLoading: Boolean,
+    isRefreshing: Boolean,
+    proceedIntent: (IHealthScreenIntent) -> Unit
 ) {
 
+    val refreshState = rememberPullToRefreshState()
+    PullToRefreshBox(
+        modifier = modifier,
+        isRefreshing = isRefreshing,
+        onRefresh = {
+            proceedIntent(
+                IHealthScreenIntent.RefreshOverviewUiData
+            )
+        },
+        state = refreshState,
+        indicator = {
+            AppRefreshIndicator(
+                modifier = Modifier
+                    .align(Alignment.TopCenter),
+                state = refreshState,
+                isRefreshing = isRefreshing
+            )
+        },
+        content = {
+            ScreenContent(
+                todayStatistics = todayStatistics,
+                isLoading = isLoading
+            )
+        }
+    )
+}
+
+@Composable
+private fun ScreenContent(
+    todayStatistics: TodayHealthStatisticsModelUi,
+    isLoading: Boolean
+) {
     Column(
-        modifier = modifier
+        modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
 
         Row(
@@ -81,7 +124,7 @@ fun HealthScreenOverviewUi(
                 iconTint = healthScreenOverviewWeightIconColor,
                 iconBackground = healthScreenOverviewWeightBackgroundColor,
                 header = stringResource(R.string.current_weight_section),
-                value = todayStatistics.currentWeightText,
+                value = todayStatistics.currentWeightText + " " + stringResource(R.string.kg_text),
                 isLoading = isLoading
             )
 
@@ -100,7 +143,7 @@ fun HealthScreenOverviewUi(
                 iconTint = healthScreenOverviewHeartRateIconColor,
                 iconBackground = healthScreenOverviewHeartRateBackgroundColor,
                 header = stringResource(R.string.heart_rate_section),
-                value = todayStatistics.heartRateText,
+                value = todayStatistics.heartRateText + " " + stringResource(R.string.bpm_text),
                 isLoading = isLoading
             )
         }
@@ -177,32 +220,32 @@ private fun TodayStatisticsSection(
             )
         } else {
 
-            HealthScreenDataProgressSection(
+            AppDataProgressSection(
                 modifier = Modifier.padding(healthScreenContentItemTopPadding),
                 headerText = stringResource(R.string.calories_section),
                 valueText = statistics.caloriesStatisticsText,
-                value = statistics.consumedCaloriesProcent
+                valuePercent = statistics.consumedCaloriesPercent
             )
 
-            HealthScreenDataProgressSection(
+            AppDataProgressSection(
                 modifier = Modifier.padding(healthScreenContentItemTopPadding),
                 headerText = stringResource(R.string.proteins_section_text),
-                valueText = statistics.proteinsStatisticsText,
-                value = statistics.consumedProteinsProcent
+                valueText = statistics.proteinsStatisticsText + stringResource(R.string.grams_text),
+                valuePercent = statistics.consumedProteinsPercent
             )
 
-            HealthScreenDataProgressSection(
+            AppDataProgressSection(
                 modifier = Modifier.padding(healthScreenContentItemTopPadding),
                 headerText = stringResource(R.string.carbs_section_text),
-                valueText = statistics.carbohydratesStatisticsText,
-                value = statistics.consumedCarbsProcent
+                valueText = statistics.carbohydratesStatisticsText + stringResource(R.string.grams_text),
+                valuePercent = statistics.consumedCarbsPercent
             )
 
-            HealthScreenDataProgressSection(
+            AppDataProgressSection(
                 modifier = Modifier.padding(healthScreenContentItemTopPadding),
                 headerText = stringResource(R.string.fats_section_text),
-                valueText = statistics.fatsStatisticsText,
-                value = statistics.consumedFatsProcent
+                valueText = statistics.fatsStatisticsText + stringResource(R.string.grams_text),
+                valuePercent = statistics.consumedFatsPercent
             )
         }
     }
@@ -293,7 +336,9 @@ private fun LightTheme() {
                             carbohydratesIntake = 300.4
                         )
                     ),
-                    isLoading = false
+                    isLoading = false,
+                    isRefreshing = false,
+                    proceedIntent = {}
                 )
             }
         }
@@ -329,7 +374,9 @@ private fun DarkTheme() {
                             carbohydratesIntake = 300.4
                         )
                     ),
-                    isLoading = false
+                    isLoading = false,
+                    isRefreshing = false,
+                    proceedIntent = {}
                 )
             }
         }

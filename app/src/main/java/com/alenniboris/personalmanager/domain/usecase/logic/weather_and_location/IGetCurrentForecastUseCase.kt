@@ -10,4 +10,14 @@ interface IGetCurrentForecastUseCase {
         lat: Double,
         lon: Double
     ): CustomResultModelDomain<CurrentWeatherForecastModelDomain, CommonExceptionModelDomain>
+
+    suspend fun location(
+        lat: Double,
+        lon: Double
+    ): CustomResultModelDomain<String, CommonExceptionModelDomain>
+
+    suspend fun weather(
+        lat: Double,
+        lon: Double
+    ): CustomResultModelDomain<CurrentWeatherForecastModelDomain, CommonExceptionModelDomain>
 }

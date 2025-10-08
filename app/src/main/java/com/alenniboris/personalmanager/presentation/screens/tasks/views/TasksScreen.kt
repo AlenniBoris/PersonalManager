@@ -26,7 +26,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alenniboris.personalmanager.R
-import com.alenniboris.personalmanager.domain.utils.LogPrinter
 import com.alenniboris.personalmanager.presentation.screens.destinations.PersonalScreenDestination
 import com.alenniboris.personalmanager.presentation.screens.tasks.ITasksScreenEvent
 import com.alenniboris.personalmanager.presentation.screens.tasks.ITasksScreenIntent
@@ -55,6 +54,7 @@ import com.alenniboris.personalmanager.presentation.uikit.views.AppDatePicker
 import com.alenniboris.personalmanager.presentation.uikit.views.AppLazyButtonRow
 import com.alenniboris.personalmanager.presentation.uikit.views.AppSettingsDialog
 import com.alenniboris.personalmanager.presentation.uikit.views.AppSingleLineDateFilter
+import com.alenniboris.personalmanager.presentation.uikit.views.AppTaskAddingDialog
 import com.alenniboris.personalmanager.presentation.uikit.views.AppTopBar
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -251,10 +251,48 @@ private fun TasksScreenUi(
             )
 
             if (state.isAddTaskDialogVisible) {
-                TasksScreenAddTaskDialog(
+                AppTaskAddingDialog(
                     addTaskData = state.addTaskData,
                     isTaskUploading = state.isTaskUploading,
-                    proceedIntent = proceedIntent
+                    onDismiss = {
+                        proceedIntent(
+                            ITasksScreenIntent.UpdateAddTaskDialogVisibility
+                        )
+                    },
+                    onTitleChange = {
+                        proceedIntent(
+                            ITasksScreenIntent.UpdateAddTaskTitle(
+                                newValue = it
+                            )
+                        )
+                    },
+                    onDescriptionChange = {
+                        proceedIntent(
+                            ITasksScreenIntent.UpdateAddTaskDescription(
+                                newValue = it
+                            )
+                        )
+                    },
+                    onPriorityChange = {
+                        proceedIntent(
+                            ITasksScreenIntent.UpdateAddTaskPriority(it)
+                        )
+                    },
+                    onDueDatePickerVisibility = {
+                        proceedIntent(
+                            ITasksScreenIntent.UpdateDatePickerVisibility()
+                        )
+                    },
+                    onDueTimePickerVisibility = {
+                        proceedIntent(
+                            ITasksScreenIntent.UpdateTimePickerVisibility()
+                        )
+                    },
+                    onAdd = {
+                        proceedIntent(
+                            ITasksScreenIntent.ProceedAddTaskAction
+                        )
+                    }
                 )
             }
 

@@ -11,14 +11,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.alenniboris.personalmanager.domain.utils.LogPrinter
+import com.alenniboris.personalmanager.presentation.screens.destinations.PersonalScreenDestination
 import com.alenniboris.personalmanager.presentation.screens.home.HomeScreenState
 import com.alenniboris.personalmanager.presentation.screens.home.HomeScreenViewModel
 import com.alenniboris.personalmanager.presentation.screens.home.IHomeScreenEvent
 import com.alenniboris.personalmanager.presentation.screens.home.IHomeScreenIntent
+import com.alenniboris.personalmanager.presentation.uikit.theme.tasksScreenUpcomingTaskColor
 import com.alenniboris.personalmanager.presentation.uikit.utils.PermissionType
+import com.alenniboris.personalmanager.presentation.uikit.utils.ToastUtil
 import com.alenniboris.personalmanager.presentation.uikit.utils.launchForPermission
 import com.alenniboris.personalmanager.presentation.uikit.utils.toPermission
 import com.alenniboris.personalmanager.presentation.uikit.values.HomeScreenRoute
@@ -26,13 +30,16 @@ import com.alenniboris.personalmanager.presentation.uikit.views.AppPermissionRat
 import com.google.android.gms.location.LocationServices
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.launch
 
 @Composable
 @RootNavGraph
 @Destination(route = HomeScreenRoute)
-fun HomeScreen() {
+fun HomeScreen(
+    navigator: DestinationsNavigator
+) {
 
     val viewModel: HomeScreenViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -42,13 +49,17 @@ fun HomeScreen() {
 
     LaunchedEffect(Unit) {
         launch {
-            event.filterIsInstance<IHomeScreenEvent.OpenSettings>().collect {
-                val openingIntent =
-                    Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                        data = Uri.fromParts("package", context.packageName, null)
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    }
-                context.startActivity(openingIntent)
+            event.filterIsInstance<IHomeScreenEvent.ShowToast>().collect { coming ->
+                ToastUtil.show(
+                    context = context,
+                    resId = coming.messageId
+                )
+            }
+        }
+
+        launch {
+            event.filterIsInstance<IHomeScreenEvent.OpenPersonalScreen>().collect {
+                navigator.navigate(PersonalScreenDestination)
             }
         }
     }
@@ -57,59 +68,4 @@ fun HomeScreen() {
         state = state,
         proceedIntent = proceedIntent
     )
-}
-
-@Composable
-private fun HomeScreenUi(
-    state: HomeScreenState,
-    proceedIntent: (IHomeScreenIntent) -> Unit
-) {
-
-    val context = LocalContext.current
-    val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(
-        context
-    )
-    val permissionLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            LogPrinter.printLog("!!!", "granted home screen")
-        }
-    }
-    LaunchedEffect(Unit) {
-        launchForPermission(
-            permission = PermissionType.PERMISSION_FINE_LOCATION,
-            context = context,
-            onPermissionGrantedAction = {
-//                proceedIntent(
-//                    IHomeScreenIntent.GetUserLocation(
-//                        fusedLocationProviderClient = fusedLocationProviderClient
-//                    )
-//                )
-            },
-            onPermissionNotGrantedAction = {},
-            onShowRationale = { permission ->
-                proceedIntent(
-                    IHomeScreenIntent.UpdateRequestedPermissionAndShowDialog(
-                        newRequestedPermission = permission
-                    )
-                )
-            },
-            onLaunchAgain = { permission ->
-                permissionLauncher.launch(permission.toPermission())
-            }
-        )
-    }
-    if (state.isPermissionDialogVisible) {
-        state.requestedPermission?.let {
-            AppPermissionRationaleDialog(
-                permissionType = it,
-                onOpenSettings = {
-                    proceedIntent(
-                        IHomeScreenIntent.OpenSettingsAndHidePermissionDialog
-                    )
-                }
-            )
-        }
-    }
 }

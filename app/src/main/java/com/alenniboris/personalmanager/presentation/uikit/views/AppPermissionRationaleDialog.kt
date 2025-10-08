@@ -7,16 +7,23 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.alenniboris.fastbanking.presentation.uikit.theme.bodyStyle
+import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.appMainTextColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSize
+import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeBig
+import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeMedium
 import com.alenniboris.personalmanager.presentation.uikit.utils.PermissionType
 import com.alenniboris.personalmanager.presentation.uikit.utils.toPermissionExplanation
 import com.alenniboris.personalmanager.presentation.uikit.utils.toPermissionName
@@ -28,16 +35,20 @@ fun AppPermissionRationaleDialog(
     onOpenSettings: () -> Unit
 ) {
     AlertDialog(
+        containerColor = appColor,
         onDismissRequest = {},
         confirmButton = {
             Button(
-                onClick = onOpenSettings
+                onClick = onOpenSettings,
+                colors = ButtonDefaults.buttonColors().copy(
+                    containerColor = appColor
+                )
             ) {
                 Text(
                     style = bodyStyle.copy(
                         color = appMainTextColor
                     ),
-                    text = "Go to settings"
+                    text = stringResource(R.string.go_to_settings_text)
                 )
             }
         },
@@ -45,7 +56,9 @@ fun AppPermissionRationaleDialog(
         title = {
             Text(
                 style = bodyStyle.copy(
-                    color = appMainTextColor
+                    fontSize = appTextSizeMedium,
+                    color = appMainTextColor,
+                    fontWeight = FontWeight.Bold
                 ),
                 text = stringResource(permissionType.toPermissionName())
             )
@@ -53,6 +66,7 @@ fun AppPermissionRationaleDialog(
         text = {
             Text(
                 style = bodyStyle.copy(
+                    fontSize = appTextSize,
                     color = appMainTextColor
                 ),
                 text = stringResource(permissionType.toPermissionExplanation())
