@@ -12,15 +12,18 @@ import com.alenniboris.personalmanager.domain.model.common.IAppDispatchers
 import com.alenniboris.personalmanager.domain.model.user.UserModelDomain
 import com.alenniboris.personalmanager.domain.repository.IUserRepository
 import com.alenniboris.personalmanager.domain.utils.LogPrinter
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
+    private val auth: FirebaseAuth,
     private val database: FirebaseDatabase,
     private val dispatchers: IAppDispatchers
 ) : IUserRepository {
@@ -33,6 +36,14 @@ class UserRepositoryImpl @Inject constructor(
         password: String
     ): CustomResultModelDomain<Unit, CommonExceptionModelDomain> = withContext(dispatchers.IO) {
         runCatching {
+
+            val authResult = auth.signInWithEmailAndPassword(email, password).await()
+            val firebaseUser = authResult.user
+            if (firebaseUser == null) {
+                return@withContext CustomResultModelDomain.Error(
+                    CommonExceptionModelDomain.ErrorGettingData
+                )
+            }
 
             return@withContext when (
                 val databaseUserResult = CommonFunctions.requestElementByField(
@@ -53,19 +64,10 @@ class UserRepositoryImpl @Inject constructor(
 
                     val databaseUser = databaseUserResult.result
                     databaseUser?.let {
-
-                        if (databaseUser.password == password) {
-
-                            _userFlow.update {
-                                databaseUser.toModelDomain()
-                            }
-
-                            CustomResultModelDomain.Success(Unit)
-                        } else {
-                            return@withContext CustomResultModelDomain.Error(
-                                CommonExceptionModelDomain.WrongPassword
-                            )
+                        _userFlow.update {
+                            databaseUser.toModelDomain()
                         }
+                        CustomResultModelDomain.Success(Unit)
                     } ?: return@withContext CustomResultModelDomain.Error(
                         CommonExceptionModelDomain.NoSuchUser
                     )
@@ -97,38 +99,15 @@ class UserRepositoryImpl @Inject constructor(
     ): CustomResultModelDomain<Unit, CommonExceptionModelDomain> = withContext(dispatchers.IO) {
         runCatching {
 
-            when (
-                val databaseUserResult = CommonFunctions.requestElementByField(
-                    field = FirebaseDatabaseValues.FIELD_EMAIL,
-                    fieldValue = user.email,
-                    dispatcher = dispatchers.IO,
-                    database = database,
-                    table = FirebaseDatabaseValues.TABLE_USERS,
-                    resultMapping = { dataModel: UserModelData? ->
-                        dataModel
-                    },
-                    exceptionMapping = { exception ->
-                        exception.toCommonException()
-                    })
-            ) {
-                is CustomResultModelDomain.Success -> {
-                    databaseUserResult.result?.let {
-                        return@withContext CustomResultModelDomain.Error(
-                            CommonExceptionModelDomain.UserAlreadyExists
-                        )
-                    }
-                }
-
-                is CustomResultModelDomain.Error -> {
-                    return@withContext CustomResultModelDomain.Error(
-                        databaseUserResult.exception
-                    )
-                }
+            val authResult = auth.createUserWithEmailAndPassword(user.email, password).await()
+            val firebaseUser = authResult.user
+            if (firebaseUser == null) {
+                return@withContext CustomResultModelDomain.Error(
+                    CommonExceptionModelDomain.ErrorGettingData
+                )
             }
 
-
             return@withContext when (
-
                 val registrationResult = CommonFunctions.addRecordToTheTable(
                     dispatcher = dispatchers.IO,
                     database = database,
@@ -140,7 +119,7 @@ class UserRepositoryImpl @Inject constructor(
                         CommonExceptionModelDomain.ErrorGettingData
                     },
                     editingRecord = { newId ->
-                        user.copy(id = newId).toModelData().copy(password = password)
+                        user.copy(id = newId).toModelData()
                     }
                 )
             ) {
@@ -169,8 +148,9 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun signOut(){
+    override fun signOut() {
         _userFlow.update { null }
+        auth.signOut()
     }
 
     override suspend fun updateUser(
@@ -202,7 +182,22 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun sendPasswordResetLink(
         email: String
-    ): CustomResultModelDomain<Unit, CommonExceptionModelDomain> {
-        TODO("Not yet implemented")
-    }
+    ): CustomResultModelDomain<Unit, CommonExceptionModelDomain> =
+        withContext(dispatchers.IO) {
+            runCatching {
+                val result = auth.sendPasswordResetEmail(email).await()
+                return@withContext CustomResultModelDomain.Success(Unit)
+            }.getOrElse {
+                LogPrinter.printLog(
+                    tag = "!!!",
+                    message = """
+                    registerUser , 
+                    ${it.stackTraceToString()}
+                """.trimIndent()
+                )
+                return@withContext CustomResultModelDomain.Error(
+                    it.toCommonException()
+                )
+            }
+        }
 }

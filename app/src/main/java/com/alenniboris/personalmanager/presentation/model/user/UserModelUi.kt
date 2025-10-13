@@ -45,8 +45,7 @@ fun UserModelUi.toDomainModel() =
         neededProteins = this.neededProteins,
         neededFats = this.neededFats,
         neededCarbohydrates = this.neededCarbohydrates,
-        gender = this.gender,
-        password = this.password
+        gender = this.gender
     )
 
 fun UserModelDomain.toModelUi() =
@@ -64,6 +63,5 @@ fun UserModelDomain.toModelUi() =
         neededProteins = this.neededProteins,
         neededFats = this.neededFats,
         neededCarbohydrates = this.neededCarbohydrates,
-        gender = this.gender,
-        password = this.password
+        gender = this.gender
     )

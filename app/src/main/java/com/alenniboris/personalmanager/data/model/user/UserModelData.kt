@@ -9,7 +9,6 @@ data class UserModelData(
     val id: String? = null,
     val name: String? = null,
     val email: String? = null,
-    val password: String? = null,
     val age: String? = null,
     val phone: String? = null,
     val height: String? = null,
@@ -28,7 +27,6 @@ data class UserModelData(
             "id" to id,
             "name" to name,
             "email" to email,
-            "password" to password,
             "age" to age,
             "phone" to phone,
             "height" to height,
@@ -66,8 +64,7 @@ fun UserModelData.toModelDomain(): UserModelDomain? =
                 "Male" -> UserGender.Male
                 "Female" -> UserGender.Female
                 else -> UserGender.Male
-            },
-            password = this.password!!
+            }
         )
     }.getOrElse {
         LogPrinter.printLog(
@@ -85,7 +82,6 @@ fun UserModelDomain.toModelData(): UserModelData =
         id = this.id,
         name = this.name,
         email = this.email,
-        password = this.password,
         age = this.age.toString(),
         phone = this.phoneNumber,
         height = this.height.toString(),

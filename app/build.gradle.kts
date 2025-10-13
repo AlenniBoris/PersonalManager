@@ -83,6 +83,7 @@ dependencies {
 
     //Firebase
     implementation(libs.firebase.database)
+    implementation(libs.firebase.auth)
 
     //Hilt
     implementation(libs.hilt.android)
