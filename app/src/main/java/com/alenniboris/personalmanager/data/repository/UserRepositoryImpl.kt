@@ -199,4 +199,10 @@ class UserRepositoryImpl @Inject constructor(
                 }
             }
         }
+
+    override suspend fun sendPasswordResetLink(
+        email: String
+    ): CustomResultModelDomain<Unit, CommonExceptionModelDomain> {
+        TODO("Not yet implemented")
+    }
 }

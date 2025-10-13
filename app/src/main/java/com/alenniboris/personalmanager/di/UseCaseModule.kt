@@ -20,6 +20,7 @@ import com.alenniboris.personalmanager.domain.usecase.impl.tasks.UpdateTaskUseCa
 import com.alenniboris.personalmanager.domain.usecase.impl.user.GetCurrentUserUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.user.LoginUserByEmailAndPasswordUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.user.RegisterUserUseCaseImpl
+import com.alenniboris.personalmanager.domain.usecase.impl.user.SendResetPasswordLinkUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.user.SignOutUserUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.user.UpdateUserUseCaseImpl
 import com.alenniboris.personalmanager.domain.usecase.impl.weather_and_location.GetCurrentForecastUseCaseImpl
@@ -50,6 +51,7 @@ import com.alenniboris.personalmanager.domain.usecase.logic.tasks.IUpdateTaskUse
 import com.alenniboris.personalmanager.domain.usecase.logic.user.IGetCurrentUserUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.user.ILoginUserByEmailAndPasswordUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.user.IRegisterUserUseCase
+import com.alenniboris.personalmanager.domain.usecase.logic.user.ISendResetPasswordLinkUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.user.ISignOutUserUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.user.IUpdateUserUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.weather_and_location.IGetCurrentForecastUseCase
@@ -220,4 +222,9 @@ abstract class UseCaseModule {
     abstract fun bindUpdateUserUseCase(
         updateUserUseCaseImpl: UpdateUserUseCaseImpl
     ): IUpdateUserUseCase
+
+    @Binds
+    abstract fun bindSendResetPasswordLinkUseCase(
+        sendResetPasswordLinkUseCaseImpl: SendResetPasswordLinkUseCaseImpl
+    ): ISendResetPasswordLinkUseCase
 }

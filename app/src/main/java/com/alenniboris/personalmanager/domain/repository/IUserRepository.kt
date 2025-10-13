@@ -24,4 +24,8 @@ interface IUserRepository {
     suspend fun updateUser(
         user: UserModelDomain
     ): CustomResultModelDomain<Unit, CommonExceptionModelDomain>
+
+    suspend fun sendPasswordResetLink(
+        email: String
+    ): CustomResultModelDomain<Unit, CommonExceptionModelDomain>
 }
