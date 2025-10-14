@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,7 +40,8 @@ fun RegistrationProcessUi(
                 color = enterTextFieldColor,
                 shape = logRegScreenMainShape
             )
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .testTag(tag = "registration_name"),
         value = state.user.name,
         onValueChanged = {
             proceedIntent(
@@ -57,7 +59,8 @@ fun RegistrationProcessUi(
                 color = enterTextFieldColor,
                 shape = logRegScreenMainShape
             )
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .testTag(tag = "registration_email"),
         value = state.user.email,
         onValueChanged = {
             proceedIntent(
@@ -75,7 +78,8 @@ fun RegistrationProcessUi(
                 color = enterTextFieldColor,
                 shape = logRegScreenMainShape
             )
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .testTag(tag = "registration_password"),
         value = state.password,
         onValueChanged = {
             proceedIntent(
@@ -92,7 +96,8 @@ fun RegistrationProcessUi(
             proceedIntent(
                 ILogRegScreenIntent.UpdatePasswordVisibility
             )
-        }
+        },
+        iconTestTagPrefix = "registration_password"
     )
 
     AppTextField(
@@ -102,7 +107,8 @@ fun RegistrationProcessUi(
                 color = enterTextFieldColor,
                 shape = logRegScreenMainShape
             )
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .testTag(tag = "registration_password_check"),
         value = state.passwordCheck,
         onValueChanged = {
             proceedIntent(
@@ -119,7 +125,8 @@ fun RegistrationProcessUi(
             proceedIntent(
                 ILogRegScreenIntent.UpdatePasswordCheckVisibility
             )
-        }
+        },
+        iconTestTagPrefix = "registration_password_check"
     )
 }
 

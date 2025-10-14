@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -45,6 +46,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSize
 import com.alenniboris.personalmanager.presentation.uikit.theme.appTextSizeMedium
 import com.alenniboris.personalmanager.presentation.uikit.theme.buttonRowBackgroundColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenBackgroundColor
+import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenBigTopPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenColumnPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenFinalButtonPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenHeaderTextBottomPadding
@@ -65,68 +67,71 @@ import com.google.android.gms.location.LocationServices
 @Composable
 fun LogRegScreenUi(
     state: LogRegScreenState,
-    proceedIntent: (ILogRegScreenIntent) -> Unit
+    proceedIntent: (ILogRegScreenIntent) -> Unit,
+    isTest: Boolean = false
 ) {
 
-    val context = LocalContext.current
+    if (!isTest) {
+        val context = LocalContext.current
 
-    val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(
-        context
-    )
-    val permissionLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            proceedIntent(
-                ILogRegScreenIntent.GetUserLocation(
-                    fusedLocationProviderClient = fusedLocationProviderClient
-                )
-            )
-        } else {
-            proceedIntent(
-                ILogRegScreenIntent.UpdateRequestedPermission(
-                    PermissionType.PERMISSION_FINE_LOCATION
-                )
-            )
-        }
-    }
-    (state as? LogRegScreenState.Login)?.let {
-        LaunchedEffect(state.requestedPermission) {
-            launchForPermission(
-                permission = PermissionType.PERMISSION_FINE_LOCATION,
-                context = context,
-                onPermissionGrantedAction = {
-                    proceedIntent(
-                        ILogRegScreenIntent.GetUserLocation(
-                            fusedLocationProviderClient = fusedLocationProviderClient
-                        )
+        val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(
+            context
+        )
+        val permissionLauncher = rememberLauncherForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            if (isGranted) {
+                proceedIntent(
+                    ILogRegScreenIntent.GetUserLocation(
+                        fusedLocationProviderClient = fusedLocationProviderClient
                     )
-                },
-                onPermissionNotGrantedAction = {},
-                onShowRationale = { permission ->
-                    proceedIntent(
-                        ILogRegScreenIntent.UpdateRequestedPermissionAndShowDialog(
-                            newRequestedPermission = permission
-                        )
+                )
+            } else {
+                proceedIntent(
+                    ILogRegScreenIntent.UpdateRequestedPermission(
+                        PermissionType.PERMISSION_FINE_LOCATION
                     )
-                },
-                onLaunchAgain = { permission ->
-                    permissionLauncher.launch(permission.toPermission())
-                }
-            )
+                )
+            }
         }
-    }
-    (state as? LogRegScreenState.Login)?.let {
-        if (state.isPermissionDialogVisible) {
-            state.requestedPermission?.let {
-                AppPermissionRationaleDialog(
-                    permissionType = it,
-                    onOpenSettings = {
+        (state as? LogRegScreenState.Login)?.let {
+            LaunchedEffect(state.requestedPermission) {
+                launchForPermission(
+                    permission = PermissionType.PERMISSION_FINE_LOCATION,
+                    context = context,
+                    onPermissionGrantedAction = {
                         proceedIntent(
-                            ILogRegScreenIntent.OpenSettingsAndHidePermissionDialog
+                            ILogRegScreenIntent.GetUserLocation(
+                                fusedLocationProviderClient = fusedLocationProviderClient
+                            )
                         )
+                    },
+                    onPermissionNotGrantedAction = {},
+                    onShowRationale = { permission ->
+                        proceedIntent(
+                            ILogRegScreenIntent.UpdateRequestedPermissionAndShowDialog(
+                                newRequestedPermission = permission
+                            )
+                        )
+                    },
+                    onLaunchAgain = { permission ->
+                        permissionLauncher.launch(permission.toPermission())
                     }
                 )
+            }
+        }
+        (state as? LogRegScreenState.Login)?.let {
+            if (state.isPermissionDialogVisible) {
+                state.requestedPermission?.let {
+                    AppPermissionRationaleDialog(
+                        permissionType = it,
+                        onOpenSettings = {
+                            proceedIntent(
+                                ILogRegScreenIntent.OpenSettingsAndHidePermissionDialog
+                            )
+                        }
+                    )
+                }
             }
         }
     }
@@ -234,8 +239,14 @@ private fun MainSection(
 
         AppCustomButton(
             modifier = Modifier
-                .padding(logRegScreenFinalButtonPadding)
-                .fillMaxWidth(),
+                .padding(
+                    if (state is LogRegScreenState.Registration)
+                        logRegScreenFinalButtonPadding
+                    else
+                        logRegScreenBigTopPadding
+                )
+                .fillMaxWidth()
+                .testTag(tag = "log_reg_final_button"),
             text = stringResource(state.currentProcess.toUiString()),
             onClick = {
                 proceedIntent(
@@ -243,6 +254,38 @@ private fun MainSection(
                 )
             }
         )
+
+        if (state is LogRegScreenState.Login) {
+            AppCustomButton(
+                modifier = Modifier
+                    .padding(logRegScreenFinalButtonPadding)
+                    .fillMaxWidth()
+                    .testTag(tag = "login_reset_password_button"),
+                onClick = {
+                    proceedIntent(
+                        ILogRegScreenIntent.ChangeProcess(LogRegScreenProcess.PasswordReset)
+                    )
+                },
+                text = stringResource(R.string.password_reset_option),
+                icon = painterResource(R.drawable.password_closed_icon)
+            )
+        }
+
+        if (state is LogRegScreenState.PasswordReset) {
+            AppCustomButton(
+                modifier = Modifier
+                    .padding(logRegScreenFinalButtonPadding)
+                    .fillMaxWidth()
+                    .testTag(tag = "password_reset_back_button"),
+                onClick = {
+                    proceedIntent(
+                        ILogRegScreenIntent.ChangeBackToLogin
+                    )
+                },
+                text = stringResource(R.string.go_back_to_login),
+                icon = painterResource(R.drawable.back_icon)
+            )
+        }
     }
 }
 
@@ -287,15 +330,15 @@ private fun LightTheme() {
     ) {
         Surface {
             Box(modifier = Modifier.fillMaxSize()) {
-//                LogRegScreenUi(
-//                    state = LogRegScreenState.Login(),
-//                    proceedIntent = {}
-//                )
-
                 LogRegScreenUi(
-                    state = LogRegScreenState.PasswordReset(),
+                    state = LogRegScreenState.Login(),
                     proceedIntent = {}
                 )
+
+//                LogRegScreenUi(
+//                    state = LogRegScreenState.PasswordReset(),
+//                    proceedIntent = {}
+//                )
             }
         }
     }

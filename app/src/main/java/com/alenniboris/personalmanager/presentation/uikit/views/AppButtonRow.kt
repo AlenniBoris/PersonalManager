@@ -19,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.alenniboris.fastbanking.presentation.uikit.theme.bodyStyle
@@ -62,6 +63,7 @@ fun AppButtonRow(
                     .weight(1f)
                     .background(color = backgroundColor)
                     .padding(appButtonRowButtonInnerPadding)
+                    .testTag(tag = "app_button_row_button_${element.text}")
             ) {
 
                 Text(

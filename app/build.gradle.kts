@@ -74,6 +74,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose.android)
     implementation(libs.play.services.location)
     implementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.compose.ui.test.junit4)
+    testImplementation(libs.junit.jupiter)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -119,4 +121,15 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(kotlin("test"))
+
+    // ui tests
+//    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+//    debugImplementation(libs.androidx.compose.ui.test.manifest)
+//    androidTestImplementation(libs.androidx.junit.v115)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.mockito.android)
+    androidTestImplementation(libs.mockito.kotlin)
+    // Test rules and transitive dependencies:
+// Needed for createComposeRule(), but not for createAndroidComposeRule<YourActivity>():
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 }

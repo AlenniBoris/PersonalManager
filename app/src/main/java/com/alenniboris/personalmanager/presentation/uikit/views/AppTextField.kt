@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -54,7 +55,8 @@ fun AppTextField(
     isPasswordVisible: Boolean = false,
     isEnabled: Boolean = true,
     maxLines: Int = 1,
-    keyboardType: KeyboardType = KeyboardType.Unspecified
+    keyboardType: KeyboardType = KeyboardType.Unspecified,
+    iconTestTagPrefix: String = ""
 ) {
 
     EnterValueTextField(
@@ -68,7 +70,8 @@ fun AppTextField(
         isPasswordVisible = isPasswordVisible,
         isEnabled = isEnabled,
         maxLines = maxLines,
-        keyboardType = keyboardType
+        keyboardType = keyboardType,
+        iconTestTagPrefix = iconTestTagPrefix
     )
 }
 
@@ -85,6 +88,7 @@ private fun EnterValueTextField(
     isEnabled: Boolean = true,
     maxLines: Int = 1,
     keyboardType: KeyboardType = KeyboardType.Unspecified,
+    iconTestTagPrefix: String = ""
 ) {
     BasicTextField(
         value = value,
@@ -102,6 +106,7 @@ private fun EnterValueTextField(
             ) {
                 icon?.let {
                     IconButton(
+                        modifier = Modifier.testTag(tag = "app_text_field_visibility_button_$iconTestTagPrefix"),
                         onClick = { onIconClicked() },
                     ) {
                         Icon(
@@ -138,7 +143,6 @@ private fun EnterValueTextField(
         maxLines = maxLines
     )
 }
-
 
 @Composable
 @Preview

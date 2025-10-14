@@ -9,12 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.presentation.screens.login_registration.ILogRegScreenIntent
-import com.alenniboris.personalmanager.presentation.screens.login_registration.LogRegScreenProcess
 import com.alenniboris.personalmanager.presentation.screens.login_registration.LogRegScreenState
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
 import com.alenniboris.personalmanager.presentation.uikit.theme.emailIcon
@@ -24,7 +24,6 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenBigT
 import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenMainShape
 import com.alenniboris.personalmanager.presentation.uikit.theme.passwordHidePicture
 import com.alenniboris.personalmanager.presentation.uikit.theme.passwordShowPicture
-import com.alenniboris.personalmanager.presentation.uikit.views.AppCustomButton
 import com.alenniboris.personalmanager.presentation.uikit.views.AppTextField
 
 @Composable
@@ -40,7 +39,8 @@ fun LoginProcessUi(
                 color = enterTextFieldColor,
                 shape = logRegScreenMainShape
             )
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .testTag(tag = "login_email"),
         value = state.email,
         onValueChanged = {
             proceedIntent(
@@ -48,7 +48,8 @@ fun LoginProcessUi(
             )
         },
         placeholder = stringResource(R.string.email_placeholder),
-        icon = painterResource(emailIcon)
+        icon = painterResource(emailIcon),
+        iconTestTagPrefix = "login_email"
     )
 
     AppTextField(
@@ -58,7 +59,8 @@ fun LoginProcessUi(
                 color = enterTextFieldColor,
                 shape = logRegScreenMainShape
             )
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .testTag(tag = "login_password"),
         value = state.password,
         onValueChanged = {
             proceedIntent(
@@ -75,20 +77,8 @@ fun LoginProcessUi(
             proceedIntent(
                 ILogRegScreenIntent.UpdatePasswordVisibility
             )
-        }
-    )
-
-    AppCustomButton(
-        modifier = Modifier
-            .padding(logRegScreenBigTopPadding)
-            .fillMaxWidth(),
-        onClick = {
-            proceedIntent(
-                ILogRegScreenIntent.ChangeProcess(LogRegScreenProcess.PasswordReset)
-            )
         },
-        text = stringResource(R.string.password_reset_option),
-        icon = painterResource(R.drawable.password_closed_icon)
+        iconTestTagPrefix = "login_password"
     )
 }
 

@@ -4,10 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,9 +18,7 @@ import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerT
 import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.emailIcon
 import com.alenniboris.personalmanager.presentation.uikit.theme.enterTextFieldColor
-import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenBigTopPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenMainShape
-import com.alenniboris.personalmanager.presentation.uikit.views.AppCustomButton
 import com.alenniboris.personalmanager.presentation.uikit.views.AppTextField
 
 @Composable
@@ -35,7 +33,8 @@ fun PasswordResetProcessUi(
                 color = enterTextFieldColor,
                 shape = logRegScreenMainShape
             )
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .testTag(tag = "password_reset_email"),
         value = state.email,
         onValueChanged = {
             proceedIntent(
@@ -44,19 +43,6 @@ fun PasswordResetProcessUi(
         },
         placeholder = stringResource(R.string.email_placeholder),
         icon = painterResource(emailIcon)
-    )
-
-    AppCustomButton(
-        modifier = Modifier
-            .padding(logRegScreenBigTopPadding)
-            .fillMaxWidth(),
-        onClick = {
-            proceedIntent(
-                ILogRegScreenIntent.ChangeBackToLogin
-            )
-        },
-        text = stringResource(R.string.go_back_to_login),
-        icon = painterResource(R.drawable.back_icon)
     )
 }
 
