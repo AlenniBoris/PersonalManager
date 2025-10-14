@@ -15,7 +15,7 @@ fun Throwable.toCommonException(): CommonExceptionModelDomain = when (this) {
 
     is FirebaseAuthUserCollisionException -> CommonExceptionModelDomain.UserAlreadyExists
     is FirebaseAuthInvalidUserException -> CommonExceptionModelDomain.NoSuchUser
-    is FirebaseAuthInvalidCredentialsException -> CommonExceptionModelDomain.EmailIsWrongType
+    is FirebaseAuthInvalidCredentialsException -> CommonExceptionModelDomain.WrongEnteredData
 
     else -> CommonExceptionModelDomain.UnknownException
 }

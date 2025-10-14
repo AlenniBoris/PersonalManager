@@ -7,10 +7,12 @@ import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.domain.model.common.CustomResultModelDomain
 import com.alenniboris.personalmanager.domain.usecase.logic.user.ILoginUserByEmailAndPasswordUseCase
 import com.alenniboris.personalmanager.domain.usecase.logic.user.IRegisterUserUseCase
+import com.alenniboris.personalmanager.domain.usecase.logic.user.ISendResetPasswordLinkUseCase
 import com.alenniboris.personalmanager.domain.utils.LogPrinter
 import com.alenniboris.personalmanager.domain.utils.SingleFlowEvent
 import com.alenniboris.personalmanager.presentation.mapper.toUiString
 import com.alenniboris.personalmanager.presentation.model.user.toDomainModel
+import com.alenniboris.personalmanager.presentation.screens.login_registration.views.LoginProcessUi
 import com.alenniboris.personalmanager.presentation.uikit.utils.DatastoreRepository
 import com.alenniboris.personalmanager.presentation.uikit.utils.PermissionType
 import com.alenniboris.personalmanager.presentation.uikit.values.DatastoreValues
@@ -36,7 +38,8 @@ import javax.inject.Inject
 class LogRegScreenViewModel @Inject constructor(
     private val loginUserByEmailAndPasswordUseCase: ILoginUserByEmailAndPasswordUseCase,
     private val registerUserUseCase: IRegisterUserUseCase,
-    private val datastore: DatastoreRepository
+    private val datastore: DatastoreRepository,
+    private val sendResetPasswordLinkUseCase: ISendResetPasswordLinkUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<LogRegScreenState>(LogRegScreenState.Login())
@@ -66,7 +69,13 @@ class LogRegScreenViewModel @Inject constructor(
             is ILogRegScreenIntent.UpdateRequestedPermission -> updateRequestedPermission(
                 intent.permission
             )
+
+            is ILogRegScreenIntent.ChangeBackToLogin -> changeBackToLogin()
         }
+    }
+
+    private fun changeBackToLogin() {
+        _state.update { LogRegScreenState.Login() }
     }
 
     private fun updateRequestedPermission(permission: PermissionType) {
@@ -182,6 +191,35 @@ class LogRegScreenViewModel @Inject constructor(
             is LogRegScreenState.Registration -> {
                 proceedUserRegistration()
             }
+
+            is LogRegScreenState.PasswordReset -> sendResetLink()
+        }
+    }
+
+    private fun sendResetLink() {
+        (_state.value as? LogRegScreenState.PasswordReset)?.let { state ->
+            viewModelScope.launch {
+                when (
+                    val res = sendResetPasswordLinkUseCase.invoke(state.email)
+                ) {
+                    is CustomResultModelDomain.Success -> {
+                        _event.emit(
+                            ILogRegScreenEvent.ShowToast(
+                                R.string.email_send_text
+                            )
+                        )
+                        changeBackToLogin()
+                    }
+
+                    is CustomResultModelDomain.Error -> {
+                        _event.emit(
+                            ILogRegScreenEvent.ShowToast(
+                                res.exception.toUiString()
+                            )
+                        )
+                    }
+                }
+            }
         }
     }
 
@@ -249,6 +287,7 @@ class LogRegScreenViewModel @Inject constructor(
             when (it) {
                 is LogRegScreenState.Login -> it.copy(email = newValue)
                 is LogRegScreenState.Registration -> it.copy(user = it.user.copy(email = newValue))
+                is LogRegScreenState.PasswordReset -> it.copy(email = newValue)
             }
         }
     }
@@ -258,6 +297,7 @@ class LogRegScreenViewModel @Inject constructor(
             when (it) {
                 is LogRegScreenState.Login -> it
                 is LogRegScreenState.Registration -> it.copy(passwordCheck = newValue)
+                is LogRegScreenState.PasswordReset -> it
             }
         }
     }
@@ -267,6 +307,7 @@ class LogRegScreenViewModel @Inject constructor(
             when (it) {
                 is LogRegScreenState.Login -> it.copy(password = newValue)
                 is LogRegScreenState.Registration -> it.copy(password = newValue)
+                is LogRegScreenState.PasswordReset -> it
             }
         }
     }
@@ -276,6 +317,7 @@ class LogRegScreenViewModel @Inject constructor(
             when (it) {
                 is LogRegScreenState.Login -> it
                 is LogRegScreenState.Registration -> it.copy(user = it.user.copy(name = newValue))
+                is LogRegScreenState.PasswordReset -> it
             }
         }
     }
@@ -291,6 +333,12 @@ class LogRegScreenViewModel @Inject constructor(
             LogRegScreenProcess.Registration -> {
                 (_state.value as? LogRegScreenState.Login)?.let {
                     _state.update { LogRegScreenState.Registration() }
+                }
+            }
+
+            LogRegScreenProcess.PasswordReset -> {
+                (_state.value as? LogRegScreenState.Login)?.let {
+                    _state.update { LogRegScreenState.PasswordReset() }
                 }
             }
         }

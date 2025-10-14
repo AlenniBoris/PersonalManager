@@ -1,7 +1,6 @@
 package com.alenniboris.personalmanager.presentation.screens.login_registration.views
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,28 +13,24 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.presentation.screens.login_registration.ILogRegScreenIntent
-import com.alenniboris.personalmanager.presentation.screens.login_registration.LogRegScreenProcess
 import com.alenniboris.personalmanager.presentation.screens.login_registration.LogRegScreenState
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
+import com.alenniboris.personalmanager.presentation.uikit.theme.appColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.emailIcon
 import com.alenniboris.personalmanager.presentation.uikit.theme.enterTextFieldColor
-import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenBackgroundColor
 import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenBigTopPadding
 import com.alenniboris.personalmanager.presentation.uikit.theme.logRegScreenMainShape
-import com.alenniboris.personalmanager.presentation.uikit.theme.passwordHidePicture
-import com.alenniboris.personalmanager.presentation.uikit.theme.passwordShowPicture
 import com.alenniboris.personalmanager.presentation.uikit.views.AppCustomButton
 import com.alenniboris.personalmanager.presentation.uikit.views.AppTextField
 
 @Composable
-fun LoginProcessUi(
-    state: LogRegScreenState.Login,
+fun PasswordResetProcessUi(
+    state: LogRegScreenState.PasswordReset,
     proceedIntent: (ILogRegScreenIntent) -> Unit
 ) {
 
     AppTextField(
         modifier = Modifier
-            .padding(logRegScreenBigTopPadding)
             .background(
                 color = enterTextFieldColor,
                 shape = logRegScreenMainShape
@@ -51,44 +46,17 @@ fun LoginProcessUi(
         icon = painterResource(emailIcon)
     )
 
-    AppTextField(
-        modifier = Modifier
-            .padding(logRegScreenBigTopPadding)
-            .background(
-                color = enterTextFieldColor,
-                shape = logRegScreenMainShape
-            )
-            .fillMaxWidth(),
-        value = state.password,
-        onValueChanged = {
-            proceedIntent(
-                ILogRegScreenIntent.UpdatePassword(it)
-            )
-        },
-        isPasswordField = true,
-        isPasswordVisible = state.isPasswordVisible,
-        placeholder = stringResource(R.string.password_placeholder),
-        icon = painterResource(
-            if (!state.isPasswordVisible) passwordHidePicture else passwordShowPicture
-        ),
-        onIconClicked = {
-            proceedIntent(
-                ILogRegScreenIntent.UpdatePasswordVisibility
-            )
-        }
-    )
-
     AppCustomButton(
         modifier = Modifier
             .padding(logRegScreenBigTopPadding)
             .fillMaxWidth(),
         onClick = {
             proceedIntent(
-                ILogRegScreenIntent.ChangeProcess(LogRegScreenProcess.PasswordReset)
+                ILogRegScreenIntent.ChangeBackToLogin
             )
         },
-        text = stringResource(R.string.password_reset_option),
-        icon = painterResource(R.drawable.password_closed_icon)
+        text = stringResource(R.string.go_back_to_login),
+        icon = painterResource(R.drawable.back_icon)
     )
 }
 
@@ -102,11 +70,10 @@ private fun LightTheme() {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(logRegScreenBackgroundColor),
-                verticalArrangement = Arrangement.Center
+                    .background(appColor)
             ) {
-                LoginProcessUi(
-                    state = LogRegScreenState.Login(),
+                PasswordResetProcessUi(
+                    state = LogRegScreenState.PasswordReset(),
                     proceedIntent = {}
                 )
             }
@@ -124,11 +91,10 @@ private fun DarkTheme() {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(logRegScreenBackgroundColor),
-                verticalArrangement = Arrangement.Center
+                    .background(appColor)
             ) {
-                LoginProcessUi(
-                    state = LogRegScreenState.Login(),
+                PasswordResetProcessUi(
+                    state = LogRegScreenState.PasswordReset(),
                     proceedIntent = {}
                 )
             }

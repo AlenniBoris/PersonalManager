@@ -205,4 +205,10 @@
     <string name="meters_in_second_text">m/s</string>
     <string name="welcome_text">Welcome</string>
     <string name="welcome_back_text">Welcome back</string>
+    <string name="password_reset_option">Reset password</string>
+    <string name="email_send_text">Email was send</string>
+    <string name="password_reset_description">Change your password to the new one</string>
+    <string name="send_link_text">Send link</string>
+    <string name="go_back_to_login">Back to login</string>
+    <string name="wrong_entered_data_exception">Check your entered data</string>
 </resources>

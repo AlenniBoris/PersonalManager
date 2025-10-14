@@ -12,6 +12,7 @@ sealed interface ILogRegScreenIntent {
     data object ProceedFinalButtonAction : ILogRegScreenIntent
     data object UpdatePasswordVisibility : ILogRegScreenIntent
     data object UpdatePasswordCheckVisibility : ILogRegScreenIntent
+    data object ChangeBackToLogin: ILogRegScreenIntent
     data class GetUserLocation(
         val fusedLocationProviderClient: FusedLocationProviderClient
     ) : ILogRegScreenIntent

@@ -14,4 +14,5 @@ fun CommonExceptionModelDomain.toUiString(): Int = when (this) {
     CommonExceptionModelDomain.WrongPassword -> R.string.wrong_password_exception
     CommonExceptionModelDomain.EmailIsWrongType -> R.string.email_wrong_type_exception
     CommonExceptionModelDomain.WeakPassword -> R.string.weak_password_exception
+    CommonExceptionModelDomain.WrongEnteredData -> R.string.wrong_entered_data_exception
 }

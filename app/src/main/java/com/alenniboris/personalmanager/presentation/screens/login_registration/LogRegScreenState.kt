@@ -22,4 +22,8 @@ sealed class LogRegScreenState(
         val isPasswordVisible: Boolean = false,
         val isPasswordCheckVisible: Boolean = false
     ) : LogRegScreenState(currentProcess = LogRegScreenProcess.Registration)
+
+    data class PasswordReset(
+        val email: String = ""
+    ) : LogRegScreenState(currentProcess = LogRegScreenProcess.PasswordReset)
 }

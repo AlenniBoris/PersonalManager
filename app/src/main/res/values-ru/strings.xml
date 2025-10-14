@@ -206,4 +206,10 @@
     <string name="meters_in_second_text">м/с</string>
     <string name="welcome_text">Добро пожаловать</string>
     <string name="welcome_back_text">С возвращением</string>
+    <string name="password_reset_option">Изменение пароля</string>
+    <string name="email_send_text">Письмо отправлено на почту</string>
+    <string name="password_reset_description">Измените пароль как хотите</string>
+    <string name="send_link_text">Оправить письмо</string>
+    <string name="go_back_to_login">Вернуться на вход</string>
+    <string name="wrong_entered_data_exception">Проверьте введенные данные</string>
 </resources>

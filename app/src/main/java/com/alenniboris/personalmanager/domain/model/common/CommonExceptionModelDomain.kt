@@ -12,4 +12,5 @@ sealed class CommonExceptionModelDomain : Throwable() {
     data object UserAlreadyExists : CommonExceptionModelDomain()
     data object EmailIsWrongType : CommonExceptionModelDomain()
     data object WeakPassword: CommonExceptionModelDomain()
+    data object WrongEnteredData: CommonExceptionModelDomain()
 }

@@ -24,12 +24,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.alenniboris.fastbanking.presentation.uikit.theme.bodyStyle
 import com.alenniboris.personalmanager.R
 import com.alenniboris.personalmanager.presentation.screens.login_registration.ILogRegScreenIntent
 import com.alenniboris.personalmanager.presentation.screens.login_registration.LogRegScreenProcess
 import com.alenniboris.personalmanager.presentation.screens.login_registration.LogRegScreenState
+import com.alenniboris.personalmanager.presentation.screens.login_registration.listOfLogRegProcesses
 import com.alenniboris.personalmanager.presentation.screens.login_registration.toUiString
 import com.alenniboris.personalmanager.presentation.uikit.model.ClickableElement
 import com.alenniboris.personalmanager.presentation.uikit.theme.PersonalManagerTheme
@@ -172,31 +174,43 @@ private fun MainSection(
     ) {
 
         HeaderTextSection(
-            mainText = stringResource(R.string.get_started_text),
-            subtleTextString = stringResource(R.string.log_reg_options_description)
+            mainText = stringResource(
+                when (state.currentProcess) {
+                    LogRegScreenProcess.Login, LogRegScreenProcess.Registration -> R.string.get_started_text
+                    LogRegScreenProcess.PasswordReset -> R.string.password_reset_option
+                }
+            ),
+            subtleTextString = stringResource(
+                when (state.currentProcess) {
+                    LogRegScreenProcess.Login, LogRegScreenProcess.Registration -> R.string.log_reg_options_description
+                    LogRegScreenProcess.PasswordReset -> R.string.password_reset_description
+                }
+            )
         )
 
-        AppButtonRow(
-            modifier = Modifier
-                .clip(appRoundedShape)
-                .fillMaxWidth()
-                .background(buttonRowBackgroundColor)
-                .padding(appButtonRowInnerPadding),
-            currentElement = ClickableElement(
-                text = stringResource(state.currentProcess.toUiString()),
-                onClick = {}
-            ),
-            listOfElements = LogRegScreenProcess.entries.toList().map {
-                ClickableElement(
-                    text = stringResource(it.toUiString()),
-                    onClick = {
-                        proceedIntent(
-                            ILogRegScreenIntent.ChangeProcess(it)
-                        )
-                    }
-                )
-            }
-        )
+        if (state.currentProcess != LogRegScreenProcess.PasswordReset) {
+            AppButtonRow(
+                modifier = Modifier
+                    .clip(appRoundedShape)
+                    .fillMaxWidth()
+                    .background(buttonRowBackgroundColor)
+                    .padding(appButtonRowInnerPadding),
+                currentElement = ClickableElement(
+                    text = stringResource(state.currentProcess.toUiString()),
+                    onClick = {}
+                ),
+                listOfElements = listOfLogRegProcesses.map {
+                    ClickableElement(
+                        text = stringResource(it.toUiString()),
+                        onClick = {
+                            proceedIntent(
+                                ILogRegScreenIntent.ChangeProcess(it)
+                            )
+                        }
+                    )
+                }
+            )
+        }
 
         when (state) {
             is LogRegScreenState.Login ->
@@ -207,6 +221,12 @@ private fun MainSection(
 
             is LogRegScreenState.Registration ->
                 RegistrationProcessUi(
+                    state = state,
+                    proceedIntent = proceedIntent
+                )
+
+            is LogRegScreenState.PasswordReset ->
+                PasswordResetProcessUi(
                     state = state,
                     proceedIntent = proceedIntent
                 )
@@ -251,7 +271,8 @@ private fun HeaderTextSection(
             text = subtleTextString,
             style = bodyStyle.copy(
                 color = appMainTextColor,
-                fontSize = appTextSize
+                fontSize = appTextSize,
+                textAlign = TextAlign.Center
             )
         )
     }
@@ -266,8 +287,13 @@ private fun LightTheme() {
     ) {
         Surface {
             Box(modifier = Modifier.fillMaxSize()) {
+//                LogRegScreenUi(
+//                    state = LogRegScreenState.Login(),
+//                    proceedIntent = {}
+//                )
+
                 LogRegScreenUi(
-                    state = LogRegScreenState.Login(),
+                    state = LogRegScreenState.PasswordReset(),
                     proceedIntent = {}
                 )
             }
