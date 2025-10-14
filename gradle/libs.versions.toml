@@ -5,8 +5,11 @@ converterGson = "3.0.0"
 coreSplashscreen = "1.0.1"
 datastorePreferences = "1.1.7"
 gson = "2.13.1"
+koinTest = "4.1.1"
+kotlinxCoroutinesTest = "1.10.2"
 leakcanaryAndroid = "2.14"
 loggingInterceptor = "5.1.0"
+mockitoCore = "5.20.0"
 raamcostaCore = "1.11.9"
 hiltAndroid = "2.57.1"
 hiltNavigationCompose = "1.2.0"
@@ -25,6 +28,7 @@ lifecycleRuntimeComposeAndroid = "2.9.3"
 retrofit = "3.0.0"
 playServicesLocation = "21.3.0"
 firebaseAuth = "24.0.1"
+junitKtx = "1.3.0"
 
 [libraries]
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
@@ -32,6 +36,8 @@ androidx-datastore-preferences = { module = "androidx.datastore:datastore-prefer
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
 retrofit-cache-extension = { module = "com.andretietz.retrofit:cache-extension", version.ref = "cacheExtension" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanaryAndroid" }
@@ -41,6 +47,7 @@ raamcosta-ksp = { module = "io.github.raamcosta.compose-destinations:ksp", versi
 raamcosta-core = { module = "io.github.raamcosta.compose-destinations:core", version.ref = "raamcostaCore" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
+hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hiltAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -59,6 +66,7 @@ androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", nam
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
