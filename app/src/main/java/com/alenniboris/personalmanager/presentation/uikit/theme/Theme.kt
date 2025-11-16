@@ -32,16 +32,6 @@ private val LightColorScheme = lightColorScheme(
     primary = Color(0xffdbdbdb),
     background = Color(0xffdbdbdb),
     onBackground = Color(0xff000000)
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
 )
 
 @Composable
@@ -71,10 +61,6 @@ fun PersonalManagerTheme(
 
         SideEffect {
             val window = (view.context as Activity).window
-
-            val appBarColor = Color.Transparent
-
-            window.statusBarColor = topBarColor.toArgb()
             window.navigationBarColor = appColor.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
                 themeMode.value is ThemeMode.Light

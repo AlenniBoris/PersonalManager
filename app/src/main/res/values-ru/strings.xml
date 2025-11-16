@@ -7,7 +7,7 @@
     <string name="home_button_text">Дом</string>
     <string name="weather_button_text">Погода</string>
     <string name="tasks_button_text">Задачи</string>
-    <string name="health_button_text">Здоровье</string>
+    <string name="health_button_text">Жизнь</string>
     <string name="text_field_icon_btn_description">text field icon btn</string>
     <string name="getting_data_exception">Ошибка при получении данных. Попробуйте снова</string>
     <string name="internet_exception">Проверьте соединение с сетью</string>
@@ -107,7 +107,7 @@
     <string name="activity_option">Активность</string>
     <string name="nutrition_option">Питание</string>
     <string name="current_weight_section">Текущий вес</string>
-    <string name="heart_rate_section">Сердцебиение</string>
+    <string name="heart_rate_section">Сердце</string>
     <string name="calories_section">Калории</string>
     <string name="daily_goals_text">Цели дня</string>
     <string name="proteins_section_text">Белки</string>
@@ -182,7 +182,7 @@
     <string name="go_to_settings_text">Открыть настройки</string>
     <string name="today_overview_section">Обзор за сегодня</string>
     <string name="today_overview_section_description">Как ваши дела сегодня?</string>
-    <string name="temperature_text">Температура</string>
+    <string name="temperature_text">На улице</string>
     <string name="tasks_text">Задачи</string>
     <string name="heart_rate_text">ЧСС</string>
     <string name="weight_text">Вес</string>
